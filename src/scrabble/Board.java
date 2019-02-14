@@ -15,12 +15,49 @@ public class Board {
             }
         }
     }
-public class BoardTile{
-    private boolean empty;
-    private boolean bonus;
-    private Letters letter;
-    private int multiplier;
 
-}
+    public class BoardTile{
+        private boolean empty;
+        private boolean bonus;
+        private Letters letter;
+        private int multiplier;
+
+        public BoardTile(){
+            empty = true;
+
+        }
+
+        public boolean isEmpty() {
+            return empty;
+        }
+
+        public void setEmpty(boolean empty) {
+            this.empty = empty;
+        }
+
+        public boolean isBonus() {
+            return bonus;
+        }
+
+        public void setBonus(boolean bonus) {
+            this.bonus = bonus;
+        }
+
+        public Letters getLetter() {
+            return letter;
+        }
+
+        public void setLetter(Letters letter) {
+            this.letter = letter;
+        }
+
+        public int getMultiplier() {
+            return multiplier;
+        }
+
+        public void setMultiplier(int multiplier) {
+            this.multiplier = multiplier;
+        }
+    }
 
 }
