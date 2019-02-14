@@ -19,7 +19,6 @@ public class LetterBag {
 
             int fre = frequency(alphabet.charAt(i));
 
-
             for(int j = 0; j < fre; j++){
                 bag.add(new Letters(alphabet.charAt(i)));
             }
@@ -80,7 +79,6 @@ public class LetterBag {
 
         return freq;
     }
-
 
 
 }
