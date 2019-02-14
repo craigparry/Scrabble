@@ -169,7 +169,7 @@ public class Dictionary {
 
         test.insert("boy");
 
-        System.out.println("here");
+
 
         if(test.search("there")){ System.out.println("found");}
         if(test.search("brother")){ System.out.println("found");}

@@ -18,6 +18,7 @@ public class Board {
 public class BoardTile{
     private boolean empty;
     private boolean bonus;
+    private Letters letter;
     private int multiplier;
 
 }
