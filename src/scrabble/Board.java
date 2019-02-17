@@ -4,10 +4,13 @@ public class Board {
 
     private int size;
     private List<List<BoardTile>> gameBoard;
+
     public Board(int x){
+
+        //broke, do I have to initialize the size of arraylist?
         size = x;
         gameBoard = new ArrayList<List<BoardTile>>();
-        for(int i = 0; i< size; i++){
+        for(int i = 0; i < size; i++){
             gameBoard.set(i,new ArrayList<>());
             for(int k = 0; k< size; k++){
                 gameBoard.get(i).set(k,new BoardTile());
@@ -16,10 +19,37 @@ public class Board {
         }
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
+    public String toString(){
+        String hold = "";
+
+        for(List<BoardTile> row: gameBoard){
+            for(BoardTile col: row){
+                if(col.getEmpty()){
+                    if(col.isBonus()){
+                        hold += col.getMultiplier();
+                    } else{
+                        hold +="*";
+                    }
+
+                } else{
+                    hold += col.getPiece().getLetter();
+                }
+
+            }
+            hold += "\n";
+        }
+        return hold;
+    }
+
     public class BoardTile{
         private boolean empty;
         private boolean bonus;
-        private Letters letter;
+        private Letters piece;
         private int multiplier;
 
         public BoardTile(){
@@ -27,7 +57,7 @@ public class Board {
 
         }
 
-        public boolean isEmpty() {
+        public boolean getEmpty() {
             return empty;
         }
 
@@ -43,12 +73,12 @@ public class Board {
             this.bonus = bonus;
         }
 
-        public Letters getLetter() {
-            return letter;
+        public Letters getPiece() {
+            return piece;
         }
 
-        public void setLetter(Letters letter) {
-            this.letter = letter;
+        public void setPiece(Letters letter) {
+            this.piece = letter;
         }
 
         public int getMultiplier() {
@@ -58,6 +88,11 @@ public class Board {
         public void setMultiplier(int multiplier) {
             this.multiplier = multiplier;
         }
+    }
+
+    public static void main(String[] args){
+        Board test = new Board(15);
+        System.out.print(test.toString());
     }
 
 }

@@ -2,8 +2,11 @@ package scrabble;
 
 public class Letters {
 
+
+
     private char letter;
     private int value;
+    private boolean blank;
 
     public Letters(char let){
         letter = let;
@@ -11,14 +14,18 @@ public class Letters {
 
     }
 
+    public char getLetter() {
+        return letter;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
     public int letterValue(char letter){
         int val;
 
         switch(letter){
-
-
-
-
             case 'a':
             case 'e':
             case 'i':
