@@ -24,18 +24,18 @@ public class Dictionary {
     public void readDictFile(){
         try(
                 // use this for the jar file?
-//                InputStream in = getClass().getResourceAsStream("dictionary.txt");
-//                BufferedReader reader = new BufferedReader(new InputStreamReader(in))){
+//            InputStream in = getClass().getResourceAsStream("dictionary.txt");
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(in))){
 
             // use this in the mean time
-                BufferedReader reader = new BufferedReader(new FileReader("dictionary.txt"))){
+            BufferedReader reader = new BufferedReader(new FileReader("dictionary.txt"))){
             String line;
-            while ((line = reader.readLine()) != null){
-                hold.add(line);
+                while ((line = reader.readLine()) != null){
+                    hold.add(line);
+                }
+            } catch(IOException ex){
+                System.out.println(ex.toString());
             }
-        } catch(IOException ex){
-            System.out.println(ex.toString());
-        }
     }
     /**Populates the dictiony with words from the read in file
      * @param
