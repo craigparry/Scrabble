@@ -14,6 +14,7 @@ public class Letters {
 
     }
 
+
     public char getLetter() {
         return letter;
     }

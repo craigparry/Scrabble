@@ -11,8 +11,14 @@ set up the letter bag.
 Todo: 
 Need to test the trie on a larger collection of words
 so will do that when I get the library of words that I
-want to use for the game tomorrow. 
+want to use for the game. 
 
+need to create a io stream to read in the dictionary
+and a io stream to read in frequencies or letter values
+
+need to creat an io stream that reads in the string rep
+of a board that can be used to test the legal moves of 
+the game 
 
 
 set up inital board and main game with a toString 

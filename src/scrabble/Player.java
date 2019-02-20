@@ -1,13 +1,23 @@
 package scrabble;
 import java.util.*;
 
-public class Player {
+public abstract class Player {
     private int points;
     private Collection<Letters> tray;
 
 
+    public Player(){
+        points =0;
+        tray =new LinkedList<>();
+    }
 
+    public int getPoints() {
+        return points;
+    }
 
+    public Collection<Letters> getTray() {
+        return tray;
+    }
 
     /*shared methods*/
     public void placeWord(){

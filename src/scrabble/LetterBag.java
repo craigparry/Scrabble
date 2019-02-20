@@ -5,6 +5,15 @@ public class LetterBag {
     private Collection<Letters> bag;
     private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
 //    private Map<Character, Integer> freqMap;
+//    Comparator<String> comp = new Comparator<>(){
+//        public int compare(Letters s1, Letters s2){
+//
+//            int value = 0;
+//            if((value =(s1.length()-s2.length()))==0){
+//                return s1.compareTo(s2);
+//            }else return value;
+//        }
+//    };
 
     public LetterBag(){
         bag = new LinkedList<>();
@@ -24,6 +33,12 @@ public class LetterBag {
             }
         }
 
+    }
+
+    public Letters draw(){
+        Random rand = new Random();
+
+        return;
     }
 
 

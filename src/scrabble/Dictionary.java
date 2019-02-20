@@ -1,5 +1,6 @@
 package scrabble;
 import java.util.*;
+import java.io.*;
 
 
 public class Dictionary {
@@ -14,6 +15,17 @@ public class Dictionary {
         dictionary = new LinkedList<>();
 
 
+        try(
+            InputStream in = getClass().getResourceAsStream("/dictionary.txt");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in))){
+
+            String line;
+            while ((line = reader.readLine()) != null){
+                hold.add(line);
+            }
+        } catch(IOException ex){
+            System.out.println(ex.toString());
+        }
     }
 
     /**Populates the dictiony with words from the read in file
