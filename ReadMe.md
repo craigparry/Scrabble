@@ -18,3 +18,9 @@ want to use for the game tomorrow.
 set up inital board and main game with a toString 
 method so that I can test initial set up of the game and 
 start preparing the logic of the game. 
+
+test bonus representation of letters and bonus
+
+start set up of player class: abstract and comp/human extensions
+
+Gui- may be usuful to make a singleton for the gui

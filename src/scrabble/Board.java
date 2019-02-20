@@ -6,16 +6,14 @@ public class Board {
 //    private List<List<BoardTile>> gameBoard;
     private BoardTile[][] gameBoard;
 
+    public Board(){
+        size =15;
+        initBoard();
+    }
+
     public Board(int x){
         size =x;
-        gameBoard = new BoardTile[size][size];
-
-
-        for(int i =0; i< size; i++){
-            for(int k =0; k<size; k++) {
-            gameBoard[i][k] = new BoardTile();
-            }
-        }
+        initBoard();
 
         //broke, do I have to initialize the size of arraylist?
 //        size = x;
@@ -29,6 +27,17 @@ public class Board {
 //        }
 
 
+    }
+
+    public void initBoard(){
+        gameBoard = new BoardTile[size][size];
+
+
+        for(int i =0; i< size; i++){
+            for(int k =0; k<size; k++) {
+                gameBoard[i][k] = new BoardTile();
+            }
+        }
     }
 
     /**
