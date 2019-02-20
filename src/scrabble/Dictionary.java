@@ -13,12 +13,22 @@ public class Dictionary {
     private List<String> hold;
     public Dictionary(){
         dictionary = new LinkedList<>();
+        hold = new LinkedList<>();
+        readDictFile();
+        populate();
 
 
+    }
+
+
+    public void readDictFile(){
         try(
-            InputStream in = getClass().getResourceAsStream("/dictionary.txt");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in))){
+                // use this for the jar file?
+//                InputStream in = getClass().getResourceAsStream("dictionary.txt");
+//                BufferedReader reader = new BufferedReader(new InputStreamReader(in))){
 
+            // use this in the mean time
+                BufferedReader reader = new BufferedReader(new FileReader("dictionary.txt"))){
             String line;
             while ((line = reader.readLine()) != null){
                 hold.add(line);
@@ -27,7 +37,6 @@ public class Dictionary {
             System.out.println(ex.toString());
         }
     }
-
     /**Populates the dictiony with words from the read in file
      * @param
      * @return void
@@ -169,23 +178,29 @@ public class Dictionary {
 
     public static void main(String[] args){
         Dictionary test = new Dictionary();
-        test.insert("this");
-
-        test.insert("there");
-
-        test.insert("to");
-
-        test.insert("boy");
-
-        test.insert("brother");
-
-        test.insert("boy");
+//        test.insert("this");
+//
+//        test.insert("there");
+//
+//        test.insert("to");
+//
+//        test.insert("boy");
+//
+//        test.insert("brother");
+//
+//        test.insert("boy");
 
 
 
         if(test.search("there")){ System.out.println("found");}
         if(test.search("brother")){ System.out.println("found");}
         if(test.search("bo")){ System.out.println("found");}
+
+        if(test.search("stess")){ System.out.println("found");}
+        if(test.search("test")){ System.out.println("found");}
+        if(test.search("aqui")){
+            System.out.println("found");
+        } else {System.out.println("Not Found");}
 
     }
 

@@ -35,11 +35,11 @@ public class LetterBag {
 
     }
 
-    public Letters draw(){
-        Random rand = new Random();
-
-        return;
-    }
+//    public Letters draw(){
+//        Random rand = new Random();
+//
+//        return;
+//    }
 
 
     protected int frequency(char letter){
