@@ -3,20 +3,32 @@ import java.util.*;
 public class Board {
 
     private int size;
-    private List<List<BoardTile>> gameBoard;
+//    private List<List<BoardTile>> gameBoard;
+    private BoardTile[][] gameBoard;
 
     public Board(int x){
+        size =x;
+        gameBoard = new BoardTile[size][size];
 
-        //broke, do I have to initialize the size of arraylist?
-        size = x;
-        gameBoard = new ArrayList<List<BoardTile>>();
-        for(int i = 0; i < size; i++){
-            gameBoard.set(i,new ArrayList<>());
-            for(int k = 0; k< size; k++){
-                gameBoard.get(i).set(k,new BoardTile());
 
+        for(int i =0; i< size; i++){
+            for(int k =0; k<size; k++) {
+            gameBoard[i][k] = new BoardTile();
             }
         }
+
+        //broke, do I have to initialize the size of arraylist?
+//        size = x;
+//        gameBoard = new ArrayList<List<BoardTile>>(size);
+//        for(int i = 0; i < size; i++){
+//            gameBoard.add(new ArrayList<>(size));
+//            for(int k = 0; k< size; k++){
+//                gameBoard.get(i).set(k,new BoardTile());
+//
+//            }
+//        }
+
+
     }
 
     /**
@@ -27,23 +39,43 @@ public class Board {
     public String toString(){
         String hold = "";
 
-        for(List<BoardTile> row: gameBoard){
-            for(BoardTile col: row){
-                if(col.getEmpty()){
-                    if(col.isBonus()){
-                        hold += col.getMultiplier();
+        for(int i =0; i< size; i++){
+            for(int k =0; k<size; k++){
+                if(gameBoard[i][k].getEmpty()){
+                    if(gameBoard[i][k].isBonus()){
+                        hold += gameBoard[i][k].getMultiplier();
                     } else{
-                        hold +="*";
+                        hold +="* ";
                     }
 
                 } else{
-                    hold += col.getPiece().getLetter();
+                    hold += gameBoard[i][k].getPiece().getLetter();
                 }
 
             }
             hold += "\n";
         }
         return hold;
+
+
+
+//        for(List<BoardTile> row: gameBoard){
+//            for(BoardTile col: row){
+//                if(col.getEmpty()){
+//                    if(col.isBonus()){
+//                        hold += col.getMultiplier();
+//                    } else{
+//                        hold +="*";
+//                    }
+//
+//                } else{
+//                    hold += col.getPiece().getLetter();
+//                }
+//
+//            }
+//            hold += "\n";
+//        }
+//        return hold;
     }
 
     public class BoardTile{
