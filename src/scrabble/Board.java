@@ -1,4 +1,5 @@
 package scrabble;
+import java.io.*;
 import java.util.*;
 public class Board {
 
@@ -28,6 +29,52 @@ public class Board {
 
 
     }
+    public void configBoard(String board){
+        int row =0;
+        int col =0;
+        int position = 0;
+        char c;
+        while(position< board.length()){
+            c = board.charAt(position);
+            if(c == '.'){
+                gameBoard[row][col].setEmpty(true);
+                col++;
+            }
+            if(Character.isAlphabetic(c)){
+                gameBoard[row][col].setEmpty(false);
+                gameBoard[row][col].setPiece(new Letters(c));
+                col++;
+            }
+            if(Character.isDigit(c)){
+                gameBoard[row][col].setBonus(true);
+                gameBoard[row][col].setMultiplier(Character.getNumericValue(c));
+                gameBoard[row][col].setEmpty(true);
+                col++;
+            }
+            if(c == '\n'){
+                row++;
+            }
+            position++;
+        }
+
+
+
+    }
+
+    public String readBoard(){
+        String config = "";
+        try(
+                BufferedReader reader = new BufferedReader(new FileReader("boardconfig.txt"))){
+            String line;
+            while ((line = reader.readLine()) != null){
+                config += line + "\n";
+            }
+        } catch(IOException ex){
+            System.out.println(ex.toString());
+        }
+        return config;
+    }
+
 
     public void initBoard(){
         gameBoard = new BoardTile[size][size];

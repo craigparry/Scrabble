@@ -26,6 +26,8 @@ public class Dictionary {
     public void readDictFile(){
         try(
                 // use this for the jar file?
+                // need to create resources folder and "mark directory as resource root"
+                // with the resources in the oflder to use this input stream
 //            InputStream in = getClass().getResourceAsStream("dictionary.txt");
 //            BufferedReader reader = new BufferedReader(new InputStreamReader(in))){
 
