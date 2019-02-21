@@ -9,12 +9,12 @@ public class Dictionary {
     *read in the dictionary and then sort the words in a trie
     *
     */
-    private List<TrieNode> dictionary;
+//    private List<TrieNode> dictionary;
     private List<String> hold;
     private Map<Character,TrieNode> dictMap;
     public Dictionary(){
         dictMap = new HashMap<>();
-        dictionary = new LinkedList<>();
+//        dictionary = new LinkedList<>();
         hold = new LinkedList<>();
         readDictFile();
         populate();
@@ -206,14 +206,14 @@ public class Dictionary {
     public class TrieNode{
         private String word;
         private boolean isWord;
-        private List<TrieNode> branch;
+//        private List<TrieNode> branch;
         private Map<Character, TrieNode> mapBranch;
         private char letter;
 
         public TrieNode(char let){
             letter = let;
             mapBranch = new HashMap<>();
-            branch = new LinkedList<>();
+//            branch = new LinkedList<>();
             isWord = false;
         }
         public void setWord(){
@@ -223,9 +223,9 @@ public class Dictionary {
 
             return isWord;
         }
-        public List<TrieNode> getBranch(){
-            return branch;
-        }
+//        public List<TrieNode> getBranch(){
+//            return branch;
+//        }
 
         public char getLetter(){
             return letter;

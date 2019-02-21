@@ -2,28 +2,25 @@ package scrabble;
 import java.util.*;
 
 public class LetterBag {
-    private Collection<Letters> bag;
+    public List<Letters> getBag(){
+        return bag;
+    }
+
+    private List<Letters> bag;
+    private Random rand;
     private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
-//    private Map<Character, Integer> freqMap;
-//    Comparator<String> comp = new Comparator<>(){
-//        public int compare(Letters s1, Letters s2){
-//
-//            int value = 0;
-//            if((value =(s1.length()-s2.length()))==0){
-//                return s1.compareTo(s2);
-//            }else return value;
-//        }
-//    };
 
     public LetterBag(){
         bag = new LinkedList<>();
 //        freqMap = new HashMap<>();
+        rand = new Random();
         fillBag();
 
 
     }
     public void fillBag(){
         bag.clear();
+        //constructs tiles according to the letter frequencies for the letters
         for(int i = 0; i< alphabet.length(); i++){
 
             int fre = frequency(alphabet.charAt(i));
@@ -32,14 +29,16 @@ public class LetterBag {
                 bag.add(new Letters(alphabet.charAt(i)));
             }
         }
-
+        //constructs two default blank tiles
+        for(int b = 0; b<=1; b++){
+            bag.add(new Letters());
+        }
     }
 
-//    public Letters draw(){
-//        Random rand = new Random();
-//
-//        return;
-//    }
+    public Letters draw(){
+        int hold = rand.nextInt(bag.size());
+        return bag.remove(hold);
+    }
 
 
     protected int frequency(char letter){

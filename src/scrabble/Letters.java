@@ -2,18 +2,18 @@ package scrabble;
 
 public class Letters {
 
-
-
     private char letter;
     private int value;
     private boolean blank;
 
+    public Letters(){
+        blank =true;
+    }
     public Letters(char let){
         letter = let;
         value = letterValue(let);
 
     }
-
 
     public char getLetter() {
         return letter;
@@ -22,6 +22,16 @@ public class Letters {
     public int getValue() {
         return value;
     }
+    public boolean getBlank(){
+        return blank;
+    }
+
+    public void setBlankValue(char let){
+        value = letterValue(let);
+        letter = Character.toUpperCase(let);
+
+    }
+
 
     public int letterValue(char letter){
         int val;

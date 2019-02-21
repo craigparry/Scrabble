@@ -4,6 +4,8 @@ public class MainGameLoop {
     private Board gameBoard;
     private LetterBag bag;
     private Dictionary dictionary;
+    private Player human;
+    private Player computer;
     private int turn;
     // computer
     //human
@@ -16,6 +18,8 @@ public class MainGameLoop {
         gameBoard = new Board();
         bag = new LetterBag();
         dictionary = new Dictionary();
+        human = new Human();
+        computer = new Computer();
         turn = 0;
     }
 

@@ -40,6 +40,16 @@ public class Board {
         }
     }
 
+    public void setTile(int row, int col, Letters let){
+        gameBoard[row][col].setPiece(let);
+    }
+
+    public boolean isLegal(int row, int col, String word){
+
+
+        return false;
+    }
+
     /**
      *
      * @return
@@ -54,7 +64,7 @@ public class Board {
                     if(gameBoard[i][k].isBonus()){
                         hold += gameBoard[i][k].getMultiplier();
                     } else{
-                        hold +="* ";
+                        hold +=". ";
                     }
 
                 } else{
@@ -95,6 +105,10 @@ public class Board {
 
         public BoardTile(){
             empty = true;
+            multiplier =0;
+            piece =null;
+            bonus = false;
+
 
         }
 
@@ -109,11 +123,9 @@ public class Board {
         public boolean isBonus() {
             return bonus;
         }
-
         public void setBonus(boolean bonus) {
             this.bonus = bonus;
         }
-
         public Letters getPiece() {
             return piece;
         }
@@ -132,7 +144,9 @@ public class Board {
     }
 
     public static void main(String[] args){
-        Board test = new Board(15);
+        Board test = new Board();
+
+
         System.out.print(test.toString());
     }
 

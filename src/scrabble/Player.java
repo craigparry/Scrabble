@@ -11,6 +11,12 @@ public abstract class Player {
         tray =new LinkedList<>();
     }
 
+    public void drawTray(LetterBag bag){
+        while(tray.size()<= 7){
+            tray.add(bag.draw());
+        }
+    }
+
     public int getPoints() {
         return points;
     }
@@ -20,19 +26,26 @@ public abstract class Player {
     }
 
     /*shared methods*/
-    public void placeWord(){
+    public boolean placeWord(String word, Board board){
         /*maybe a boolean where the word selected is tried at this location
         and if the move is legal then removes pieces from the tray and scores
         the word for the player.
         *
          */
+
+        //ask the board if the turn is legal
+
+        // then place the word on the board if true else return false
+        return false;
     }
 
-    public void playTurn(){
+
+
+    public abstract void playTurn();
         /*this may need to be set up in each individually so that the
         * functionality differs between the computer and the human player
         * */
-    }
+
 
 
     /* human methods */
@@ -46,10 +59,7 @@ public abstract class Player {
 
 
 
-    public String findBestWord(){
-        /*traverse board and test words at each location saving the highest scoring word*/
-        return "here";
-    }
+
 
 
 }
