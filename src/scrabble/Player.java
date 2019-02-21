@@ -6,9 +6,10 @@ public abstract class Player {
     private Collection<Letters> tray;
 
 
-    public Player(){
+    public Player(LetterBag bag){
         points =0;
         tray =new LinkedList<>();
+        drawTray(bag);
     }
 
     public void drawTray(LetterBag bag){
