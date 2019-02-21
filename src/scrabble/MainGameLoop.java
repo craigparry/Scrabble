@@ -18,8 +18,8 @@ public class MainGameLoop {
         gameBoard = new Board();
         bag = new LetterBag();
         dictionary = new Dictionary();
-        human = new Human(bag);
-        computer = new Computer(bag);
+        human = new Human(bag,gameBoard);
+        computer = new Computer(bag,gameBoard);
         turn = 0;
     }
 

@@ -2,8 +2,8 @@ package scrabble;
 
 public class Human extends Player {
 
-    public Human(LetterBag bag){
-        super(bag);
+    public Human(LetterBag bag, Board board){
+        super(bag,board);
     }
 
     public void playTurn(){

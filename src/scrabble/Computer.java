@@ -2,8 +2,8 @@ package scrabble;
 
 public class Computer extends Player {
 
-    public Computer(LetterBag bag){
-        super(bag);
+    public Computer(LetterBag bag, Board board){
+        super(bag,board);
     }
 
 

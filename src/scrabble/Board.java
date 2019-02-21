@@ -91,7 +91,7 @@ public class Board {
         gameBoard[row][col].setPiece(let);
     }
 
-    public boolean isLegal(int row, int col, String word){
+    public boolean isLegal(int row, int col, String word, Direction dir){
 
 
         return false;

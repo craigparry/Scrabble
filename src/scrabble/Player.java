@@ -4,12 +4,16 @@ import java.util.*;
 public abstract class Player {
     private int points;
     private Collection<Letters> tray;
+    private Board gameBoard;
+    private LetterBag letterBag;
 
 
-    public Player(LetterBag bag){
+    public Player(LetterBag bag,Board board){
         points =0;
         tray =new LinkedList<>();
-        drawTray(bag);
+        letterBag =bag;
+        gameBoard = board;
+        drawTray(letterBag);
     }
 
     public void drawTray(LetterBag bag){
