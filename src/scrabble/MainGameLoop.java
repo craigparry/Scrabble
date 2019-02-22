@@ -15,9 +15,10 @@ public class MainGameLoop {
     }
 
     public void newGame(){
-        gameBoard = new Board();
-        bag = new LetterBag();
         dictionary = new Dictionary();
+        gameBoard = new Board(dictionary);
+        bag = new LetterBag();
+
         human = new Human(bag,gameBoard);
         computer = new Computer(bag,gameBoard);
         turn = 0;

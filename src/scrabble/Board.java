@@ -4,29 +4,22 @@ import java.util.*;
 public class Board {
 
     private int size;
-//    private List<List<BoardTile>> gameBoard;
-    private BoardTile[][] gameBoard;
+    private ArrayList<ArrayList<BoardTile>> gameBoard;
+//    private BoardTile[][] gameBoard;
+    private Dictionary dictionary;
 
-    public Board(){
+    public Board(Dictionary dict){
+        dictionary = dict;
         size =15;
         initBoard();
+        //broke, do I have to initialize the size of arraylist?
+
     }
 
-    public Board(int x){
+    public Board(int x, Dictionary dict){
+        dictionary = dict;
         size =x;
         initBoard();
-
-        //broke, do I have to initialize the size of arraylist?
-//        size = x;
-//        gameBoard = new ArrayList<List<BoardTile>>(size);
-//        for(int i = 0; i < size; i++){
-//            gameBoard.add(new ArrayList<>(size));
-//            for(int k = 0; k< size; k++){
-//                gameBoard.get(i).set(k,new BoardTile());
-//
-//            }
-//        }
-
 
     }
     public void configBoard(String board){
@@ -37,18 +30,20 @@ public class Board {
         while(position< board.length()){
             c = board.charAt(position);
             if(c == '.'){
-                gameBoard[row][col].setEmpty(true);
+                gameBoard.get(row).get(col).setEmpty(true);
+
                 col++;
             }
             if(Character.isAlphabetic(c)){
-                gameBoard[row][col].setEmpty(false);
-                gameBoard[row][col].setPiece(new Letters(c));
+                gameBoard.get(row).get(col).setEmpty(false);
+                gameBoard.get(row).get(col).setPiece(new Letters(c));
+
                 col++;
             }
             if(Character.isDigit(c)){
-                gameBoard[row][col].setBonus(true);
-                gameBoard[row][col].setMultiplier(Character.getNumericValue(c));
-                gameBoard[row][col].setEmpty(true);
+                gameBoard.get(row).get(col).setBonus(true);
+                gameBoard.get(row).get(col).setMultiplier(Character.getNumericValue(c));
+                gameBoard.get(row).get(col).setEmpty(true);
                 col++;
             }
             if(c == '\n'){
@@ -77,22 +72,45 @@ public class Board {
 
 
     public void initBoard(){
-        gameBoard = new BoardTile[size][size];
+        gameBoard = new ArrayList<>(size);
+        for(int i = 0; i < size; i++){
+            gameBoard.add(new ArrayList<>(size));
+            for(int k = 0; k< size; k++){
+                if(gameBoard.isEmpty()){
+                    System.out.print("Empty");
+                }
+                gameBoard.get(i).add(new BoardTile());
 
-
-        for(int i =0; i< size; i++){
-            for(int k =0; k<size; k++) {
-                gameBoard[i][k] = new BoardTile();
             }
         }
     }
 
     public void setTile(int row, int col, Letters let){
-        gameBoard[row][col].setPiece(let);
+        gameBoard.get(row).get(col).setPiece(let);
+        gameBoard.get(row).get(col).setEmpty(false);
+    }
+
+    public boolean boardEmpty(){
+        for(ArrayList<BoardTile> row: gameBoard){
+            for(BoardTile tile: row){
+                if(!tile.isEmpty()){
+                    return false;
+                }
+            }
+
+        }
+        return true;
     }
 
     public boolean isLegal(int row, int col, String word, Direction dir){
+        //from the starting position
+        // check for the length of the string
+        // to see if there are available spaces and if the word matches a
+        //word in the dictionary
 
+        if(this.boardEmpty()){
+
+        }
 
         return false;
     }
@@ -104,44 +122,44 @@ public class Board {
     @Override
     public String toString(){
         String hold = "";
-
-        for(int i =0; i< size; i++){
-            for(int k =0; k<size; k++){
-                if(gameBoard[i][k].getEmpty()){
-                    if(gameBoard[i][k].isBonus()){
-                        hold += gameBoard[i][k].getMultiplier();
-                    } else{
-                        hold +=". ";
-                    }
-
-                } else{
-                    hold += gameBoard[i][k].getPiece().getLetter();
-                }
-
-            }
-            hold += "\n";
-        }
-        return hold;
-
-
-
-//        for(List<BoardTile> row: gameBoard){
-//            for(BoardTile col: row){
-//                if(col.getEmpty()){
-//                    if(col.isBonus()){
-//                        hold += col.getMultiplier();
+//
+//        for(int i =0; i< size; i++){
+//            for(int k =0; k<size; k++){
+//                if(gameBoard[i][k].isEmpty()){
+//                    if(gameBoard[i][k].isBonus()){
+//                        hold += gameBoard[i][k].getMultiplier();
 //                    } else{
-//                        hold +="*";
+//                        hold +=". ";
 //                    }
 //
 //                } else{
-//                    hold += col.getPiece().getLetter();
+//                    hold += gameBoard[i][k].getPiece().getLetter();
 //                }
 //
 //            }
 //            hold += "\n";
 //        }
 //        return hold;
+
+
+
+        for(ArrayList<BoardTile> row: gameBoard){
+            for(BoardTile col: row){
+                if(col.isEmpty()){
+                    if(col.isBonus()){
+                        hold += col.getMultiplier() +" ";
+                    } else{
+                        hold +=". ";
+                    }
+
+                } else{
+                    hold += col.getPiece().getLetter()+" ";
+                }
+
+            }
+            hold += "\n";
+        }
+        return hold;
     }
 
     public class BoardTile{
@@ -159,7 +177,7 @@ public class Board {
 
         }
 
-        public boolean getEmpty() {
+        public boolean isEmpty() {
             return empty;
         }
 
@@ -191,8 +209,9 @@ public class Board {
     }
 
     public static void main(String[] args){
-        Board test = new Board();
+        Board test = new Board(new Dictionary());
 
+        test.setTile(7,7,new Letters('a'));
 
         System.out.print(test.toString());
     }
