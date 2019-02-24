@@ -5,22 +5,18 @@ public class Board {
 
     private int size;
     private ArrayList<ArrayList<BoardTile>> gameBoard;
-//    private BoardTile[][] gameBoard;
     private Dictionary dictionary;
 
     public Board(Dictionary dict){
         dictionary = dict;
         size =15;
         initBoard();
-        //broke, do I have to initialize the size of arraylist?
-
     }
 
     public Board(int x, Dictionary dict){
         dictionary = dict;
         size =x;
         initBoard();
-
     }
     public void configBoard(String board){
         int row =0;
@@ -51,9 +47,6 @@ public class Board {
             }
             position++;
         }
-
-
-
     }
 
     public String readBoard(){
@@ -108,9 +101,40 @@ public class Board {
         // to see if there are available spaces and if the word matches a
         //word in the dictionary
 
-        if(this.boardEmpty()){
-
+        if(row >= size || row < 0) return false;
+        if(col >= size || col < 0) return false;
+        int length = word.length();
+        if(this.boardEmpty() && row != size/2 && col != size/2){
+            return false;
         }
+
+        if(dir == Direction.VERTICAL){
+            if(length+row >= size){
+                return false;
+            }
+            // check for position minus one of the word for a lettered tile
+            // check for position plus word length for a lettered tile
+            if(gameBoard.get(row-1).get(col).isEmpty()
+                    && gameBoard.get(row +length).get(col).isEmpty()){
+                return false;
+            }
+
+            if(!gameBoard.get(row-1).get(col).isEmpty()){
+                String hold = "";
+                hold += Character.toString(gameBoard.get(row-1).get(col).getPiece().getLetter());
+                hold += word;
+                //gameBoard.get(row-1).get(col).getPiece().getLetter()
+                // use this please dictionary.search(hold,null,0,hold.length());
+            }
+
+        } else{
+            if(length+col >= size){
+                return false;
+            }
+            // check for position minus one of the word for a lettered tile
+            // check for position plus word length for a lettered tile
+        }
+
 
         return false;
     }
@@ -122,26 +146,6 @@ public class Board {
     @Override
     public String toString(){
         String hold = "";
-//
-//        for(int i =0; i< size; i++){
-//            for(int k =0; k<size; k++){
-//                if(gameBoard[i][k].isEmpty()){
-//                    if(gameBoard[i][k].isBonus()){
-//                        hold += gameBoard[i][k].getMultiplier();
-//                    } else{
-//                        hold +=". ";
-//                    }
-//
-//                } else{
-//                    hold += gameBoard[i][k].getPiece().getLetter();
-//                }
-//
-//            }
-//            hold += "\n";
-//        }
-//        return hold;
-
-
 
         for(ArrayList<BoardTile> row: gameBoard){
             for(BoardTile col: row){
@@ -212,6 +216,16 @@ public class Board {
         Board test = new Board(new Dictionary());
 
         test.setTile(7,7,new Letters('a'));
+        if(test.isLegal(7,8,"arachnid",Direction.VERTICAL)){
+            System.out.println("move one T");
+        }else {
+            System.out.println("move one F");
+        }
+        if(test.isLegal(7,8,"arachnid",Direction.HORIZONTAL)){
+            System.out.println("move two T");
+        } else{
+            System.out.println("move two F");
+        }
 
         System.out.print(test.toString());
     }
