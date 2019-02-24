@@ -8,6 +8,7 @@ public class Letters {
 
     public Letters(){
         blank =true;
+        letter = '*';
     }
     public Letters(char let){
         letter = let;
@@ -30,6 +31,11 @@ public class Letters {
         value = letterValue(let);
         letter = Character.toUpperCase(let);
 
+    }
+
+    @Override
+    public String toString(){
+        return Character.toString(letter);
     }
 
 

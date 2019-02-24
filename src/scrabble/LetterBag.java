@@ -17,6 +17,7 @@ public class LetterBag {
         fillBag();
 
 
+
     }
     public void fillBag(){
         bag.clear();
@@ -93,6 +94,4 @@ public class LetterBag {
 
         return freq;
     }
-
-
 }
