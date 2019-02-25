@@ -3,6 +3,10 @@ import java.io.*;
 import java.util.*;
 public class Board {
 
+    public int getSize() {
+        return size;
+    }
+
     private int size;
     private ArrayList<ArrayList<BoardTile>> gameBoard;
     private Dictionary dictionary;
@@ -11,6 +15,10 @@ public class Board {
         dictionary = dict;
         size =15;
         initBoard();
+    }
+
+    public ArrayList<ArrayList<BoardTile>> getGameBoard() {
+        return gameBoard;
     }
 
     public Board(int x, Dictionary dict){
@@ -309,56 +317,8 @@ public class Board {
         return hold;
     }
 
-    public class BoardTile{
-        private boolean empty;
-        private boolean bonus;
-        private Letters piece;
-        private int multiplier;
-
-        public BoardTile(){
-            empty = true;
-            multiplier =0;
-            piece =null;
-            bonus = false;
 
 
-        }
-
-        public boolean isEmpty() {
-            return empty;
-        }
-
-        public void setEmpty(boolean empty) {
-            this.empty = empty;
-        }
-
-        public boolean isBonus() {
-            return bonus;
-        }
-        public void setBonus(boolean bonus) {
-            this.bonus = bonus;
-        }
-        public Letters getPiece() {
-            return piece;
-        }
-
-        public void setPiece(Letters letter) {
-            this.piece = letter;
-        }
-
-        public int getMultiplier() {
-            return multiplier;
-        }
-
-        public void setMultiplier(int multiplier) {
-            this.multiplier = multiplier;
-        }
-        @Override
-        public String toString(){
-            return piece.toString();
-
-        }
-    }
 
     public static void main(String[] args){
         Board test = new Board(new Dictionary());
@@ -367,16 +327,20 @@ public class Board {
 //        test.setTile( 8, 7, new Letters('d'));
         if(test.isLegal(8,7,"rachnid",Direction.VERTICAL)){
             System.out.println("move one T");
+            // play word
+            System.out.print(test.toString());
         }else {
             System.out.println("move one F");
         }
         if(test.isLegal(7,8,"rachnid",Direction.HORIZONTAL)){
             System.out.println("move two T");
+            // play word
+            System.out.print(test.toString());
         } else{
             System.out.println("move two F");
         }
 
-        System.out.print(test.toString());
+
     }
 
 }

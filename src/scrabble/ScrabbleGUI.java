@@ -4,16 +4,67 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.canvas.*;
-import javafx.scene.layout.*;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Alert.*;
+import javafx.scene.text.*;
 
 public class ScrabbleGUI extends Application {
     private int size;
+    private MainGameLoop game;
+    private GridPane playingBoard;
+    private HBox tray;
+
+
+
+
+    private Canvas drawLetter(BoardTile tile) {
+        int squareSize = size/15;
+        Canvas canvas;
+        GraphicsContext gc;
+        canvas = new Canvas(squareSize, squareSize);
+        gc = canvas.getGraphicsContext2D();
+        gc.setFill(Color.BEIGE);
+        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        gc.setStroke(Color.BLACK);
+        gc.setLineWidth(2);
+        gc.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        if(!tile.isEmpty()){
+            gc.setStroke(Color.BLACK);
+            gc.setFont(new Font("Regular", squareSize/2));
+//            gc.strokeText(t,(squareSize/2)-5,(squareSize/2)+5,squareSize););
+            gc.strokeText(Character.toString(tile.getPiece().getLetter()),
+                    (squareSize/2)-(squareSize/6),(squareSize/2)+5,squareSize);
+            gc.setFont(new Font("regular",squareSize/3));
+            gc.strokeText(Integer.toString(tile.getPiece().getValue()),6*squareSize/8,
+                    7*squareSize/8,squareSize/5);
+        }
+
+
+        return canvas;
+    }
+
+    private void drawBoard(){
+
+
+        int boardSize = game.getGameBoard().getSize();
+
+        for(int row =0; row<boardSize; row++){
+            for(int col =0; col<boardSize; col++){
+                Canvas temp = drawLetter(game.getGameBoard().getGameBoard().get(row).get(col));
+                playingBoard.add(temp,col,row);
+
+            }
+        }
+    }
+
+    private void drawTray(){
+        game.getHuman().getTray();
+        for(Letters letter: game.getHuman().getTray()){
+            tray.getChildren().add(drawLetter(new BoardTile(letter)));
+        }
+    }
 
     /**
      * ovverides the start method of application to start the scene of the GUI
@@ -22,15 +73,21 @@ public class ScrabbleGUI extends Application {
      */
     @Override
     public void start(Stage stage) {
-        size =500;
+        game = new MainGameLoop();
+
+
+        size =700;
         stage.setTitle("Scrabble Game");
         BorderPane screen = new BorderPane();
 
         // might want to use a grid pane as opposed to the canvas drawing
-        Canvas playingBoard = new Canvas();
+        playingBoard = new GridPane();
+//        playingBoard.getChildren().add(drawLetter(new Letters('c')));
+        drawBoard();
         VBox rightSide = new VBox();
-        HBox tray = new HBox();
-
+        tray = new HBox();
+        tray.setAlignment(Pos.CENTER);
+        drawTray();
         Button play = new Button("Play");
         Button pass = new Button("Pass");
 

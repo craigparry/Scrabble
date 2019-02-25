@@ -2,10 +2,10 @@ package scrabble;
 import java.util.*;
 
 public abstract class Player {
-    private int points;
-    private Collection<Letters> tray;
-    private Board gameBoard;
-    private LetterBag letterBag;
+    protected int points;
+    protected Collection<Letters> tray;
+    protected Board gameBoard;
+    protected LetterBag letterBag;
 
 
     public Player(LetterBag bag,Board board){
