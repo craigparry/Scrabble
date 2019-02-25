@@ -31,7 +31,7 @@ public abstract class Player {
     }
 
     /*shared methods*/
-    public boolean placeWord(String word, Board board){
+    public boolean placeWord(String word, int row, int col, Direction direction){
         /*maybe a boolean where the word selected is tried at this location
         and if the move is legal then removes pieces from the tray and scores
         the word for the player.
@@ -41,6 +41,39 @@ public abstract class Player {
         //ask the board if the turn is legal
 
         // then place the word on the board if true else return false
+        int colOff;
+        int rowOff;
+        if(direction == Direction.VERTICAL){
+            colOff = 0;
+            rowOff = 1;
+        }else{
+            colOff =1;
+            rowOff =0;
+        }
+
+        int length = word.length();
+        LinkedList<Letters> temp = new LinkedList<>();
+        if(gameBoard.isLegal(row,col,word,direction)){
+            for(int i = 0; i < length; i++){
+                for(Letters letter: getTray()){
+                    if(letter.getLetter() == word.charAt(i)){
+                        temp.add(letter);
+                        gameBoard.getGameBoard().get(row+rowOff).get(col+colOff).setPiece(letter);
+                        if(direction == Direction.VERTICAL){
+                            colOff = 0;
+                            rowOff += 1;
+                        }else{
+                            colOff +=1;
+                            rowOff =0;
+                        }
+                        break;
+                    }
+                }
+
+            }
+            tray.removeAll(temp);
+            return true;
+        }
         return false;
     }
 

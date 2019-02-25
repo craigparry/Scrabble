@@ -17,8 +17,6 @@ public class ScrabbleGUI extends Application {
     private HBox tray;
 
 
-
-
     private Canvas drawLetter(BoardTile tile) {
         int squareSize = size/15;
         Canvas canvas;
@@ -35,7 +33,7 @@ public class ScrabbleGUI extends Application {
             gc.setFont(new Font("Regular", squareSize/2));
 //            gc.strokeText(t,(squareSize/2)-5,(squareSize/2)+5,squareSize););
             gc.strokeText(Character.toString(tile.getPiece().getLetter()),
-                    (squareSize/2)-(squareSize/6),(squareSize/2)+5,squareSize);
+                    (squareSize/2)-(squareSize/7),(squareSize/2)+5,squareSize);
             gc.setFont(new Font("regular",squareSize/3));
             gc.strokeText(Integer.toString(tile.getPiece().getValue()),6*squareSize/8,
                     7*squareSize/8,squareSize/5);
@@ -85,8 +83,18 @@ public class ScrabbleGUI extends Application {
 //        playingBoard.getChildren().add(drawLetter(new Letters('c')));
         drawBoard();
         VBox rightSide = new VBox();
+        rightSide.setSpacing(size/100);
+        rightSide.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY,
+                null, null)));
+        rightSide.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         tray = new HBox();
         tray.setAlignment(Pos.CENTER);
+        tray.setSpacing(size/100);
+        tray.setBorder(new Border(new BorderStroke(Color.LIGHTGRAY,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        tray.setBackground(new Background(new BackgroundFill(Color.SADDLEBROWN,
+                null, null)));
         drawTray();
         Button play = new Button("Play");
         Button pass = new Button("Pass");
