@@ -122,105 +122,111 @@ public class Board {
         if(col >= size || col < 0) return false;
         int length = word.length();
         if(this.boardEmpty() && row != size/2 && col != size/2){
-
             return false;
-
         }
 
         if(dir == Direction.VERTICAL){
             if(length+row > size){
-
                 return false;
             }
-
             // check for position minus one of the word for a lettered tile
             // check for position plus word length for a lettered tile
             if(gameBoard.get(row-1).get(col).isEmpty()
                     && gameBoard.get(row +length).get(col).isEmpty()){
 
-//                System.out.println("row " + (row-1)+ " col " + col);
-//                if(gameBoard.get(row-1).get(col).isEmpty()){
-//                    System.out.println("true");
-//                }
-//
-//                System.out.println("row " + (row+length)+ " col " + col);
-//                if(gameBoard.get(row +length).get(col).isEmpty()){
-//                    System.out.println("true");
-//                }
-
                 return false;
             }
-            // row above the play is not empty
-//            System.out.println("row"+ (row-1));
-//            System.out.println("col"+ (col));
-
             if(!gameBoard.get(row-1).get(col).isEmpty()){
-//                System.out.print("here");
                 // check rows above the play
                 // add letters to front of word
-//                StringBuilder hold = new StringBuilder();
+
                 String temp ="";
                 int i  =1;
-                while(!gameBoard.get(row).get(col).isEmpty() && row -i >=0){
-//                    StringBuilder temp = new StringBuilder();
+                while(row -i >=0 && !gameBoard.get(row-i).get(col).isEmpty()) {
                     temp = gameBoard.get(row -i).get(col).getPiece().getLetter() +temp;
-//                    temp.append(gameBoard.get(row -i).get(col).getPiece().getLetter());
-//                    temp.append(hold);
-//                    hold = temp;
+//                    System.out.println("temp = " +temp);
                     i++;
                 }
-//                hold.append(temp);
-                // add letters passed to the end of word
-//                hold.append(word);
+//                System.out.println("here");
+                temp += word;
+//                System.out.println(word);
+//                System.out.println(temp);
                 // if found in the dictionary check the horizontal plays it might make
                 if(dictionary.search(temp,null,0,temp.length())){
                     // if false then connection on word isn't legal
                     if(!verticalHelper(row,col, word,0,length)){
                         return false;
                     }
+                    return true;
                 }
             }
-            return true;
+
 
         } else{
-            if(length+col >= size){
+            if(length+col > size){
+                int sum = length+ col;
+
                 return false;
             }
+
             // check for position minus one of the word for a lettered tile
             // check for position plus word length for a lettered tile
+            if(gameBoard.get(row).get(col-1).isEmpty()
+                    && gameBoard.get(row).get(col+length).isEmpty()){
+                return false;
+            }
+            if(!gameBoard.get(row).get(col-1).isEmpty()){
+                // check rows above the play
+                // add letters to front of word
+
+                String temp ="";
+                int i  =1;
+                while(col - i >= 0 && !gameBoard.get(row).get(col-i).isEmpty()){
+                    temp = gameBoard.get(row).get(col-i).getPiece().getLetter() +temp;
+                    i++;
+                }
+                temp += word;
+
+                // if found in the dictionary check the horizontal plays it might make
+                if(dictionary.search(temp,null,0,temp.length())){
+                    // if false then connection on word isn't legal
+                    if(!horizontalHelper(row,col, word,0,length)){
+                        return false;
+                    }
+                    return true;
+                }
+            }
         }
-
-
         return false;
     }
 
     public boolean horizontalHelper(int row, int col, String word, int position,
                                     int length){
-        if(position > length){
+        if(position >= length){
             return true;
         }
 
         int i =1;
-        StringBuilder hold = new StringBuilder();
-        //append letter tiles to the left of the position to the front of the string
-        while(!gameBoard.get(row-i).get(col).isEmpty() && row -i >=0){
-            StringBuilder temp = new StringBuilder();
 
-            temp.append(gameBoard.get(row-i).get(col).getPiece().getLetter());
-            temp.append(hold);
-            hold = temp;
+        String temp  ="";
+        //append letter tiles to the left of the position to the front of the string
+        while( row -i >=0 && !gameBoard.get(row-i).get(col).isEmpty() ){
+
+            temp = gameBoard.get(row-i).get(col).getPiece().getLetter() +temp;
             i++;
         }
-        hold.append(word.charAt(position));
+        temp += word.charAt(position);
+
         // append letters to the right of the position to the end of the string
         i =1;
-        while(!gameBoard.get(row+i).get(col).isEmpty() && row +i <size){
-            hold.append(gameBoard.get(row+i).get(col).getPiece().getLetter());
+        while(row + i < size && !gameBoard.get(row+i).get(col).isEmpty()){
+            temp += gameBoard.get(row+i).get(col).getPiece().getLetter();
+
             i++;
         }
         // should have 1 letter if no connections otherwise
-        if(hold.length() > 1){
-            if(!dictionary.search(hold.toString(),null,0, hold.length())){
+        if(temp.length() > 1){
+            if(!dictionary.search(temp,null,0, temp.length())){
                 return false;
             }
         }
@@ -242,7 +248,7 @@ public class Board {
      */
     public boolean verticalHelper(int row, int col, String word, int position,
                                   int length){
-        if(position > length){
+        if(position >= length){
             return true;
         }
 
@@ -250,19 +256,20 @@ public class Board {
 //        StringBuilder hold = new StringBuilder();
         String temp = "";
         //append letter tiles to the left of the position to the front of the string
-        while(!gameBoard.get(row).get(col-i).isEmpty() && col -i >=0){
+        while(col-i >= 0 && !gameBoard.get(row).get(col-i).isEmpty() ){
 //            StringBuilder temp = new StringBuilder();
-            temp = gameBoard.get(row).get(col -i).getPiece().getLetter() +temp;
+
 //            temp.append(gameBoard.get(row).get(col-i).getPiece().getLetter());
 //            temp.append(hold);
 //            hold = temp;
+            temp = gameBoard.get(row).get(col-i).getPiece().getLetter() +temp;
             i++;
         }
         temp += word.charAt(position);
 //        hold.append(word.charAt(position));
         // append letters to the right of the position to the end of the string
         i =1;
-        while(!gameBoard.get(row).get(col+i).isEmpty() && col +i <size){
+        while(col +i <size && !gameBoard.get(row).get(col+i).isEmpty() ){
             temp += gameBoard.get(row).get(col+1).getPiece().getLetter();
 //            hold.append(gameBoard.get(row).get(col+i).getPiece().getLetter());
             i++;
