@@ -149,38 +149,38 @@ public class Dictionary {
         } else return search(word, temp, position+1,length);
     }
 
-    public List<String> unorderedHelper(String prefix, List<Character> chars, TrieNode node){
-        //        word.toLowerCase();
-//        if(position == length) return false;
-//        TrieNode temp = null;
-//        if(node == null){
-//            if(dictMap.containsKey(word.charAt(position))){
-//                temp = dictMap.get(word.charAt(position));
-//                return search(word, temp, position+1, length);
-//            } else return false;
-//
-//        } else{
-//            if(node.getMapBranch().containsKey(word.charAt(position))){
-//                temp = node.getMapBranch().get(word.charAt(position));
-//            }
-//        }
-//
-//        if(temp == null) return false;
-//        if(position == length-1 && temp.isWord()){
-//            return true;
-//        } else return search(word, temp, position+1,length);
-List<String> temp = new LinkedList<>();
-// make sure to add the prefix to the beginning of each word
+    public List<String> unorderedHelper(String prefix, List<String> strList, List<Character> chars, TrieNode node){
+        //todo make sure that there is a case for * or blank characters in search
+        if(node == null){
+            return strList;
+        }
+        if(chars.isEmpty()){
+            //add word to the list if no more chars to check
+            strList.add(node.getWord());
+            return strList;
+        }
+
+        TrieNode tempNode = null;
+        // iterate through the list
+        for(int i= 0; i<chars.size(); i++){
+            //get TrieNOde that matches the character
+            if(node.getMapBranch().containsKey(chars.get(i))){
+                // hold the found letter to remove for the next level
+                // but don't lose it so it can be used for the other letters
+                // on this level
+                Character holdC = chars.get(i);
+                tempNode = node.getMapBranch().get(holdC);
+                chars.remove(holdC);
+                strList.addAll(unorderedHelper(prefix,strList,chars,tempNode));
+                chars.add(holdC);
+            }
+        }
 
 
-
-
-
-
-        return temp;
+        return strList;
 
     }
-    public List<String> searchUnordered(String prefix,List<Character> chars){
+    public List<String> searchUnordered(String prefix, List<Character> chars){
         List<String> hold = new LinkedList<>();
         int i = 0;
         int length = prefix.length();
@@ -210,7 +210,7 @@ List<String> temp = new LinkedList<>();
         // combination of characters at each level
         //  returning a list
 
-        hold =unorderedHelper(prefix,chars,temp);
+        hold =unorderedHelper(prefix,hold,chars,temp);
         return hold;
     }
 

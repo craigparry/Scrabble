@@ -31,7 +31,7 @@ public class Computer extends Player {
                         !gameBoard.getGameBoard().get(ro-1).get(co).isEmpty()){
 
                     node =findBestWord(gameBoard.getVertPrefix(ro,co),ro,co,Direction.VERTICAL);
-                    // returns playNode if the score is higher than the previous play node
+                    //todo returns playNode if the score is higher than the previous play node
                     // score then replace.
                     // if the play placed all possible letters from the tray then
                     // return that play
@@ -44,6 +44,7 @@ public class Computer extends Player {
                 if(gameBoard.getGameBoard().get(ro).get(co).isEmpty()&&
                         !gameBoard.getGameBoard().get(ro).get(co-1).isEmpty()) {
                     node =findBestWord(gameBoard.getHorPrefix(ro,co),ro, co, Direction.HORIZONTAL);
+                    //todo
                     // returns playNode if the score is higher than the previous play node
                     // score then replace.
                     // if the play placed all possible letters from the tray then
@@ -78,7 +79,19 @@ public class Computer extends Player {
         holdWords = dictionary.searchUnordered(prefix,temp);
 
         if(!holdWords.isEmpty()){
+            //todo here
             //find the highest scoring word and set score
+            // remove prefix and check if is a legal word
+            // if too slow maybe check for the legal word
+            // as we search the dictionary
+            // do
+            // findHighScore()
+            // score tile()
+
+
+
+
+
         }
 
 
