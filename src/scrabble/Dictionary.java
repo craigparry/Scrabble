@@ -117,7 +117,8 @@ public class Dictionary {
 
 
         if(position == length-1){
-            temp.setWord();
+            temp.setIsWord();
+            temp.setWord(word);
             return;
         } else {
             insert(word,temp,position+1,length);
@@ -148,6 +149,70 @@ public class Dictionary {
         } else return search(word, temp, position+1,length);
     }
 
+    public List<String> unorderedHelper(String prefix, List<Character> chars, TrieNode node){
+        //        word.toLowerCase();
+//        if(position == length) return false;
+//        TrieNode temp = null;
+//        if(node == null){
+//            if(dictMap.containsKey(word.charAt(position))){
+//                temp = dictMap.get(word.charAt(position));
+//                return search(word, temp, position+1, length);
+//            } else return false;
+//
+//        } else{
+//            if(node.getMapBranch().containsKey(word.charAt(position))){
+//                temp = node.getMapBranch().get(word.charAt(position));
+//            }
+//        }
+//
+//        if(temp == null) return false;
+//        if(position == length-1 && temp.isWord()){
+//            return true;
+//        } else return search(word, temp, position+1,length);
+List<String> temp = new LinkedList<>();
+// make sure to add the prefix to the beginning of each word
+
+
+
+
+
+
+        return temp;
+
+    }
+    public List<String> searchUnordered(String prefix,List<Character> chars){
+        List<String> hold = new LinkedList<>();
+        int i = 0;
+        int length = prefix.length();
+        TrieNode temp = null;
+        prefix.toLowerCase();
+
+        while(i<length){
+            if(temp == null){
+                if(dictMap.containsKey(prefix.charAt(i))) {
+                    temp = dictMap.get(prefix.charAt(i));
+                    i++;
+                }else{
+                    return hold;
+                }
+            } else{
+                if(temp.getMapBranch().containsKey(prefix.charAt(i))){
+                    temp = temp.getMapBranch().get(prefix.charAt(i));
+                    i++;
+                }else{
+                    return hold;
+                }
+            }
+        }
+        // using the temp node we just created with the prefix
+        // check the dictionary for a new words traversing each node r
+        //recursively and adding words as we as well as making sure we check each
+        // combination of characters at each level
+        //  returning a list
+
+        hold =unorderedHelper(prefix,chars,temp);
+        return hold;
+    }
 
 //    /**Searches the Trie for the word passed into the function with Linkedlist
 //     * trie
@@ -206,6 +271,7 @@ public class Dictionary {
 //    }
 
     public class TrieNode{
+
         private String word;
         private boolean isWord;
 //        private List<TrieNode> branch;
@@ -218,7 +284,7 @@ public class Dictionary {
 //            branch = new LinkedList<>();
             isWord = false;
         }
-        public void setWord(){
+        public void setIsWord(){
             isWord =true;
         }
         public boolean isWord(){
@@ -228,6 +294,13 @@ public class Dictionary {
 //        public List<TrieNode> getBranch(){
 //            return branch;
 //        }
+        public String getWord() {
+            return word;
+        }
+
+        public void setWord(String word) {
+            this.word = word;
+        }
 
         public char getLetter(){
             return letter;

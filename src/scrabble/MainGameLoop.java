@@ -19,8 +19,8 @@ public class MainGameLoop {
         gameBoard = new Board(dictionary);
         bag = new LetterBag();
 
-        human = new Human(bag,gameBoard);
-        computer = new Computer(bag,gameBoard);
+        human = new Human(bag,gameBoard,dictionary);
+        computer = new Computer(bag,gameBoard,dictionary);
         turn = 0;
     }
 
@@ -83,6 +83,7 @@ public class MainGameLoop {
     public static void main(String[] args) {
 	// write your code here
         MainGameLoop test = new MainGameLoop();
+        test.getGameBoard().setTile(7,7,new Letters('a'));
 
     }
 }

@@ -30,3 +30,9 @@ test bonus representation of letters and bonus
 start set up of player class: abstract and comp/human extensions
 
 Gui- may be usuful to make a singleton for the gui
+
+
+TODO: monday need to make the computer move happen, I have the legal move and 
+I just need to test set piece tomorrow morning. Then I should be set up for 
+the computer move portion. I also need to set up a file reader
+to test my config board method and feed it a test. 

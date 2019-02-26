@@ -187,12 +187,12 @@ public class Board {
                 // check rows above the play
                 // add letters to front of word
 
-                String temp ="";
-                int i  =1;
-                while(col - i >= 0 && !gameBoard.get(row).get(col-i).isEmpty()){
-                    temp = gameBoard.get(row).get(col-i).getPiece().getLetter() +temp;
-                    i++;
-                }
+                String temp =getHorPrefix(row,col);
+//                int i  =1;
+//                while(col - i >= 0 && !gameBoard.get(row).get(col-i).isEmpty()){
+//                    temp = gameBoard.get(row).get(col-i).getPiece().getLetter() +temp;
+//                    i++;
+//                }
                 temp += word;
 
                 // if found in the dictionary check the horizontal plays it might make
@@ -214,19 +214,19 @@ public class Board {
             return true;
         }
 
-        int i =1;
 
-        String temp  ="";
-        //append letter tiles to the left of the position to the front of the string
-        while( row -i >=0 && !gameBoard.get(row-i).get(col).isEmpty() ){
 
-            temp = gameBoard.get(row-i).get(col).getPiece().getLetter() +temp;
-            i++;
-        }
+        String temp  =getVertPrefix(row,col);
+//        //append letter tiles to the left of the position to the front of the string
+//        while( row -i >=0 && !gameBoard.get(row-i).get(col).isEmpty() ){
+//
+//            temp = gameBoard.get(row-i).get(col).getPiece().getLetter() +temp;
+//            i++;
+//        }
         temp += word.charAt(position);
 
         // append letters to the right of the position to the end of the string
-        i =1;
+        int i =1;
         while(row + i < size && !gameBoard.get(row+i).get(col).isEmpty()){
             temp += gameBoard.get(row+i).get(col).getPiece().getLetter();
 
@@ -242,6 +242,30 @@ public class Board {
         return horizontalHelper(row,col+1,word, position+1,length);
     }
 
+
+    public String getVertPrefix(int row, int col){
+        int i =1;
+
+        String temp  ="";
+        //append letter tiles to the left of the position to the front of the string
+        while( row -i >=0 && !gameBoard.get(row-i).get(col).isEmpty() ){
+
+            temp = gameBoard.get(row-i).get(col).getPiece().getLetter() +temp;
+            i++;
+        }
+        return temp;
+
+    }
+    public String getHorPrefix(int row, int col){
+        int i =1;
+//        StringBuilder hold = new StringBuilder();
+        String temp = "";
+        //append letter tiles to the left of the position to the front of the string
+        while(col-i >= 0 && !gameBoard.get(row).get(col-i).isEmpty() ){
+            temp = gameBoard.get(row).get(col-i).getPiece().getLetter() +temp;
+            i++;
+        }
+        return temp;}
     /** This function searches the horizontal connections of a vertical play
      * on the board. Starting at positoin(row,col) and moving down along the
      * board it will check each row for a new word created by the play and return
@@ -259,24 +283,24 @@ public class Board {
         if(position >= length){
             return true;
         }
-
-        int i =1;
-//        StringBuilder hold = new StringBuilder();
-        String temp = "";
-        //append letter tiles to the left of the position to the front of the string
-        while(col-i >= 0 && !gameBoard.get(row).get(col-i).isEmpty() ){
-//            StringBuilder temp = new StringBuilder();
-
-//            temp.append(gameBoard.get(row).get(col-i).getPiece().getLetter());
-//            temp.append(hold);
-//            hold = temp;
-            temp = gameBoard.get(row).get(col-i).getPiece().getLetter() +temp;
-            i++;
-        }
+        String temp = getHorPrefix(row,col);
+//        int i =1;
+////        StringBuilder hold = new StringBuilder();
+//        String temp = "";
+//        //append letter tiles to the left of the position to the front of the string
+//        while(col-i >= 0 && !gameBoard.get(row).get(col-i).isEmpty() ){
+////            StringBuilder temp = new StringBuilder();
+//
+////            temp.append(gameBoard.get(row).get(col-i).getPiece().getLetter());
+////            temp.append(hold);
+////            hold = temp;
+//            temp = gameBoard.get(row).get(col-i).getPiece().getLetter() +temp;
+//            i++;
+//        }
         temp += word.charAt(position);
 //        hold.append(word.charAt(position));
         // append letters to the right of the position to the end of the string
-        i =1;
+        int i =1;
         while(col +i <size && !gameBoard.get(row).get(col+i).isEmpty() ){
             temp += gameBoard.get(row).get(col+1).getPiece().getLetter();
 //            hold.append(gameBoard.get(row).get(col+i).getPiece().getLetter());
@@ -290,6 +314,11 @@ public class Board {
         }
         return verticalHelper(row+1,col,word,position+1,length);
     }
+
+    public void scorePlay(){
+
+    }
+
     /**
      *
      * @return
@@ -328,6 +357,7 @@ public class Board {
         if(test.isLegal(8,7,"rachnid",Direction.VERTICAL)){
             System.out.println("move one T");
             // play word
+
             System.out.print(test.toString());
         }else {
             System.out.println("move one F");

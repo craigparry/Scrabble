@@ -6,14 +6,16 @@ public abstract class Player {
     protected Collection<Letters> tray;
     protected Board gameBoard;
     protected LetterBag letterBag;
+    protected Dictionary dictionary;
 
 
-    public Player(LetterBag bag,Board board){
+    public Player(LetterBag bag,Board board,Dictionary dictionary){
         points =0;
         tray =new LinkedList<>();
         letterBag =bag;
         gameBoard = board;
         drawTray(letterBag);
+        this.dictionary = dictionary;
     }
 
     public void drawTray(LetterBag bag){
