@@ -34,42 +34,97 @@ public class Board {
 
 
 
-
+        //todo: debug the issues here, the board is reading in, need to configure correct
         int row =0;
         int col =0;
         int position = 0;
         char c;
-        while(position< boardStr.length()){
-            c = boardStr.charAt(position);
-            if(c == '.'){
-                gameBoard.get(row).get(col).setEmpty(true);
+        String temp = "";
+        c = boardStr.charAt(position);
+        if(Character.isDigit(c)){
 
-                col++;
+            while(c != '\n'){
+
+                temp += c;
+                position++;
+                c = boardStr.charAt(position);
             }
-            if(Character.isAlphabetic(c)){
+            System.out.println(temp);
+
+            this.size = Integer.parseInt(temp);
+            initBoard();
+
+
+
+        }
+
+        position++;
+
+        while(position< boardStr.length() && row <size){
+//            System.out.println(c);
+//            System.out.println("row" +row);
+//            System.out.println("col" +col);
+            c = boardStr.charAt(position);
+
+
+            if(c == '.'){
+                position++;
+
+                c = boardStr.charAt(position);
+                //right side is letter Bonus
+                if(Character.isDigit(c)){
+                    gameBoard.get(row).get(col).setBonus(true);
+
+                    gameBoard.get(row).get(col).setLetterBonus(Character.getNumericValue(c));
+                    gameBoard.get(row).get(col).setEmpty(true);
+                } else {
+
+                    c = boardStr.charAt(position);
+                    if(c=='.'){
+                        gameBoard.get(row).get(col).setEmpty(true);
+                    }
+
+                }
+                col++;
+            } else if(Character.isAlphabetic(c)){
                 gameBoard.get(row).get(col).setEmpty(false);
                 gameBoard.get(row).get(col).setPiece(new Letters(c));
 
                 col++;
-            }
-            if(Character.isDigit(c)){
-                gameBoard.get(row).get(col).setBonus(true);
-                gameBoard.get(row).get(col).setMultiplier(Character.getNumericValue(c));
-                gameBoard.get(row).get(col).setEmpty(true);
+            } else if(Character.isDigit(c)){
+                char hold = c;
+                position++;
+                c = boardStr.charAt(position);
+                if(c == '.'){
+//                    System.out.print(c);
+                    gameBoard.get(row).get(col).setBonus(true);
+                    gameBoard.get(row).get(col).setWordBonus(Character.getNumericValue(hold));
+                    gameBoard.get(row).get(col).setEmpty(true);
+                }
+
                 col++;
             }
-            if(c == '\n'){
+            else if (c == '\n'){
+//                System.out.println("new");
                 row++;
+                col =0;
+            } else{
+
             }
             position++;
         }
     }
 
     public String readBoard(){
+
+        //todo make it read generically when there is a file from command line
         String config = "";
+
+
         try(
-                BufferedReader reader = new BufferedReader(new FileReader("boardconfig.txt"))){
+                BufferedReader reader = new BufferedReader(new FileReader("scrabble_board.txt"))){
             String line;
+
             while ((line = reader.readLine()) != null){
                 config += line + "\n";
             }
@@ -118,7 +173,7 @@ public class Board {
         // to see if there are available spaces and if the word matches a
         //word in the dictionary
 
-
+        /* todo: need to check for the case of a horizontal word played under a horizontal word and a vertical played next to a vertical*/
         /*need to use the position that is passed into the function then
         * we check if that position is occupied. If it is then not legal
         * we want to check for positions one off of an already played tile
@@ -208,13 +263,12 @@ public class Board {
         return false;
     }
 
+
     public boolean horizontalHelper(int row, int col, String word, int position,
                                     int length){
         if(position >= length){
             return true;
         }
-
-
 
         String temp  =getVertPrefix(row,col);
 //        //append letter tiles to the left of the position to the front of the string
@@ -331,7 +385,13 @@ public class Board {
             for(BoardTile col: row){
                 if(col.isEmpty()){
                     if(col.isBonus()){
-                        hold += col.getMultiplier() +" ";
+
+                        if(col.getLetterBonus() >0){
+                            hold += col.getLetterBonus() +" ";
+                        } else {
+                            hold += col.getWordBonus() +" ";
+                        }
+
                     } else{
                         hold +=". ";
                     }
@@ -350,25 +410,38 @@ public class Board {
 
 
     public static void main(String[] args){
-        Board test = new Board(new Dictionary());
 
-        test.setTile(7,7,new Letters('a'));
-//        test.setTile( 8, 7, new Letters('d'));
-        if(test.isLegal(8,7,"rachnid",Direction.VERTICAL)){
-            System.out.println("move one T");
-            // play word
+        int length = args.length;
+        Dictionary dict = new Dictionary();
+        Board board = new Board(dict);
+        String config;
+//        if(length>0){
+//            String temp = args[0];
+            config = board.readBoard();
+          System.out.println(config);
+            board.configBoard(config);
 
-            System.out.print(test.toString());
-        }else {
-            System.out.println("move one F");
-        }
-        if(test.isLegal(7,8,"rachnid",Direction.HORIZONTAL)){
-            System.out.println("move two T");
-            // play word
-            System.out.print(test.toString());
-        } else{
-            System.out.println("move two F");
-        }
+//        }
+        System.out.print(board.toString());
+//        Board test = new Board(new Dictionary());
+//
+//        test.setTile(7,7,new Letters('a'));
+////        test.setTile( 8, 7, new Letters('d'));
+//        if(test.isLegal(8,7,"rachnid",Direction.VERTICAL)){
+//            System.out.println("move one T");
+//            // play word
+//
+//            System.out.print(test.toString());
+//        }else {
+//            System.out.println("move one F");
+//        }
+//        if(test.isLegal(7,8,"rachnid",Direction.HORIZONTAL)){
+//            System.out.println("move two T");
+//            // play word
+//            System.out.print(test.toString());
+//        } else{
+//            System.out.println("move two F");
+//        }
 
 
     }

@@ -150,7 +150,7 @@ public class Dictionary {
     }
 
     public List<String> unorderedHelper(String prefix, List<String> strList, List<Character> chars, TrieNode node){
-        //todo make sure that there is a case for * or blank characters in search
+        //todo make sure that there is a case for * or blank characters
         if(node == null){
             return strList;
         }
@@ -170,6 +170,9 @@ public class Dictionary {
                 // on this level
                 Character holdC = chars.get(i);
                 tempNode = node.getMapBranch().get(holdC);
+                if(tempNode.isWord()){
+                    strList.add(tempNode.getWord());
+                }
                 chars.remove(holdC);
                 strList.addAll(unorderedHelper(prefix,strList,chars,tempNode));
                 chars.add(holdC);

@@ -80,13 +80,14 @@ public class Computer extends Player {
 
         if(!holdWords.isEmpty()){
             //todo here
+
             //find the highest scoring word and set score
             // remove prefix and check if is a legal word
             // if too slow maybe check for the legal word
             // as we search the dictionary
             // do
             // findHighScore()
-            // score tile()
+            // scoreWord()
 
 
 

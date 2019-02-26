@@ -4,11 +4,12 @@ public class BoardTile {
     private boolean empty;
     private boolean bonus;
     private Letters piece;
-    private int multiplier;
+    private int LetterBonus;
+    private int wordBonus;
 
     public BoardTile() {
         empty = true;
-        multiplier = 0;
+        LetterBonus = 0;
         piece = null;
         bonus = false;
 
@@ -17,7 +18,7 @@ public class BoardTile {
     public BoardTile(Letters letter) {
         empty = false;
         piece = letter;
-        multiplier =0;
+        LetterBonus =0;
         bonus = false;
 
 
@@ -47,14 +48,21 @@ public class BoardTile {
         this.piece = letter;
     }
 
-    public int getMultiplier() {
-        return multiplier;
+    public int getLetterBonus() {
+        return LetterBonus;
     }
 
-    public void setMultiplier(int multiplier) {
-        this.multiplier = multiplier;
+    public void setLetterBonus(int letterBonus) {
+        this.LetterBonus = letterBonus;
     }
 
+    public int getWordBonus() {
+        return wordBonus;
+    }
+
+    public void setWordBonus(int wordBonus) {
+        this.wordBonus = wordBonus;
+    }
     @Override
     public String toString() {
         return piece.toString();
