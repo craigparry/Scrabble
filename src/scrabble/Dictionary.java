@@ -167,7 +167,8 @@ public class Dictionary {
         // might need to seperate the bottom half into its own helper or try to debug again and watch the first iteration
         // its matching the dictionary for a list of words with no prefix
 
-        //todo, need to include searching for strings with a wildcard
+        //todo, need to include searching for strings with a wildcard its making some duplicates that
+        // exist because it is reusing letters in the tray
         List<Character> tempList = new LinkedList<>();
 
         TrieNode tempNode = null;

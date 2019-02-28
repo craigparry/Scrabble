@@ -75,22 +75,48 @@ public class Computer extends Player {
     public PlayNode findBestWord(String prefix, int ro, int co, Direction direction ){
         /*traverse board and test words at each location saving the highest scoring word
         * that is a legal move on the board and return a */
-        List<Character> temp = new LinkedList<>();
+        List<Character> chars = new LinkedList<>();
         List<String> holdWords;
         String word="";
         int row=0;
         int col=0;
         int score=0;
-
+        // todo make it check every position on the board thank you very much
 
         for(Letters let: tray){
-            temp.add(let.getLetter());
+            chars.add(let.getLetter());
         }
 
-        holdWords = dictionary.searchUnordered(prefix,temp);
+        holdWords = dictionary.searchUnordered(prefix,chars);
 
         if(!holdWords.isEmpty()){
-            //todo here
+            //todo here test this
+            Letters tempLet = new Letters();
+            String best="";
+            int highest =0;
+            int preLength = prefix.length();
+            for(String s: holdWords){
+                int holdScore=0;
+                int length= s.length();
+                int prePos =0;
+
+                for(int i =0; i< length; i++){
+                    if(prePos < preLength){
+                        holdScore += tempLet.letterValue(s.charAt(i));
+                        prePos++;
+                    }
+                    if(chars.contains(s.charAt(i))){
+                        holdScore += tempLet.letterValue(s.charAt(i));
+                    }
+                }
+                if(holdScore>highest){
+                    best = s;
+                }
+
+            }
+            //todo
+            // for each letter in the string, find the corresponding character in the tray and add score
+            // if that letter does not exist after the prefix then that will be the wildcard and the points wont count.
 
             //find the highest scoring word and set score
             // remove prefix and check if is a legal word

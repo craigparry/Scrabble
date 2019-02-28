@@ -32,7 +32,12 @@ public class Letters {
         letter = Character.toUpperCase(let);
 
     }
-
+//    public int scoreWord(String word){
+//        int length = word.length(){
+//
+//        }
+//
+//    }
     @Override
     public String toString(){
         return Character.toString(letter);
