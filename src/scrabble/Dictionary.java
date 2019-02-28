@@ -163,8 +163,11 @@ public class Dictionary {
             return strList;
         }
 
-        //todo fix bug where the last letter on some words is not seen therefor the word is not added to the list
+        //fixed bug where the last letter on some words is not seen therefor the word is not added to the list
         // might need to seperate the bottom half into its own helper or try to debug again and watch the first iteration
+        // its matching the dictionary for a list of words with no prefix
+
+        //todo, need to include searching for strings with a wildcard
         List<Character> tempList = new LinkedList<>();
 
         TrieNode tempNode = null;
@@ -173,32 +176,73 @@ public class Dictionary {
             tempList.clear();
             tempList.addAll(chars);
             if(node == null){
-                if(dictMap.containsKey(i)){
-                    Character holdC = i;
-                    tempNode = dictMap.get(holdC);
-                    if(tempNode.isWord()){
-                        strList.add(tempNode.getWord());
+                if(i == '*'){
+                    String alpha ="abcdeghijklmnopqrstuvwxyz";
+                    int len = alpha.length();
+                    char wild;
+                    for(int j =0; j< len; j++){
+                        wild = alpha.charAt(j);
+                        if(dictMap.containsKey(wild)){
+                            Character holdC = wild;
+                            tempNode = dictMap.get(holdC);
+                            if(tempNode.isWord()){
+                                strList.add(tempNode.getWord());
+                            }
+                            tempList.remove(i);
+                            unorderedHelper(prefix,strList,tempList,tempNode);
+                        }
                     }
-//                    chars.remove(holdC);
-                    tempList.remove(holdC);
-                    unorderedHelper(prefix,strList,tempList,tempNode);
-//                    strList.addAll(unorderedHelper(prefix,new LinkedList<>(),chars,tempNode));
-//                    chars.add(holdC);
+                }else{
+                    if(dictMap.containsKey(i)){
+                        Character holdC = i;
+                        tempNode = dictMap.get(holdC);
+                        if(tempNode.isWord()){
+                            strList.add(tempNode.getWord());
+                        }
+                        tempList.remove(holdC);
+                        unorderedHelper(prefix,strList,tempList,tempNode);
+                    }
                 }
             }else{
-                //get TrieNOde that matches the character
-                if(node.getMapBranch().containsKey(i)){
-                    // hold the found letter to remove for the next level
-                    // but don't lose it so it can be used for the other letters
-                    // on this level
-                    Character holdC = i;
-                    tempNode = node.getMapBranch().get(holdC);
-                    if(tempNode.isWord()){
-                        strList.add(tempNode.getWord());
+                if(i == '*') {
+                    String alpha = "abcdeghijklmnopqrstuvwxyz";
+                    int len = alpha.length();
+                    char wild;
+                    for (int j = 0; j < len; j++) {
+                        wild = alpha.charAt(j);
+                        //get TrieNOde that matches the character
+                        if(node.getMapBranch().containsKey(wild)){
+                            // hold the found letter to remove for the next level
+                            // but don't lose it so it can be used for the other letters
+                            // on this level
+                            Character holdC = wild;
+                            tempNode = node.getMapBranch().get(holdC);
+                            if(tempNode.isWord()){
+                                strList.add(tempNode.getWord());
+                            }
+                            tempList.remove(i);
+                            unorderedHelper(prefix,strList,tempList,tempNode);
+                        }
+
+
                     }
-                    tempList.remove(holdC);
-                    unorderedHelper(prefix,strList,tempList,tempNode);
+
+                }else{
+                    //get TrieNOde that matches the character
+                    if(node.getMapBranch().containsKey(i)){
+                        // hold the found letter to remove for the next level
+                        // but don't lose it so it can be used for the other letters
+                        // on this level
+                        Character holdC = i;
+                        tempNode = node.getMapBranch().get(holdC);
+                        if(tempNode.isWord()){
+                            strList.add(tempNode.getWord());
+                        }
+                        tempList.remove(holdC);
+                        unorderedHelper(prefix,strList,tempList,tempNode);
+                    }
                 }
+
 
             }
         }
@@ -368,14 +412,62 @@ public class Dictionary {
 
 
 
-        if(test.search("dogies",null,0,5)){ System.out.println("found");}
-        if(test.search("brother",null,0,7)){ System.out.println("found");}
-        if(test.search("bo",null,0,2)){ System.out.println("found");}
+//        if(test.search("dogies",null,0,5)){ System.out.println("found");}
+//        if(test.search("brother",null,0,7)){ System.out.println("found");}
+//        if(test.search("bo",null,0,2)){ System.out.println("found");}
+//
+//        if(test.search("stress",null,0,6)){ System.out.println("found");}
+//        if(test.search("test",null,0,4)){ System.out.println("found");}
+////        System.out.println("here");
+//        do,dog,dogs, dogie ,dogies ,doge ,doges ,dos
+//                dose
+//        doe
+//                does
+//        dig
+//                digs
+//        die
+//                dies
+//        de
+//                des
+//        dei
+//                go
+//        god
+//                gods
+//        goes
+//                gid
+//        gids
+//                gie
+//        gied
+//                gies
+//        ged
+//                geds
+//        geoid
+//                geoids
+//        od
+//                ods
+//        ode
+//                odes
+//        os
+//                ose
+//        oe
+//                oes
+//        so
+//                sod
+//        si
+//                side
+//        seg
+//                sego
+//        sei
+//                id
+//        ids
+//                ides,is,ego,egos,egis,es,eidos
 
-        if(test.search("stress",null,0,6)){ System.out.println("found");}
-        if(test.search("test",null,0,4)){ System.out.println("found");}
-//        System.out.println("here");
-        if(test.search("aqui",null,0,4)){
+
+
+
+
+        String temp = "";
+        if(test.search(temp,null,0,temp.length())){
             System.out.println("found");
         } else {System.out.println("Not Found");}
     }
