@@ -26,21 +26,22 @@ public class Board {
         size =x;
         initBoard();
     }
-    public void configBoard(String boardStr){
+    public String configBoard(String boardStr){
         /*maybe use this board config to clone the game
         board and plug in the values of the word that we are
         testing for a legal move.
          */
 
-
-
-        //todo: debug the issues here, the board is reading in, need to configure correct
         int row =0;
         int col =0;
         int position = 0;
         char c;
         String temp = "";
         c = boardStr.charAt(position);
+        while(c == '\n'){
+            position++;
+            c=boardStr.charAt(position);
+        }
         if(Character.isDigit(c)){
 
             while(c != '\n'){
@@ -49,7 +50,7 @@ public class Board {
                 position++;
                 c = boardStr.charAt(position);
             }
-            System.out.println(temp);
+//            System.out.println(temp);
 
             this.size = Integer.parseInt(temp);
             initBoard();
@@ -113,25 +114,66 @@ public class Board {
             }
             position++;
         }
+
+        String tray = "";
+//        System.out.print("ahh "+ c);
+        c = boardStr.charAt(position);
+        while(c == '\n'){
+            position++;
+            c= boardStr.charAt(position);
+//            System.out.print(c);
+//            System.out.println("here "+ c);
+        }
+
+        if(c != '\n'){
+
+
+            while(c != '\n'){
+//                System.out.println(c);
+                tray += c;
+                position++;
+                c = boardStr.charAt(position);
+            }
+
+        }
+
+//        System.out.print("here " + tray);
+        return tray;
     }
 
-    public String readBoard(){
+    public String readBoard(String file){
 
         //todo make it read generically when there is a file from command line
         String config = "";
 
+        if(file!= null){
+            try(
 
-        try(
-                BufferedReader reader = new BufferedReader(new FileReader("scrabble_board.txt"))){
-            String line;
+                    BufferedReader reader = new BufferedReader(new FileReader(file))){
+                String line;
 
-            while ((line = reader.readLine()) != null){
-                config += line + "\n";
+                while ((line = reader.readLine()) != null){
+                    config += line + "\n";
+                }
+            } catch(IOException ex){
+                System.out.println(ex.toString());
             }
-        } catch(IOException ex){
-            System.out.println(ex.toString());
+            return config;
         }
-        return config;
+        else {
+            try (
+
+                    BufferedReader reader = new BufferedReader(new FileReader("scrabble_board.txt"))) {
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    config += line + "\n";
+                }
+            } catch (IOException ex) {
+                System.out.println(ex.toString());
+            }
+            return config;
+        }
     }
 
 
@@ -417,7 +459,7 @@ public class Board {
         String config;
 //        if(length>0){
 //            String temp = args[0];
-            config = board.readBoard();
+            config = board.readBoard(null);
           System.out.println(config);
             board.configBoard(config);
 

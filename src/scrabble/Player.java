@@ -24,6 +24,21 @@ public abstract class Player {
         }
     }
 
+
+    public void setTray(String letters) {
+        tray.clear();
+
+        for(int i =0; i<letters.length();i++){
+            tray.add(new Letters(letters.charAt(i)));
+        }
+
+    }
+    public void printTray(){
+        for(Letters l: tray){
+            System.out.print(l.toString());
+        }
+        System.out.println();
+    }
     public int getPoints() {
         return points;
     }

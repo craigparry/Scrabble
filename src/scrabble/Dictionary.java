@@ -151,34 +151,57 @@ public class Dictionary {
 
     public List<String> unorderedHelper(String prefix, List<String> strList, List<Character> chars, TrieNode node){
         //todo make sure that there is a case for * or blank characters
-        if(node == null){
-            return strList;
-        }
-        if(chars.isEmpty()){
+
+//        if(node == null){
+//
+//
+//        }
+        if(chars.isEmpty()&& node.isWord()){
             //add word to the list if no more chars to check
+
             strList.add(node.getWord());
             return strList;
         }
 
+        //todo fix bug where the last letter on some words is not seen therefor the word is not added to the list
+        // might need to seperate the bottom half into its own helper or try to debug again and watch the first iteration
+        List<Character> tempList = new LinkedList<>();
+
         TrieNode tempNode = null;
         // iterate through the list
-        for(int i= 0; i<chars.size(); i++){
-            //get TrieNOde that matches the character
-            if(node.getMapBranch().containsKey(chars.get(i))){
-                // hold the found letter to remove for the next level
-                // but don't lose it so it can be used for the other letters
-                // on this level
-                Character holdC = chars.get(i);
-                tempNode = node.getMapBranch().get(holdC);
-                if(tempNode.isWord()){
-                    strList.add(tempNode.getWord());
+        for(Character i: chars){
+            tempList.clear();
+            tempList.addAll(chars);
+            if(node == null){
+                if(dictMap.containsKey(i)){
+                    Character holdC = i;
+                    tempNode = dictMap.get(holdC);
+                    if(tempNode.isWord()){
+                        strList.add(tempNode.getWord());
+                    }
+//                    chars.remove(holdC);
+                    tempList.remove(holdC);
+                    unorderedHelper(prefix,strList,tempList,tempNode);
+//                    strList.addAll(unorderedHelper(prefix,new LinkedList<>(),chars,tempNode));
+//                    chars.add(holdC);
                 }
-                chars.remove(holdC);
-                strList.addAll(unorderedHelper(prefix,strList,chars,tempNode));
-                chars.add(holdC);
+            }else{
+                //get TrieNOde that matches the character
+                if(node.getMapBranch().containsKey(i)){
+                    // hold the found letter to remove for the next level
+                    // but don't lose it so it can be used for the other letters
+                    // on this level
+                    Character holdC = i;
+                    tempNode = node.getMapBranch().get(holdC);
+                    if(tempNode.isWord()){
+                        strList.add(tempNode.getWord());
+                    }
+                    tempList.remove(holdC);
+                    unorderedHelper(prefix,strList,tempList,tempNode);
+                }
+
             }
         }
-
 
         return strList;
 
@@ -207,6 +230,7 @@ public class Dictionary {
                 }
             }
         }
+
         // using the temp node we just created with the prefix
         // check the dictionary for a new words traversing each node r
         //recursively and adding words as we as well as making sure we check each
@@ -344,7 +368,7 @@ public class Dictionary {
 
 
 
-        if(test.search("there",null,0,5)){ System.out.println("found");}
+        if(test.search("dogies",null,0,5)){ System.out.println("found");}
         if(test.search("brother",null,0,7)){ System.out.println("found");}
         if(test.search("bo",null,0,2)){ System.out.println("found");}
 

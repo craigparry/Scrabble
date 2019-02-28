@@ -50,6 +50,17 @@ public class Computer extends Player {
                     // if the play placed all possible letters from the tray then
                     // return that play
                 }
+
+                if(gameBoard.getGameBoard().get(ro).get(co).isEmpty()&&
+                        gameBoard.getGameBoard().get(ro).get(co-1).isEmpty() &&
+                        gameBoard.getGameBoard().get(ro-1).get(co).isEmpty()){
+                    //todo check the tray for possible combinatoin of words with no
+                    // prefix so that we can check for possible board plays that make
+                    // connnections by playing vertically or horizonatlly adjacent to
+                    // the words already played on the board.
+
+
+                }
             }
         }
         if(highest == null){
