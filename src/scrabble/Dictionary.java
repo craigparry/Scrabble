@@ -156,12 +156,14 @@ public class Dictionary {
 //
 //
 //        }
+
         if(chars.isEmpty()&& node.isWord()){
             //add word to the list if no more chars to check
 
             strList.add(node.getWord());
             return strList;
         }
+
 
         //fixed bug where the last letter on some words is not seen therefor the word is not added to the list
         // might need to seperate the bottom half into its own helper or try to debug again and watch the first iteration
@@ -195,7 +197,8 @@ public class Dictionary {
                     }
                 }else{
                     if(dictMap.containsKey(i)){
-                        Character holdC = i;
+                        Character holdC = Character.toLowerCase(i);
+
                         tempNode = dictMap.get(holdC);
                         if(tempNode.isWord()&& !strList.contains(tempNode.getWord())){
                             strList.add(tempNode.getWord());
@@ -234,7 +237,7 @@ public class Dictionary {
                         // hold the found letter to remove for the next level
                         // but don't lose it so it can be used for the other letters
                         // on this level
-                        Character holdC = i;
+                        Character holdC = Character.toLowerCase(i);
                         tempNode = node.getMapBranch().get(holdC);
                         if(tempNode.isWord()&& !strList.contains(tempNode.getWord())){
                             strList.add(tempNode.getWord());

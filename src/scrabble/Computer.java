@@ -25,14 +25,23 @@ public class Computer extends Player {
         int size = gameBoard.getSize();
         int ro = 0;
         int co = 0;
+
         for(ro = 0; ro< size; ro++){
-            node =findBestWord(ro,co,Direction.VERTICAL);
+            List<Character> hold = new LinkedList<>();
+            for(co = 0; co <size; co++){
+                hold.add(gameBoard.getGameBoard().get(ro).get(co).getPiece().getLetter());
+            }
+            node =findBestWord(ro,0,hold,Direction.HORIZONTAL);
             // set highest scoring play if higher
 
         }
-        ro =0;
+
         for(co = 0; co <size; co++){
-            node =findBestWord(ro, co, Direction.HORIZONTAL);
+            List<Character> hold = new LinkedList<>();
+            for(ro = 0; ro< size; ro++){
+                hold.add(gameBoard.getGameBoard().get(ro).get(co).getPiece().getLetter());
+            }
+            node =findBestWord(0, co, hold, Direction.VERTICAL);
             // set highest scoring play if higher
         }
 
@@ -87,72 +96,49 @@ public class Computer extends Player {
      * functionality differs between the computer and the human player
      * */
 
-    public PlayNode findBestWord(int ro, int co, Direction direction ){
+    public PlayNode findBestWord(int ro, int co,List<Character> boardChar, Direction direction ){
         /*traverse board and test words at each location saving the highest scoring word
         * that is a legal move on the board and return a */
         List<Character> chars = new LinkedList<>();
         List<String> holdWords;
         String word="";
-        int row=0;
-        int col=0;
         int score=0;
         // todo make it check every position on the board thank you very much
 
         for(Letters let: tray){
             chars.add(let.getLetter());
         }
-
+        chars.addAll(boardChar);
+//        int boardSize = gameBoard.getSize();
+//        for(int i =0; i<boardSize; i++){
+//            gameBoard.get()
+//        }
 
         holdWords = dictionary.searchUnordered(new LinkedList<>(),chars,null);
 
         if(!holdWords.isEmpty()){
-            //todo here test this
-            // check if the word is legal on the board at the position
-//            Letters tempLet = new Letters();
-//            String best="";
-//            int highest =0;
-////            int preLength = prefix.length();
-//            for(String s: holdWords){
-//                int holdScore=0;
-//                int length= s.length();
-//                int prePos =0;
-//
-//                for(int i =0; i< length; i++){
-//                    if(prePos < preLength){
-//                        holdScore += tempLet.letterValue(s.charAt(i));
-//                        prePos++;
-//                    }
-//                    if(chars.contains(s.charAt(i))){
-//                        holdScore += tempLet.letterValue(s.charAt(i));
-//                    }
-//                }
-//                if(holdScore>highest){
-//                    best = s;
-//                }
+            for(String s: holdWords){
+                int tempScore =0;
+                if(gameBoard.isLegal(ro,co,s,direction)){
+                    Letters temp = new Letters();
 
-//            }
-            //todo
-            // for each letter in the string, find the corresponding character in the tray and add score
-            // if that letter does not exist after the prefix then that will be the wildcard and the points wont count.
-
-            //find the highest scoring word and set score
-            // remove prefix and check if is a legal word
-            // if too slow maybe check for the legal word
-            // as we search the dictionary
-            // do
-            // findHighScore()
-            // scoreWord()
+                    // todo: need to place the letters on a temporary board and keep
+                    // track of the the score based on the placement of the word.
+                    // to keep track of the multipliers
 
 
+                    //        Board tempBoard = new Board(dictionary);
+//        tempBoard.configBoard(size +"\n"+this.toString());
+//                    tempScore = temp.scoreWord(boardChar, , word);
+                    if(tempScore >= score ){
 
-
-
+                    }
+                }
+            }
         }
 
 
-
-
-        return new PlayNode(word, row, col ,score, direction);
+        return new PlayNode(word, ro, co ,score, direction);
     }
     protected class PlayNode{
         private Direction direction;
