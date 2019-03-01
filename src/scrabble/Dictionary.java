@@ -149,7 +149,7 @@ public class Dictionary {
         } else return search(word, temp, position+1,length);
     }
 
-    public List<String> unorderedHelper(String prefix, List<String> strList, List<Character> chars, TrieNode node){
+    public List<String> searchUnordered(List<String> strList, List<Character> chars, TrieNode node){
         //todo make sure that there is a case for * or blank characters
 
 //        if(node == null){
@@ -190,7 +190,7 @@ public class Dictionary {
                                 strList.add(tempNode.getWord());
                             }
                             tempList.remove(i);
-                            unorderedHelper(prefix,strList,tempList,tempNode);
+                            searchUnordered(strList,tempList,tempNode);
                         }
                     }
                 }else{
@@ -201,7 +201,7 @@ public class Dictionary {
                             strList.add(tempNode.getWord());
                         }
                         tempList.remove(holdC);
-                        unorderedHelper(prefix,strList,tempList,tempNode);
+                        searchUnordered(strList,tempList,tempNode);
                     }
                 }
             }else{
@@ -222,7 +222,7 @@ public class Dictionary {
                                 strList.add(tempNode.getWord());
                             }
                             tempList.remove(i);
-                            unorderedHelper(prefix,strList,tempList,tempNode);
+                            searchUnordered(strList,tempList,tempNode);
                         }
 
 
@@ -240,51 +240,48 @@ public class Dictionary {
                             strList.add(tempNode.getWord());
                         }
                         tempList.remove(holdC);
-                        unorderedHelper(prefix,strList,tempList,tempNode);
+                        searchUnordered(strList,tempList,tempNode);
                     }
                 }
-
-
             }
         }
-
         return strList;
 
     }
-    public List<String> searchUnordered(String prefix, List<Character> chars){
-        List<String> hold = new LinkedList<>();
-        int i = 0;
-        int length = prefix.length();
-        TrieNode temp = null;
-        prefix.toLowerCase();
-
-        while(i<length){
-            if(temp == null){
-                if(dictMap.containsKey(prefix.charAt(i))) {
-                    temp = dictMap.get(prefix.charAt(i));
-                    i++;
-                }else{
-                    return hold;
-                }
-            } else{
-                if(temp.getMapBranch().containsKey(prefix.charAt(i))){
-                    temp = temp.getMapBranch().get(prefix.charAt(i));
-                    i++;
-                }else{
-                    return hold;
-                }
-            }
-        }
-
-        // using the temp node we just created with the prefix
-        // check the dictionary for a new words traversing each node r
-        //recursively and adding words as we as well as making sure we check each
-        // combination of characters at each level
-        //  returning a list
-
-        hold =unorderedHelper(prefix,hold,chars,temp);
-        return hold;
-    }
+//    public List<String> searchUnordered(String prefix, List<Character> chars){
+//        List<String> hold = new LinkedList<>();
+//        int i = 0;
+//        int length = prefix.length();
+//        TrieNode temp = null;
+//        prefix.toLowerCase();
+//
+//        while(i<length){
+//            if(temp == null){
+//                if(dictMap.containsKey(prefix.charAt(i))) {
+//                    temp = dictMap.get(prefix.charAt(i));
+//                    i++;
+//                }else{
+//                    return hold;
+//                }
+//            } else{
+//                if(temp.getMapBranch().containsKey(prefix.charAt(i))){
+//                    temp = temp.getMapBranch().get(prefix.charAt(i));
+//                    i++;
+//                }else{
+//                    return hold;
+//                }
+//            }
+//        }
+//
+//        // using the temp node we just created with the prefix
+//        // check the dictionary for a new words traversing each node r
+//        //recursively and adding words as we as well as making sure we check each
+//        // combination of characters at each level
+//        //  returning a list
+//
+//        hold =unorderedHelper(prefix,hold,chars,temp);
+//        return hold;
+//    }
 
 //    /**Searches the Trie for the word passed into the function with Linkedlist
 //     * trie

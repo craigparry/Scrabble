@@ -43,9 +43,9 @@ public class WordSolver {
                 charList.add(let.getLetter());
             }
             //todo implement this completely
-            List<String> tempList = test.getDictionary().searchUnordered("",charList);
+            List<String> tempList = test.getDictionary().searchUnordered(new LinkedList<String>(),charList,null);
             for(String s: tempList){
-               // System.out.println(s);
+                System.out.println(s);
             }
 //            test.getPlayer().playTurn();
 

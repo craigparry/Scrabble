@@ -23,46 +23,61 @@ public class Computer extends Player {
         PlayNode node =null;
         PlayNode highest =null;
         int size = gameBoard.getSize();
+        int ro = 0;
+        int co = 0;
+        for(ro = 0; ro< size; ro++){
+            node =findBestWord(ro,co,Direction.VERTICAL);
+            // set highest scoring play if higher
 
-        for(int ro = 0; ro< size; ro++){
-            for(int co = 0; co <size; co++){
-                //find vertical word
-                if(gameBoard.getGameBoard().get(ro).get(co).isEmpty()&&
-                        !gameBoard.getGameBoard().get(ro-1).get(co).isEmpty()){
-
-                    node =findBestWord(gameBoard.getVertPrefix(ro,co),ro,co,Direction.VERTICAL);
-                    //todo returns playNode if the score is higher than the previous play node
-                    // score then replace.
-                    // if the play placed all possible letters from the tray then
-                    // return that play
-
-
-
-
-                }
-                //find horizontal word
-                if(gameBoard.getGameBoard().get(ro).get(co).isEmpty()&&
-                        !gameBoard.getGameBoard().get(ro).get(co-1).isEmpty()) {
-                    node =findBestWord(gameBoard.getHorPrefix(ro,co),ro, co, Direction.HORIZONTAL);
-                    //todo
-                    // returns playNode if the score is higher than the previous play node
-                    // score then replace.
-                    // if the play placed all possible letters from the tray then
-                    // return that play
-                }
-
-                if(gameBoard.getGameBoard().get(ro).get(co).isEmpty()&&
-                        gameBoard.getGameBoard().get(ro).get(co-1).isEmpty() &&
-                        gameBoard.getGameBoard().get(ro-1).get(co).isEmpty()){
-                    //todo check the tray for possible combinatoin of words with no
-                    // prefix so that we can check for possible board plays that make
-                    // connnections by playing vertically or horizonatlly adjacent to
-                    // the words already played on the board.
-
-
-                }
-            }
         }
+        ro =0;
+        for(co = 0; co <size; co++){
+            node =findBestWord(ro, co, Direction.HORIZONTAL);
+            // set highest scoring play if higher
+        }
+
+
+
+//        for(int ro = 0; ro< size; ro++){
+//
+//            for(int co = 0; co <size; co++){
+//                //find vertical word
+//                if(gameBoard.getGameBoard().get(ro).get(co).isEmpty()&&
+//                        !gameBoard.getGameBoard().get(ro-1).get(co).isEmpty()){
+//
+//                    node =findBestWord(gameBoard.getVertPrefix(ro,co),ro,co,Direction.VERTICAL);
+//                    //todo returns playNode if the score is higher than the previous play node
+//                    // score then replace.
+//                    // if the play placed all possible letters from the tray then
+//                    // return that play
+//
+//
+//
+//
+//                }
+//                //find horizontal word
+//                if(gameBoard.getGameBoard().get(ro).get(co).isEmpty()&&
+//                        !gameBoard.getGameBoard().get(ro).get(co-1).isEmpty()) {
+//                    node =findBestWord(gameBoard.getHorPrefix(ro,co),ro, co, Direction.HORIZONTAL);
+//                    //todo
+//                    // returns playNode if the score is higher than the previous play node
+//                    // score then replace.
+//                    // if the play placed all possible letters from the tray then
+//                    // return that play
+//                }
+//
+//                if(gameBoard.getGameBoard().get(ro).get(co).isEmpty()&&
+//                        gameBoard.getGameBoard().get(ro).get(co-1).isEmpty() &&
+//                        gameBoard.getGameBoard().get(ro-1).get(co).isEmpty()){
+//                    //todo check the tray for possible combinatoin of words with no
+//                    // prefix so that we can check for possible board plays that make
+//                    // connnections by playing vertically or horizonatlly adjacent to
+//                    // the words already played on the board.
+//
+//
+//                }
+//            }
+//        }
         if(highest == null){
             //increment the turn
             // pass the computer turn
@@ -72,7 +87,7 @@ public class Computer extends Player {
      * functionality differs between the computer and the human player
      * */
 
-    public PlayNode findBestWord(String prefix, int ro, int co, Direction direction ){
+    public PlayNode findBestWord(int ro, int co, Direction direction ){
         /*traverse board and test words at each location saving the highest scoring word
         * that is a legal move on the board and return a */
         List<Character> chars = new LinkedList<>();
@@ -87,34 +102,35 @@ public class Computer extends Player {
             chars.add(let.getLetter());
         }
 
-        holdWords = dictionary.searchUnordered(prefix,chars);
+
+        holdWords = dictionary.searchUnordered(new LinkedList<>(),chars,null);
 
         if(!holdWords.isEmpty()){
             //todo here test this
             // check if the word is legal on the board at the position
-            Letters tempLet = new Letters();
-            String best="";
-            int highest =0;
-            int preLength = prefix.length();
-            for(String s: holdWords){
-                int holdScore=0;
-                int length= s.length();
-                int prePos =0;
+//            Letters tempLet = new Letters();
+//            String best="";
+//            int highest =0;
+////            int preLength = prefix.length();
+//            for(String s: holdWords){
+//                int holdScore=0;
+//                int length= s.length();
+//                int prePos =0;
+//
+//                for(int i =0; i< length; i++){
+//                    if(prePos < preLength){
+//                        holdScore += tempLet.letterValue(s.charAt(i));
+//                        prePos++;
+//                    }
+//                    if(chars.contains(s.charAt(i))){
+//                        holdScore += tempLet.letterValue(s.charAt(i));
+//                    }
+//                }
+//                if(holdScore>highest){
+//                    best = s;
+//                }
 
-                for(int i =0; i< length; i++){
-                    if(prePos < preLength){
-                        holdScore += tempLet.letterValue(s.charAt(i));
-                        prePos++;
-                    }
-                    if(chars.contains(s.charAt(i))){
-                        holdScore += tempLet.letterValue(s.charAt(i));
-                    }
-                }
-                if(holdScore>highest){
-                    best = s;
-                }
-
-            }
+//            }
             //todo
             // for each letter in the string, find the corresponding character in the tray and add score
             // if that letter does not exist after the prefix then that will be the wildcard and the points wont count.
