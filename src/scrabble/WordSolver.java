@@ -1,3 +1,11 @@
+/**Craig Parry This class is used for the scrabble game and is the WordSolver for
+ * testing the Scrabble game
+ * Use with:
+ * Board.java, Computer.java, Letters.java, BoardTile.java, Direction.java,
+ * Human.java, LetterBag.java, Player.java, MainGameLoop.java, ScrabbleGUI.java,
+ * and Dictionary.java
+ */
+
 package scrabble;
 import java.util.*;
 public class WordSolver {
@@ -15,13 +23,27 @@ public class WordSolver {
         board = new Board(dictionary);
         player = new Computer(bag,board,dictionary);
     }
+
+    /** returns the board used for the wordsolver
+     *
+     * @return Board
+     */
     public Board getBoard() {
         return board;
     }
+
+    /** Returns the dictionary used for the worldSolver
+     *
+     * @return Dictionary
+     */
     public Dictionary getDictionary() {
         return dictionary;
     }
 
+    /** returns the player used for the wordsolver
+     *
+     * @return Player
+     */
     public Player getPlayer() {
         return player;
     }

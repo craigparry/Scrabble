@@ -1,3 +1,11 @@
+/**Craig Parry This class is used for the scrabble game and is the Dictionary for
+ * the Scrabble game
+ * Use with:
+ * Board.java, Computer.java, Letters.java, BoardTile.java, Direction.java,
+ * Human.java, LetterBag.java, Player.java, MainGameLoop.java, ScrabbleGUI.java,
+ * and WordSolver.java
+ */
+
 package scrabble;
 import java.util.*;
 import java.io.*;
@@ -5,24 +13,18 @@ import java.io.*;
 
 public class Dictionary {
 
-    /* todo :
-    *read in the dictionary and then sort the words in a trie
-    *
-    */
-//    private List<TrieNode> dictionary;
     private List<String> hold;
     private Map<Character,TrieNode> dictMap;
     public Dictionary(){
         dictMap = new HashMap<>();
-//        dictionary = new LinkedList<>();
         hold = new LinkedList<>();
         readDictFile();
         populate();
-
-
     }
 
-
+    /** Reads in the file used as the dictionary
+     * @reutrn void
+     */
     public void readDictFile(){
         try(
                 // use this for the jar file?
@@ -103,6 +105,14 @@ public class Dictionary {
 //        }while(i<length);
 //    }
 
+    /**Inserts a word into the dictionary trie structure
+     *
+     * @param word
+     * @param node
+     * @param position
+     * @param length
+     * @return void
+     */
     public void insert(String word, TrieNode node, int position, int length){
         word.toLowerCase();
 //        int length = word.length();
@@ -123,10 +133,17 @@ public class Dictionary {
         } else {
             insert(word,temp,position+1,length);
         }
-
-
-
     }
+
+    /** Searches the trie for a word that has been stored in the dictionary
+     * using a string literal
+     *
+     * @param word
+     * @param node
+     * @param position
+     * @param length
+     * @return boolean
+     */
     public boolean search(String word, TrieNode node, int position, int length){
         word.toLowerCase();
         if(position == length) return false;
@@ -149,13 +166,16 @@ public class Dictionary {
         } else return search(word, temp, position+1,length);
     }
 
+    /** Searches for a word stored in the trie dictionary using a list of characters
+     * to that can generate any word that could be made using those characters
+     *
+     * @param strList
+     * @param chars
+     * @param node
+     * @return List<String>
+     */
     public List<String> searchUnordered(List<String> strList, List<Character> chars, TrieNode node){
-        //todo make sure that there is a case for * or blank characters
-
-//        if(node == null){
-//
-//
-//        }
+        //did make sure that there is a case for * or blank characters
 
         if(chars.isEmpty()&& node.isWord()){
             //add word to the list if no more chars to check
@@ -165,12 +185,14 @@ public class Dictionary {
         }
 
 
-        //fixed bug where the last letter on some words is not seen therefor the word is not added to the list
-        // might need to seperate the bottom half into its own helper or try to debug again and watch the first iteration
+        //fixed bug where the last letter on some words is not seen therefor the
+        // word is not added to the list might need to seperate the bottom half
+        // into its own helper or try to debug again and watch the first iteration
         // its matching the dictionary for a list of words with no prefix
 
-        //todo, need to include searching for strings with a wildcard its making some duplicates that
-        // exist because it is reusing letters in the tray
+        //stopped storing the duplicates, but it still searches over those duplicates
+        // need to include searching for strings with a wildcard its making
+        // some duplicates that exist because it is reusing letters in the tray
         List<Character> tempList = new LinkedList<>();
 
         TrieNode tempNode = null;
@@ -342,47 +364,72 @@ public class Dictionary {
 //
 //    }
 
+    /** TrieNode class used to  make the trie sturcture for storing the dictionary
+     * used for the scrabble game
+     *
+     */
     public class TrieNode{
 
         private String word;
         private boolean isWord;
-//        private List<TrieNode> branch;
         private Map<Character, TrieNode> mapBranch;
         private char letter;
 
         public TrieNode(char let){
             letter = let;
             mapBranch = new HashMap<>();
-//            branch = new LinkedList<>();
             isWord = false;
         }
+
+        /** sets the isWord boolean to true
+         * @return void
+         */
         public void setIsWord(){
             isWord =true;
         }
+
+        /** returns the boolean isWord
+         *
+         * @return boolean
+         */
         public boolean isWord(){
 
             return isWord;
         }
-//        public List<TrieNode> getBranch(){
-//            return branch;
-//        }
+
+        /** Gets the word String member
+         *
+         * @return String
+         */
         public String getWord() {
             return word;
         }
 
+        /** Sets the word member to the String word
+         *
+         * @param word
+         * @return void
+         */
         public void setWord(String word) {
             this.word = word;
         }
 
+        /** gets the ltter member of the trienode
+         *
+         * @return char
+         */
         public char getLetter(){
             return letter;
         }
 
+        /** gets the branch of the trienode holding a map of the next level of
+         * trienodes
+         *
+         * @return Map<Character></>
+         */
         public Map<Character, TrieNode> getMapBranch() {
             return mapBranch;
         }
-
-
     }
 
     public static void main(String[] args){
@@ -420,51 +467,6 @@ public class Dictionary {
 //        if(test.search("stress",null,0,6)){ System.out.println("found");}
 //        if(test.search("test",null,0,4)){ System.out.println("found");}
 ////        System.out.println("here");
-//        do,dog,dogs, dogie ,dogies ,doge ,doges ,dos
-//                dose
-//        doe
-//                does
-//        dig
-//                digs
-//        die
-//                dies
-//        de
-//                des
-//        dei
-//                go
-//        god
-//                gods
-//        goes
-//                gid
-//        gids
-//                gie
-//        gied
-//                gies
-//        ged
-//                geds
-//        geoid
-//                geoids
-//        od
-//                ods
-//        ode
-//                odes
-//        os
-//                ose
-//        oe
-//                oes
-//        so
-//                sod
-//        si
-//                side
-//        seg
-//                sego
-//        sei
-//                id
-//        ids
-//                ides,is,ego,egos,egis,es,eidos
-
-
-
 
 
         String temp = "";

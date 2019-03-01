@@ -1,11 +1,15 @@
+/**Craig Parry This class is used for the scrabble game and is the WordSolver for
+ * testing the Scrabble game
+ * Use with:
+ * WordSolver.java, Computer.java, Letters.java, BoardTile.java, Direction.java,
+ * Human.java, LetterBag.java, Player.java, MainGameLoop.java, ScrabbleGUI.java,
+ * and Dictionary.java
+ */
+
 package scrabble;
 import java.io.*;
 import java.util.*;
 public class Board {
-
-    public int getSize() {
-        return size;
-    }
 
     private int size;
     private ArrayList<ArrayList<BoardTile>> gameBoard;
@@ -16,22 +20,38 @@ public class Board {
         size =15;
         initBoard();
     }
-
-    public ArrayList<ArrayList<BoardTile>> getGameBoard() {
-        return gameBoard;
-    }
-
     public Board(int x, Dictionary dict){
         dictionary = dict;
         size =x;
         initBoard();
     }
+    /** Gets the size of the board
+     *
+     * @return int
+     */
+    public int getSize() {
+        return size;
+    }
+
+    /**Gets the representation of the board
+     *
+     * @return ArrayList<ArrayList<BoardTile>></BoardTile>
+     */
+    public ArrayList<ArrayList<BoardTile>> getGameBoard() {
+        return gameBoard;
+    }
+
+    /** This method configures the board from a String representation that is
+     * passed into the function
+     *
+     * @param boardStr
+     * @return String
+     */
     public String configBoard(String boardStr){
         /*maybe use this board config to clone the game
         board and plug in the values of the word that we are
         testing for a legal move.
          */
-
         int row =0;
         int col =0;
         int position = 0;
@@ -43,22 +63,15 @@ public class Board {
             c=boardStr.charAt(position);
         }
         if(Character.isDigit(c)){
-
             while(c != '\n'){
-
                 temp += c;
                 position++;
                 c = boardStr.charAt(position);
             }
 //            System.out.println(temp);
-
             this.size = Integer.parseInt(temp);
             initBoard();
-
-
-
         }
-
         position++;
 
         while(position< boardStr.length() && row <size){
@@ -84,7 +97,6 @@ public class Board {
                     if(c=='.'){
                         gameBoard.get(row).get(col).setEmpty(true);
                     }
-
                 }
                 col++;
             } else if(Character.isAlphabetic(c)){
@@ -123,28 +135,27 @@ public class Board {
                 position++;
                 c= boardStr.charAt(position);
             }
-
             if(c != '\n'){
-
-
                 while(c != '\n'){
 //                System.out.println(c);
                     tray += c;
                     position++;
                     c = boardStr.charAt(position);
                 }
-
             }
         }
-
-
 //        System.out.print("here " + tray);
         return tray;
     }
-
+    /** Reads in a string representation of the board from standard input
+     * @param file
+     * @return String
+     * */
     public String readBoard(String file){
 
-        //todo make it read generically when there is a file from command line
+        //todo: make it read generically when there is a file from command line
+        // specifically using a scanner, so without the buffered reader
+
         String config = "";
 
         if(file!= null){
@@ -177,27 +188,35 @@ public class Board {
         }
     }
 
-
+    /** Initializes the gameBoard based on the specified size
+     * @return void
+     * */
     public void initBoard(){
         gameBoard = new ArrayList<>(size);
         for(int i = 0; i < size; i++){
             gameBoard.add(new ArrayList<>(size));
             for(int k = 0; k< size; k++){
                 if(gameBoard.isEmpty()){
-                    System.out.print("Empty");
+//                    System.out.print("Empty");
                 }
                 gameBoard.get(i).add(new BoardTile());
-
             }
         }
     }
-
+    /** Sets a tile on the board
+     * @param row
+     * @param col
+     * @param let
+     * @return void
+     * */
     public void setTile(int row, int col, Letters let){
         gameBoard.get(row).get(col).setPiece(let);
         gameBoard.get(row).get(col).setEmpty(false);
 
     }
-
+    /** checks if the board is empty
+     * @return boolean
+     */
     public boolean boardEmpty(){
         for(ArrayList<BoardTile> row: gameBoard){
             for(BoardTile tile: row){
@@ -205,7 +224,6 @@ public class Board {
                     return false;
                 }
             }
-
         }
         return true;
     }
@@ -231,6 +249,15 @@ public class Board {
 //        //todo this needs to be updated because it wont catch words that are played
 //        // around the words that are already placed
     // assuming the word passed is from the dictionary
+
+    /** Checks if the word played a certain row and collum and in a certain
+     * direction is a legal word
+     * @param row
+     * @param col
+     * @param word
+     * @param dir
+     * @return boolean
+     */
     public boolean isLegal(int row, int col, String word, Direction dir){
 
         if(boardEmpty()){
@@ -440,7 +467,16 @@ public class Board {
 //        return false;
 //    }
 
-
+    /** Helper function for is legal that checks the vertical connections of
+     * horizontal plays on the board
+     *
+     * @param row
+     * @param col
+     * @param word
+     * @param position
+     * @param length
+     * @return boolean
+     */
     public boolean horizontalHelper(int row, int col, String word, int position,
                                     int length){
         if(position >= length){
@@ -475,7 +511,12 @@ public class Board {
         return horizontalHelper(row,col+1,word, position+1,length);
     }
 
-
+    /** Gets the prefix of vertical connections to a location on the board
+     *
+     * @param row
+     * @param col
+     * @return String
+     */
     public String getVertPrefix(int row, int col){
         int i =1;
 
@@ -490,6 +531,13 @@ public class Board {
         return temp;
 
     }
+
+    /** Gets the prefix of a horizontal locations at the position on the board
+     *
+     * @param row
+     * @param col
+     * @return String
+     */
     public String getHorPrefix(int row, int col){
         int i =1;
 //        StringBuilder hold = new StringBuilder();
@@ -556,9 +604,9 @@ public class Board {
 
 
 
-    /**
+    /** Returns the String representation of the board
      *
-     * @return
+     * @return String
      */
     @Override
     public String toString(){
@@ -588,9 +636,6 @@ public class Board {
         }
         return hold;
     }
-
-
-
 
     public static void main(String[] args){
 

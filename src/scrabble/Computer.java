@@ -1,3 +1,11 @@
+/**Craig Parry This class is used for the scrabble game and is the computer used
+ * for the Scrabble game
+ * Use with:
+ * Board.java, BoardTile.java, Letters.java, Dictionary.java, Direction.java,
+ * Human.java, LetterBag.java, Player.java, MainGameLoop.java, ScrabbleGUI.java,
+ * and WordSolver.java
+ */
+
 package scrabble;
 import java.util.*;
 
@@ -7,8 +15,10 @@ public class Computer extends Player {
         super(bag,board,dictionary);
     }
 
-
-    public  void playTurn(){
+    /** Method that plays the turn for the computer player
+     * @return void
+     */
+    public void playTurn(){
         // search gameboard for locations on the board that have occupied spaces
         // check both vertical and horiztonal plays if there are spaces available
         // if there aren't spaces available then skip
@@ -96,6 +106,14 @@ public class Computer extends Player {
      * functionality differs between the computer and the human player
      * */
 
+    /** finds the best word that can be played for the computer player
+     *
+     * @param ro
+     * @param co
+     * @param boardChar
+     * @param direction
+     * @return PlayNode
+     */
     public PlayNode findBestWord(int ro, int co,List<Character> boardChar, Direction direction ){
         /*traverse board and test words at each location saving the highest scoring word
         * that is a legal move on the board and return a */
@@ -140,6 +158,10 @@ public class Computer extends Player {
 
         return new PlayNode(word, ro, co ,score, direction);
     }
+
+    /** Protected class that is used to hold the word, direction, col, row and
+     * score of the play.
+     */
     protected class PlayNode{
         private Direction direction;
         private String word;

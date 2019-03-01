@@ -1,3 +1,12 @@
+/**Craig Parry This class is used for the scrabble game and is Letters used for
+ * the Scrabble game
+ * Use with:
+ * Board.java, BoardTile.java,Computer.java, Dictionary.java, Direction.java,
+ * Human.java, LetterBag.java, Player.java, MainGameLoop.java, ScrabbleGUI.java,
+ * and WordSolver.java
+ */
+
+
 package scrabble;
 
 import java.util.List;
@@ -18,17 +27,35 @@ public class Letters {
 
     }
 
+    /**getter for char rep of the letter
+     *
+     * @return char
+     */
     public char getLetter() {
         return letter;
     }
 
+    /** gets the value associated with the letter
+     *
+     * @return int
+     */
     public int getValue() {
         return value;
     }
+
+    /** gets the value of blank for the tile
+     *
+     * @return boolean
+     */
     public boolean getBlank(){
         return blank;
     }
 
+    /** Setter for the blank value of the tile
+     *
+     * @param let
+     * @return void
+     */
     public void setBlankValue(char let){
         value = letterValue(let);
         letter = Character.toUpperCase(let);
@@ -56,12 +83,22 @@ public class Letters {
 //        }
 //        return score;
 //    }
+
+    /** retruns the string representation of the Letter
+     *
+     * @return String
+     */
     @Override
     public String toString(){
         return Character.toString(letter);
     }
 
-
+    /** gets the value of the letter passed into the funciton assigned by the
+     * Scrabble letter values
+     *
+     * @param letter
+     * @return int
+     */
     public int letterValue(char letter){
         int val;
 
@@ -107,11 +144,7 @@ public class Letters {
             break;
 
             default: val =0;
-
         }
-
         return val;
     }
-
-
 }
