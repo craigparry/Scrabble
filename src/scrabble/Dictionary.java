@@ -186,7 +186,7 @@ public class Dictionary {
                         if(dictMap.containsKey(wild)){
                             Character holdC = wild;
                             tempNode = dictMap.get(holdC);
-                            if(tempNode.isWord()){
+                            if(tempNode.isWord() && !strList.contains(tempNode.getWord())){
                                 strList.add(tempNode.getWord());
                             }
                             tempList.remove(i);
@@ -197,7 +197,7 @@ public class Dictionary {
                     if(dictMap.containsKey(i)){
                         Character holdC = i;
                         tempNode = dictMap.get(holdC);
-                        if(tempNode.isWord()){
+                        if(tempNode.isWord()&& !strList.contains(tempNode.getWord())){
                             strList.add(tempNode.getWord());
                         }
                         tempList.remove(holdC);
@@ -218,7 +218,7 @@ public class Dictionary {
                             // on this level
                             Character holdC = wild;
                             tempNode = node.getMapBranch().get(holdC);
-                            if(tempNode.isWord()){
+                            if(tempNode.isWord() && !strList.contains(tempNode.getWord())){
                                 strList.add(tempNode.getWord());
                             }
                             tempList.remove(i);
@@ -236,7 +236,7 @@ public class Dictionary {
                         // on this level
                         Character holdC = i;
                         tempNode = node.getMapBranch().get(holdC);
-                        if(tempNode.isWord()){
+                        if(tempNode.isWord()&& !strList.contains(tempNode.getWord())){
                             strList.add(tempNode.getWord());
                         }
                         tempList.remove(holdC);

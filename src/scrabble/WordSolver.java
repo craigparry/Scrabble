@@ -45,7 +45,7 @@ public class WordSolver {
             //todo implement this completely
             List<String> tempList = test.getDictionary().searchUnordered("",charList);
             for(String s: tempList){
-                System.out.println(s);
+               // System.out.println(s);
             }
 //            test.getPlayer().playTurn();
 

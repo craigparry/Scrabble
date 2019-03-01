@@ -91,6 +91,7 @@ public class Computer extends Player {
 
         if(!holdWords.isEmpty()){
             //todo here test this
+            // check if the word is legal on the board at the position
             Letters tempLet = new Letters();
             String best="";
             int highest =0;
