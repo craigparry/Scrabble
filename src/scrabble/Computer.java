@@ -172,7 +172,7 @@ public class Computer extends Player {
         if(!holdWords.isEmpty()){
             for(String s: holdWords){
                 int tempScore =0;
-                int legalPos = gameBoard.isLegal(ro,co,s,direction);
+                int legalPos = gameBoard.isLegal(ro,co,s,trayHold,direction);
                 // is legal returns -1 for false
                 if(legalPos >0){
                     if(direction == Direction.VERTICAL){

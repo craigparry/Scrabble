@@ -112,6 +112,7 @@ public class Board {
                 gameBoard.get(row).get(col).setEmpty(false);
                 gameBoard.get(row).get(col).setPiece(new Letters(c));
 
+
                 col++;
             } else if(Character.isDigit(c)){
                 char hold = c;
@@ -211,7 +212,7 @@ public class Board {
         for(int i = 0; i< length; i++){
 
             if(direction == Direction.VERTICAL){
-                if(!gameBoard.get(row+i).get(col).isEmpty()){
+                if(!gameBoard.get(row+i).get(col).isEmpty() && row+i < size){
                     score += gameBoard.get(row+i).get(col).getPiece().getValue();
 
 
@@ -232,7 +233,7 @@ public class Board {
                     } else{
                         score += letValue;
                     }
-                    if(tray.contains(let)){
+                    if(tray.contains(let)|| tray.contains('*')){
                         trayChars++;
                     }
                     // todo check for horiztontal scoring words created
@@ -245,8 +246,8 @@ public class Board {
                     }
                 }
             }else{
-                if(!gameBoard.get(row+i).get(col).isEmpty()){
-                    score += gameBoard.get(row+i).get(col).getPiece().getValue();
+                if(!gameBoard.get(row).get(col+i).isEmpty() && col+i <size){
+                    score += gameBoard.get(row).get(col+i).getPiece().getValue();
 
 
                 } else{
@@ -266,7 +267,7 @@ public class Board {
                     } else{
                         score += letValue;
                     }
-                    if(tray.contains(let)){
+                    if(tray.contains(let)||tray.contains('*')){
                         trayChars++;
                     }
 
@@ -362,7 +363,7 @@ public class Board {
      * @param dir
      * @return int
      */
-    public int isLegal(int row, int col, String word, Direction dir){
+    public int isLegal(int row, int col, String word, List<Character> chars, Direction dir){
 
         if(boardEmpty()){
             if(word.length()+size/2 <= size && size/2 -word.length()>=0){
@@ -399,6 +400,10 @@ public class Board {
                                 break;
                             }
                             connects =true;
+                        } else{
+                            if(!chars.contains(word.charAt(j))){
+                                break;
+                            }
                         }
 
 
@@ -440,6 +445,10 @@ public class Board {
                                 break;
                             }
                             connects =true;
+                        }else{
+                            if(!chars.contains(word.charAt(j))){
+                                break;
+                            }
                         }
 
 
@@ -450,7 +459,9 @@ public class Board {
                             connects = true;
                         }
 
-                    } else break;
+                    } else {
+                        break;
+                    }
 
                     if(j == wordLen-1 && connects){
                         legal = horizontalHelper(row,i,word,0,wordLen);
@@ -783,9 +794,9 @@ public class Board {
         System.out.print(board.toString());
 
         System.out.println("is legal ");
-        int legal = board.isLegal(8,7,"to", Direction.HORIZONTAL);
-        if(legal>0){
-            System.out.println("yay");
-        }
+//        int legal = board.isLegal(8,7,"to", Direction.HORIZONTAL);
+//        if(legal>0){
+//            System.out.println("yay");
+//        }
     }
 }

@@ -68,11 +68,15 @@ public class WordSolver {
             for(Letters let: test.getPlayer().getTray()){
                 charList.add(let.getLetter());
             }
+//        System.out.println(test.getBoard().isLegal(7,0,"tacnodes", charList, Direction.HORIZONTAL));
+           // System.out.println(test.getBoard().isLegal(0,7,"goldiest",Direction.VERTICAL));
             test.getPlayer().playTurn();
-            System.out.print("score dogiest: "+ test.getBoard().scoreWord(7,0,charList,"dogiest",Direction.VERTICAL));
-            //System.out.println("Move Scored: "+test.getPlayer().getPoints());
+
+            System.out.println("score godliest: "+ test.getBoard().scoreWord(7,0,charList,"godliest",Direction.VERTICAL));
+            System.out.println("Move Scored: "+test.getPlayer().getPoints());
             System.out.print(test.getBoard().toString());
             //todo implement this completely
+//            charList.add('t');
 //            List<String> tempList = test.getDictionary().searchUnordered(new LinkedList<String>(),charList,null);
 //            for(String s: tempList){
 //                System.out.println(s);

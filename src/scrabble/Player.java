@@ -160,7 +160,12 @@ public abstract class Player {
 
         int length = word.length();
         LinkedList<Letters> temp = new LinkedList<>();
-        if(gameBoard.isLegal(row,col,word,direction)>0){
+        List<Character> trayHold = new LinkedList<>();
+        for(Letters let: tray){
+//            chars.add(let.getLetter());
+            trayHold.add(let.getLetter());
+        }
+        if(gameBoard.isLegal(row,col,word,trayHold,direction)>0){
             for(int i = 0; i < length; i++){
                 for(Letters letter: getTray()){
                     if(letter.getLetter() == word.charAt(i)){
