@@ -188,6 +188,78 @@ public class Board {
         }
     }
 
+        public int scoreWord(int row, int col, List<Character> tray, String word, Direction direction){
+        int length = word.length();
+        int score =0;
+        int trayChars =0;
+        int wordBonus =0;
+
+        for(int i = 0; i< length; i++){
+
+            if(direction == Direction.VERTICAL){
+                if(!gameBoard.get(row+i).get(col).isEmpty()){
+                    score += gameBoard.get(row+i).get(col).getPiece().getValue();
+
+
+                } else{
+
+                    int letterBonus = gameBoard.get(row+i).get(col).getLetterBonus();
+                    int wBonus = gameBoard.get(row+i).get(col).getWordBonus();
+                    if (wordBonus > 0){
+                        wordBonus = wordBonus * wBonus;
+                    }else{
+                        wordBonus =wBonus;
+                    }
+                    Letters temp = new Letters();
+                    char let = word.charAt(i);
+                    int letValue = temp.letterValue(let);
+                    if(letterBonus >0){
+                        score += letterBonus * letValue;
+                    } else{
+                        score += letValue;
+                    }
+                    if(tray.contains(let)){
+                        trayChars++;
+                    }
+                    // todo check for horiztontal scoring words created
+                }
+            }else{
+                if(!gameBoard.get(row+i).get(col).isEmpty()){
+                    score += gameBoard.get(row+i).get(col).getPiece().getValue();
+
+
+                } else{
+
+                    int letterBonus = gameBoard.get(row).get(col+i).getLetterBonus();
+                    int wBonus = gameBoard.get(row).get(col+i).getWordBonus();
+                    if (wordBonus > 0){
+                        wordBonus = wordBonus * wBonus;
+                    }else{
+                        wordBonus =wBonus;
+                    }
+                    Letters temp = new Letters();
+                    char let = word.charAt(i);
+                    int letValue = temp.letterValue(let);
+                    if(letterBonus >0){
+                        score += letterBonus * letValue;
+                    } else{
+                        score += letValue;
+                    }
+                    if(tray.contains(let)){
+                        trayChars++;
+                    }
+
+                    //todo check for vertical scoring words created
+                }
+            }
+
+        }
+        if(trayChars == 7){
+            score +=50;
+        }
+
+        return score;
+    }
     /** Initializes the gameBoard based on the specified size
      * @return void
      * */
@@ -251,19 +323,20 @@ public class Board {
     // assuming the word passed is from the dictionary
 
     /** Checks if the word played a certain row and collum and in a certain
-     * direction is a legal word
+     * direction is a legal word, returns negative value for false and returns
+     * row or collumn value for legal words
      * @param row
      * @param col
      * @param word
      * @param dir
-     * @return boolean
+     * @return int
      */
-    public boolean isLegal(int row, int col, String word, Direction dir){
+    public int isLegal(int row, int col, String word, Direction dir){
 
         if(boardEmpty()){
             if(word.length()+size/2 <= size && size/2 -word.length()>=0){
                 // maybe just place the word
-               return true;
+               return size/2;
             }
         }
 
@@ -310,7 +383,7 @@ public class Board {
                     if(j == wordLen-1 && connects){
                         legal = verticalHelper(i,col,word,0,wordLen);
                         if(legal){
-                            return true;
+                            return i;
                         }
                     }
                 }
@@ -351,7 +424,7 @@ public class Board {
                     if(j == wordLen-1 && connects){
                         legal = horizontalHelper(row,i,word,0,wordLen);
                         if(legal){
-                            return true;
+                            return i;
                         }
                     }
                 }
@@ -359,7 +432,7 @@ public class Board {
             }
 
         }
-        return false;
+        return -1;
     }
 
 
@@ -653,8 +726,8 @@ public class Board {
         System.out.print(board.toString());
 
         System.out.println("is legal ");
-        boolean legal = board.isLegal(8,7,"to", Direction.HORIZONTAL);
-        if(legal){
+        int legal = board.isLegal(8,7,"to", Direction.HORIZONTAL);
+        if(legal>0){
             System.out.println("yay");
         }
 

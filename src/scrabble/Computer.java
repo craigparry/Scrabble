@@ -118,6 +118,7 @@ public class Computer extends Player {
         /*traverse board and test words at each location saving the highest scoring word
         * that is a legal move on the board and return a */
         List<Character> chars = new LinkedList<>();
+        List<Character> trayHold = new LinkedList<>();
         List<String> holdWords;
         String word="";
         int score=0;
@@ -125,6 +126,7 @@ public class Computer extends Player {
 
         for(Letters let: tray){
             chars.add(let.getLetter());
+            trayHold.add(let.getLetter());
         }
         chars.addAll(boardChar);
 //        int boardSize = gameBoard.getSize();
@@ -137,8 +139,14 @@ public class Computer extends Player {
         if(!holdWords.isEmpty()){
             for(String s: holdWords){
                 int tempScore =0;
-                if(gameBoard.isLegal(ro,co,s,direction)){
-                    Letters temp = new Letters();
+                int legalPos = gameBoard.isLegal(ro,co,s,direction);
+                if(legalPos >0){
+                    if(direction == Direction.VERTICAL){
+                        tempScore = gameBoard.scoreWord(legalPos, co,trayHold,s, direction);
+                    }else{
+                        tempScore =gameBoard.scoreWord(ro, legalPos, trayHold,s, direction);
+                    }
+
 
                     // todo: need to place the letters on a temporary board and keep
                     // track of the the score based on the placement of the word.

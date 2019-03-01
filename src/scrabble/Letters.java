@@ -68,21 +68,7 @@ public class Letters {
 //
 //    }
 
-//    public int scoreWord(List<Character> boardChar, List<Character> tray, String word){
-//        int length = word.length();
-//        int score =0;
-//        int trayChars =0;
-//
-//        for(int i = 0; i< length; i++){
-//            char temp = word.charAt(i);
-//            if(boardChar.contains(temp) || tray.contains(temp)){
-//                score += letterValue(temp);
-//            } else{
-//                trayChars++;
-//            }
-//        }
-//        return score;
-//    }
+
 
     /** retruns the string representation of the Letter
      *
