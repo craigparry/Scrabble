@@ -29,6 +29,8 @@ public class Computer extends Player {
 
 // PlayNode temp = findBestWord();
 //        gameBoard.isLegal();
+        System.out.println("computer board ");
+        System.out.println(gameBoard.toString());
 
         PlayNode node =null;
         PlayNode highest =null;
@@ -39,9 +41,19 @@ public class Computer extends Player {
         for(ro = 0; ro< size; ro++){
             List<Character> hold = new LinkedList<>();
             for(co = 0; co <size; co++){
-                hold.add(gameBoard.getGameBoard().get(ro).get(co).getPiece().getLetter());
+//                hold.add(gameBoard.getGameBoard().get(ro).get(co).getPiece().getLetter());
+                if(gameBoard.getGameBoard().get(ro).get(co).getPiece() != null){
+                    hold.add(gameBoard.getGameBoard().get(ro).get(co).getPiece().getLetter());
+                }
+
             }
             node =findBestWord(ro,0,hold,Direction.HORIZONTAL);
+            if(node != null && highest ==null){
+                highest =node;
+            }
+            if(node != null && node.getScore() > highest.getScore()){
+                highest = node;
+            }
             // set highest scoring play if higher
 
         }
@@ -49,12 +61,26 @@ public class Computer extends Player {
         for(co = 0; co <size; co++){
             List<Character> hold = new LinkedList<>();
             for(ro = 0; ro< size; ro++){
-                hold.add(gameBoard.getGameBoard().get(ro).get(co).getPiece().getLetter());
+                if(gameBoard.getGameBoard().get(ro).get(co).getPiece() != null) {
+                    hold.add(gameBoard.getGameBoard().get(ro).get(co).getPiece().getLetter());
+                }
             }
             node =findBestWord(0, co, hold, Direction.VERTICAL);
+            if(node != null && highest ==null){
+                highest =node;
+            }
+            if(node != null && node.getScore() > highest.getScore()){
+                highest = node;
+            }
             // set highest scoring play if higher
         }
 
+        if(highest != null){
+            points += placeWord(highest);
+        } else{
+            //increment the turn
+            // pass the computer turn
+        }
 
 
 //        for(int ro = 0; ro< size; ro++){
@@ -97,10 +123,7 @@ public class Computer extends Player {
 //                }
 //            }
 //        }
-        if(highest == null){
-            //increment the turn
-            // pass the computer turn
-        }
+
     }
     /*this may need to be set up in each individually so that the
      * functionality differs between the computer and the human player
@@ -114,6 +137,14 @@ public class Computer extends Player {
      * @param direction
      * @return PlayNode
      */
+
+
+
+    //todo I have a bug that is not caluclating the highest score correctly so I
+    // need to look and fix that maybe I'm not setting or getting the bonuses correctly
+    // or something
+
+
     public PlayNode findBestWord(int ro, int co,List<Character> boardChar, Direction direction ){
         /*traverse board and test words at each location saving the highest scoring word
         * that is a legal move on the board and return a */
@@ -122,6 +153,8 @@ public class Computer extends Player {
         List<String> holdWords;
         String word="";
         int score=0;
+        int row =0;
+        int col=0;
         // todo make it check every position on the board thank you very much
 
         for(Letters let: tray){
@@ -140,11 +173,25 @@ public class Computer extends Player {
             for(String s: holdWords){
                 int tempScore =0;
                 int legalPos = gameBoard.isLegal(ro,co,s,direction);
+                // is legal returns -1 for false
                 if(legalPos >0){
                     if(direction == Direction.VERTICAL){
                         tempScore = gameBoard.scoreWord(legalPos, co,trayHold,s, direction);
+                        if(tempScore > score ){
+                            score =tempScore;
+                            word =s;
+                            row = legalPos;
+                            col =co;
+
+                        }
                     }else{
                         tempScore =gameBoard.scoreWord(ro, legalPos, trayHold,s, direction);
+                        if(tempScore > score ){
+                            score =tempScore;
+                            word =s;
+                            row = ro;
+                            col =legalPos;
+                        }
                     }
 
 
@@ -156,15 +203,16 @@ public class Computer extends Player {
                     //        Board tempBoard = new Board(dictionary);
 //        tempBoard.configBoard(size +"\n"+this.toString());
 //                    tempScore = temp.scoreWord(boardChar, , word);
-                    if(tempScore >= score ){
 
-                    }
                 }
             }
         }
 
+        if(!word.equals("")){
+            return new PlayNode(word, row, col ,score, direction);
+        }
+        else return null;
 
-        return new PlayNode(word, ro, co ,score, direction);
     }
 
     /** Protected class that is used to hold the word, direction, col, row and
@@ -183,6 +231,45 @@ public class Computer extends Player {
             this.col =col;
             this.score =score;
             this.direction = direction;
+        }
+        public Direction getDirection() {
+            return direction;
+        }
+
+        public void setDirection(Direction direction) {
+            this.direction = direction;
+        }
+
+        public String getWord() {
+            return word;
+        }
+
+        public void setWord(String word) {
+            this.word = word;
+        }
+
+        public int getCol() {
+            return col;
+        }
+
+        public void setCol(int col) {
+            this.col = col;
+        }
+
+        public int getRow() {
+            return row;
+        }
+
+        public void setRow(int row) {
+            this.row = row;
+        }
+
+        public int getScore() {
+            return score;
+        }
+
+        public void setScore(int score) {
+            this.score = score;
         }
     }
 

@@ -58,17 +58,25 @@ public class WordSolver {
             tray =test.getBoard().configBoard(config);
 //            System.out.print(config);
 //            System.out.print(tray);
+
+
+
+
             test.getPlayer().setTray(tray);
             test.getPlayer().printTray();
             List<Character> charList = new LinkedList<>();
             for(Letters let: test.getPlayer().getTray()){
                 charList.add(let.getLetter());
             }
+            test.getPlayer().playTurn();
+            System.out.print("score dogiest: "+ test.getBoard().scoreWord(7,0,charList,"dogiest",Direction.VERTICAL));
+            //System.out.println("Move Scored: "+test.getPlayer().getPoints());
+            System.out.print(test.getBoard().toString());
             //todo implement this completely
-            List<String> tempList = test.getDictionary().searchUnordered(new LinkedList<String>(),charList,null);
-            for(String s: tempList){
-                System.out.println(s);
-            }
+//            List<String> tempList = test.getDictionary().searchUnordered(new LinkedList<String>(),charList,null);
+//            for(String s: tempList){
+//                System.out.println(s);
+//            }
 //            test.getPlayer().playTurn();
 
 //        }

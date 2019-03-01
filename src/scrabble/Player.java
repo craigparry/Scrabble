@@ -79,6 +79,57 @@ public abstract class Player {
         return tray;
     }
 
+    public Letters removeLetter(char let){
+        Letters temp = null;
+        for(Letters l: tray){
+            if(l.getLetter() == let){
+                temp = l;
+            }
+        }
+            tray.remove(temp);
+        return temp;
+    }
+    public int placeWord(Computer.PlayNode node){
+        String word = node.getWord();
+        int row = node.getRow();
+        int col = node.getCol();
+        Direction dir = node.getDirection();
+
+        if(dir ==Direction.VERTICAL){
+            for(int i =0; i< word.length(); i++){
+                if(gameBoard.getGameBoard().get(row+i).get(col).isEmpty()){
+                    Letters temp =null;
+                    temp = removeLetter(word.charAt(i));
+                    if(temp != null){
+                        temp = removeLetter('*');
+                        temp.setBlankValue(word.charAt(i));
+                        gameBoard.setTile(row+i,col,temp);
+                    }
+
+                }
+
+            }
+        }else{
+            for(int i =0; i< word.length(); i++){
+                if(gameBoard.getGameBoard().get(row).get(col+i).isEmpty()){
+                    Letters temp =null;
+                    temp = removeLetter(word.charAt(i));
+                    if(temp != null){
+                        gameBoard.setTile(row,col+i,temp);
+                    } else{
+                        temp = removeLetter('*');
+                        temp.setBlankValue(word.charAt(i));
+                        gameBoard.setTile(row, col+i,temp);
+                    }
+
+                }
+
+            }
+        }
+
+        return node.getScore();
+    }
+
     /**Places a word on the board
      *
      * @param word
@@ -109,7 +160,7 @@ public abstract class Player {
 
         int length = word.length();
         LinkedList<Letters> temp = new LinkedList<>();
-        if(gameBoard.isLegal(row,col,word,direction)){
+        if(gameBoard.isLegal(row,col,word,direction)>0){
             for(int i = 0; i < length; i++){
                 for(Letters letter: getTray()){
                     if(letter.getLetter() == word.charAt(i)){

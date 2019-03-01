@@ -87,6 +87,9 @@ public class Board {
                 c = boardStr.charAt(position);
                 //right side is letter Bonus
                 if(Character.isDigit(c)){
+                    if(gameBoard.get(row).get(col) == null){
+                        gameBoard.get(row).add(col,new BoardTile());
+                    }
                     gameBoard.get(row).get(col).setBonus(true);
 
                     gameBoard.get(row).get(col).setLetterBonus(Character.getNumericValue(c));
@@ -95,11 +98,17 @@ public class Board {
 
                     c = boardStr.charAt(position);
                     if(c=='.'){
+                        if(gameBoard.get(row).get(col) == null){
+                            gameBoard.get(row).add(col,new BoardTile());
+                        }
                         gameBoard.get(row).get(col).setEmpty(true);
                     }
                 }
                 col++;
             } else if(Character.isAlphabetic(c)){
+                if(gameBoard.get(row).get(col) == null){
+                    gameBoard.get(row).add(col,new BoardTile());
+                }
                 gameBoard.get(row).get(col).setEmpty(false);
                 gameBoard.get(row).get(col).setPiece(new Letters(c));
 
@@ -109,6 +118,9 @@ public class Board {
                 position++;
                 c = boardStr.charAt(position);
                 if(c == '.'){
+                    if(gameBoard.get(row).get(col) == null){
+                        gameBoard.get(row).add(col,new BoardTile());
+                    }
 //                    System.out.print(c);
                     gameBoard.get(row).get(col).setBonus(true);
                     gameBoard.get(row).get(col).setWordBonus(Character.getNumericValue(hold));
@@ -188,6 +200,8 @@ public class Board {
         }
     }
 
+
+
         public int scoreWord(int row, int col, List<Character> tray, String word, Direction direction){
         int length = word.length();
         int score =0;
@@ -208,13 +222,13 @@ public class Board {
                     if (wordBonus > 0){
                         wordBonus = wordBonus * wBonus;
                     }else{
-                        wordBonus =wBonus;
+                        wordBonus = wBonus;
                     }
                     Letters temp = new Letters();
                     char let = word.charAt(i);
                     int letValue = temp.letterValue(let);
                     if(letterBonus >0){
-                        score += letterBonus * letValue;
+                        score += (letterBonus * letValue);
                     } else{
                         score += letValue;
                     }
@@ -222,6 +236,13 @@ public class Board {
                         trayChars++;
                     }
                     // todo check for horiztontal scoring words created
+                    String horizontal = getHorPrefix(row+i, col);
+                    horizontal += getHorSufix(row+i,col);
+                    if(horizontal.length()>0) {
+                        for (int j = 0; j<horizontal.length();j++){
+                            score+= temp.letterValue(horizontal.charAt(j));
+                        }
+                    }
                 }
             }else{
                 if(!gameBoard.get(row+i).get(col).isEmpty()){
@@ -250,9 +271,19 @@ public class Board {
                     }
 
                     //todo check for vertical scoring words created
+                    String vertical = getVertPrefix(row, col+i);
+                    vertical += getVertSufix(row,col+i);
+                    if(vertical.length()>0) {
+                        for (int j = 0; j<vertical.length();j++){
+                            score+= temp.letterValue(vertical.charAt(j));
+                        }
+                    }
                 }
             }
 
+        }
+        if(wordBonus >0){
+            score = score * wordBonus;
         }
         if(trayChars == 7){
             score +=50;
@@ -604,6 +635,20 @@ public class Board {
         return temp;
 
     }
+    public String getVertSufix(int row, int col){
+        int i =1;
+
+        String temp  ="";
+        //append letter tiles to the left of the position to the front of the string
+        while( row+i >=0 && !gameBoard.get(row+i).get(col).isEmpty() ){
+            char hold =gameBoard.get(row+i).get(col).getPiece().getLetter();
+            hold = Character.toLowerCase(hold);
+            temp += hold;
+            i++;
+        }
+        return temp;
+
+    }
 
     /** Gets the prefix of a horizontal locations at the position on the board
      *
@@ -622,8 +667,21 @@ public class Board {
             temp = hold +temp;
             i++;
         }
-        return temp;}
-
+        return temp;
+    }
+    public String getHorSufix(int row, int col){
+        int i =1;
+//        StringBuilder hold = new StringBuilder();
+        String temp = "";
+        //append letter tiles to the left of the position to the front of the string
+        while(col+i >= 0 && !gameBoard.get(row).get(col+i).isEmpty() ){
+            char hold =gameBoard.get(row).get(col+i).getPiece().getLetter();
+            hold = Character.toLowerCase(hold);
+            temp += hold;
+            i++;
+        }
+        return temp;
+    }
     /** This function searches the horizontal connections of a vertical play
      * on the board. Starting at positoin(row,col) and moving down along the
      * board it will check each row for a new word created by the play and return
@@ -722,7 +780,6 @@ public class Board {
           System.out.println(config);
             board.configBoard(config);
 
-//        }
         System.out.print(board.toString());
 
         System.out.println("is legal ");
@@ -730,34 +787,5 @@ public class Board {
         if(legal>0){
             System.out.println("yay");
         }
-
-
-
-
-
-
-
-//        Board test = new Board(new Dictionary());
-//
-//        test.setTile(7,7,new Letters('a'));
-////        test.setTile( 8, 7, new Letters('d'));
-//        if(test.isLegal(8,7,"rachnid",Direction.VERTICAL)){
-//            System.out.println("move one T");
-//            // play word
-//
-//            System.out.print(test.toString());
-//        }else {
-//            System.out.println("move one F");
-//        }
-//        if(test.isLegal(7,8,"rachnid",Direction.HORIZONTAL)){
-//            System.out.println("move two T");
-//            // play word
-//            System.out.print(test.toString());
-//        } else{
-//            System.out.println("move two F");
-//        }
-
-
     }
-
 }

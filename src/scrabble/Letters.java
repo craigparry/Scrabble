@@ -57,7 +57,7 @@ public class Letters {
      * @return void
      */
     public void setBlankValue(char let){
-        value = letterValue(let);
+        value = 0;
         letter = Character.toUpperCase(let);
 
     }
