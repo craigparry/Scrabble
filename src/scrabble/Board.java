@@ -455,9 +455,9 @@ public class Board {
                             return i;
                         }else return -1;
                     }
-                    if(j == wordLen -1){
-                        return i;
-                    }
+//                    if(j == wordLen -1){
+//                        return i;
+//                    }
                 }
             }
         }else{
@@ -506,9 +506,9 @@ public class Board {
                             return i;
                         }else return -1;
                     }
-                    if(j == wordLen -1){
-                        return i;
-                    }
+//                    if(j == wordLen -1){
+//                        return i;
+//                    }
                 }
             }
 
@@ -676,7 +676,7 @@ public class Board {
 
         String temp  ="";
         //append letter tiles to the left of the position to the front of the string
-        while( row -i >=0 && !gameBoard.get(row-i).get(col).isEmpty() ){
+        while( row -i >=0 && row -i < size && !gameBoard.get(row-i).get(col).isEmpty() ){
             char hold =gameBoard.get(row-i).get(col).getPiece().getLetter();
             hold = Character.toLowerCase(hold);
             temp = hold +temp;
@@ -690,7 +690,7 @@ public class Board {
 
         String temp  ="";
         //append letter tiles to the left of the position to the front of the string
-        while( row+i >=0 && !gameBoard.get(row+i).get(col).isEmpty() ){
+        while( row+i >=0 && row+i < size && !gameBoard.get(row+i).get(col).isEmpty() ){
             char hold =gameBoard.get(row+i).get(col).getPiece().getLetter();
             hold = Character.toLowerCase(hold);
             temp += hold;
@@ -711,7 +711,7 @@ public class Board {
 //        StringBuilder hold = new StringBuilder();
         String temp = "";
         //append letter tiles to the left of the position to the front of the string
-        while(col-i >= 0 && !gameBoard.get(row).get(col-i).isEmpty() ){
+        while(col-i >= 0 && col -i < size && !gameBoard.get(row).get(col-i).isEmpty() ){
             char hold =gameBoard.get(row).get(col-i).getPiece().getLetter();
             hold = Character.toLowerCase(hold);
             temp = hold +temp;
@@ -724,7 +724,7 @@ public class Board {
 //        StringBuilder hold = new StringBuilder();
         String temp = "";
         //append letter tiles to the left of the position to the front of the string
-        while(col+i >= 0 && !gameBoard.get(row).get(col+i).isEmpty() ){
+        while(col+i >= 0 && col +i < size && !gameBoard.get(row).get(col+i).isEmpty() ){
             char hold =gameBoard.get(row).get(col+i).getPiece().getLetter();
             hold = Character.toLowerCase(hold);
             temp += hold;

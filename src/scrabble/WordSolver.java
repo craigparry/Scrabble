@@ -54,7 +54,7 @@ public class WordSolver {
         String tray;
 //        if(args.length > 0){
 //            config =test.getBoard().readBoard(args[0]);
-            config =test.getBoard().readBoard("test.txt");
+            config =test.getBoard().readBoard("test2.txt");
             tray =test.getBoard().configBoard(config);
 //            System.out.print(config);
 //            System.out.print(tray);

@@ -130,13 +130,14 @@ public class Computer extends Player {
         if(!holdWords.isEmpty()){
             for(String s: holdWords){
                 int tempScore =0;
-                if(s.equals("goldiest")){
-                    System.out.println("goldiest pos:" + " row "+ ro + " col "+ co);
+
+                if(s.equals("troolie")){
+                    System.out.println("troolie pos:" + " row "+ ro + " col "+ co);
                 }
                 int legalPos = gameBoard.isLegal(ro,co,s,trayHold,direction);
 
                 // is legal returns -1 for false
-                if(legalPos >0){
+                if(legalPos >=0){
                     if(direction == Direction.VERTICAL){
                         tempScore = gameBoard.scoreWord(legalPos, co,trayHold,s, direction);
                         if(tempScore > score ){
