@@ -101,7 +101,11 @@ public abstract class Player {
                     Letters temp =null;
                     temp = removeLetter(word.charAt(i));
                     if(temp != null){
+                        gameBoard.setTile(row+i,col,temp);
+                    } else{
                         temp = removeLetter('*');
+                        // todo figure out why this is getting a null pointer
+                        // has something to do with when i should be removing the wildcard
                         temp.setBlankValue(word.charAt(i));
                         gameBoard.setTile(row+i,col,temp);
                     }

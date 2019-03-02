@@ -419,7 +419,9 @@ public class Board {
                 boolean connects = false;
 
                 for(int j = 0; j < wordLen; j++){
-
+                    if(i-1>0 &&!gameBoard.get(i-1).get(col).isEmpty()){
+                        break;
+                    }
                     // checks size of positions
                     if(i +j >=0 && i+j < size){
                         // holds letter at that position on the board
@@ -466,7 +468,9 @@ public class Board {
                 // j is string position
                 boolean connects = false;
                 for(int j = 0; j < wordLen; j++){
-
+                    if(i-1>0&&!gameBoard.get(row).get(i-1).isEmpty()){
+                        break;
+                    }
                     // checks size of positions
                     if(i +j >=0 && i+j < size){
                         // holds letter at that position on the board
