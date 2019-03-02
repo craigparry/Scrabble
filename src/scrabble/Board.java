@@ -249,11 +249,12 @@ public class Board {
                         trayChars++;
                     }
                     // todo check for horiztontal scoring words created
-                    String horizontal = getHorPrefix(row+i, col);
-                    horizontal += let;
-                    horizontal += getHorSufix(row+i,col);
-                    int horLen =horizontal.length();
-                    if(horLen>1) {
+//                    String horizontal = getHorPrefix(row+i, col);
+//                    horizontal += let;
+//                    horizontal += getHorSufix(row+i,col);
+//                    int horLen =horizontal.length();
+                    if((col-1 >=0 &&!gameBoard.get(row+i).get(col-1).isEmpty())||(col+1 < size &&!gameBoard.get(row+i).get(col+1).isEmpty())){
+//                    if(horLen>1) {
 //                        for (int j = 0; j<horLen;j++){
 
                             if(wBonus>0 ){
@@ -320,10 +321,11 @@ public class Board {
                     }
 
                     //todo check for vertical scoring words created
-                    String vertical = getVertPrefix(row, col+i);
-                    vertical += let;
-                    vertical += getVertSufix(row,col+i);
-                    if(vertical.length()>1) {
+//                    String vertical = getVertPrefix(row, col+i);
+//                    vertical += let;
+//                    vertical += getVertSufix(row,col+i);
+                    if((row-1 >=0 &&!gameBoard.get(row-1).get(col+i).isEmpty())||(row +1 < size &&!gameBoard.get(row+1).get(col+i).isEmpty())){
+//                    if(vertical.length()>1) {
 //                        for (int j = 0; j<vertical.length();j++){
                             if(wBonus > 0){
                                 scoreConnect += getVertPrefixScore(row,col+i) + getVertSufixScore(row,col+i)* wBonus;
@@ -484,7 +486,7 @@ public class Board {
                         legal = verticalHelper(i,col,word,0,wordLen);
                         if(legal){
                             return i;
-                        }else return -1;
+                        }//else return -1;
                     }
 //                    if(j == wordLen -1){
 //                        return i;
@@ -535,7 +537,7 @@ public class Board {
                         legal = horizontalHelper(row,i,word,0,wordLen);
                         if(legal){
                             return i;
-                        }else return -1;
+                        }//else return -1;
                     }
 //                    if(j == wordLen -1){
 //                        return i;
