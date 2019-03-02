@@ -120,7 +120,7 @@ public class BoardTile {
      */
     @Override
     public String toString() {
-        return piece.toString();
+        return Character.toString(piece.getLetter());
 
     }
 }

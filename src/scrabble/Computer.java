@@ -82,48 +82,6 @@ public class Computer extends Player {
             // pass the computer turn
         }
 
-
-//        for(int ro = 0; ro< size; ro++){
-//
-//            for(int co = 0; co <size; co++){
-//                //find vertical word
-//                if(gameBoard.getGameBoard().get(ro).get(co).isEmpty()&&
-//                        !gameBoard.getGameBoard().get(ro-1).get(co).isEmpty()){
-//
-//                    node =findBestWord(gameBoard.getVertPrefix(ro,co),ro,co,Direction.VERTICAL);
-//                    //todo returns playNode if the score is higher than the previous play node
-//                    // score then replace.
-//                    // if the play placed all possible letters from the tray then
-//                    // return that play
-//
-//
-//
-//
-//                }
-//                //find horizontal word
-//                if(gameBoard.getGameBoard().get(ro).get(co).isEmpty()&&
-//                        !gameBoard.getGameBoard().get(ro).get(co-1).isEmpty()) {
-//                    node =findBestWord(gameBoard.getHorPrefix(ro,co),ro, co, Direction.HORIZONTAL);
-//                    //todo
-//                    // returns playNode if the score is higher than the previous play node
-//                    // score then replace.
-//                    // if the play placed all possible letters from the tray then
-//                    // return that play
-//                }
-//
-//                if(gameBoard.getGameBoard().get(ro).get(co).isEmpty()&&
-//                        gameBoard.getGameBoard().get(ro).get(co-1).isEmpty() &&
-//                        gameBoard.getGameBoard().get(ro-1).get(co).isEmpty()){
-//                    //todo check the tray for possible combinatoin of words with no
-//                    // prefix so that we can check for possible board plays that make
-//                    // connnections by playing vertically or horizonatlly adjacent to
-//                    // the words already played on the board.
-//
-//
-//                }
-//            }
-//        }
-
     }
     /*this may need to be set up in each individually so that the
      * functionality differs between the computer and the human player
@@ -172,7 +130,11 @@ public class Computer extends Player {
         if(!holdWords.isEmpty()){
             for(String s: holdWords){
                 int tempScore =0;
+                if(s.equals("goldiest")){
+                    System.out.println("goldiest pos:" + " row "+ ro + " col "+ co);
+                }
                 int legalPos = gameBoard.isLegal(ro,co,s,trayHold,direction);
+
                 // is legal returns -1 for false
                 if(legalPos >0){
                     if(direction == Direction.VERTICAL){

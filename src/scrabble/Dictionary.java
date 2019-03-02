@@ -34,7 +34,7 @@ public class Dictionary {
 //            BufferedReader reader = new BufferedReader(new InputStreamReader(in))){
 
             // use this in the mean time
-            BufferedReader reader = new BufferedReader(new FileReader("dictionary.txt"))){
+            BufferedReader reader = new BufferedReader(new FileReader("sowpods.txt"))){
             String line;
                 while ((line = reader.readLine()) != null){
                     hold.add(line);
@@ -114,19 +114,25 @@ public class Dictionary {
      * @return void
      */
     public void insert(String word, TrieNode node, int position, int length){
-        word.toLowerCase();
+        if(!word.equals("")){
+            word.toLowerCase();
+        } else return;
+
 //        int length = word.length();
-        TrieNode temp;
+        TrieNode temp =null;
         if(node == null){
-            dictMap.putIfAbsent(word.charAt(position), new TrieNode(word.charAt(position)));
-            temp = dictMap.get(word.charAt(position));
+            if(length >0){
+                dictMap.putIfAbsent(word.charAt(position), new TrieNode(word.charAt(position)));
+                temp = dictMap.get(word.charAt(position));
+            }
+
         } else {
             node.getMapBranch().putIfAbsent(word.charAt(position), new TrieNode(word.charAt(position)));
             temp = node.getMapBranch().get(word.charAt(position));
         }
 
 
-        if(position == length-1){
+        if(position == length-1&& temp != null){
             temp.setIsWord();
             temp.setWord(word);
             return;

@@ -206,8 +206,14 @@ public class Board {
         public int scoreWord(int row, int col, List<Character> tray, String word, Direction direction){
         int length = word.length();
         int score =0;
+        int scoreConnect = 0;
         int trayChars =0;
         int wordBonus =0;
+        List<Character> tempTray=new LinkedList<>();
+        for(Character c: tray){
+            tempTray.add(c);
+
+        }
 
         for(int i = 0; i< length; i++){
 
@@ -220,20 +226,26 @@ public class Board {
 
                     int letterBonus = gameBoard.get(row+i).get(col).getLetterBonus();
                     int wBonus = gameBoard.get(row+i).get(col).getWordBonus();
-                    if (wordBonus > 0){
+                    if (wordBonus > 0 && wBonus >0){
                         wordBonus = wordBonus * wBonus;
-                    }else{
-                        wordBonus = wBonus;
+                    }if(wordBonus ==0 && wBonus>0){
+                        wordBonus =wBonus;
                     }
                     Letters temp = new Letters();
                     char let = word.charAt(i);
                     int letValue = temp.letterValue(let);
-                    if(letterBonus >0){
-                        score += (letterBonus * letValue);
-                    } else{
-                        score += letValue;
+                    if(tempTray.contains(let)) {
+                        if (letterBonus > 0) {
+                            score += (letterBonus * letValue);
+                        } else {
+                            score += letValue;
+                        }
                     }
-                    if(tray.contains(let)|| tray.contains('*')){
+                    if(tempTray.contains(let)){
+                        tempTray.remove(new Character(let));
+                        trayChars++;
+                    }else if(tempTray.contains('*')){
+                        tempTray.remove(new Character('*'));
                         trayChars++;
                     }
                     // todo check for horiztontal scoring words created
@@ -241,7 +253,11 @@ public class Board {
                     horizontal += getHorSufix(row+i,col);
                     if(horizontal.length()>0) {
                         for (int j = 0; j<horizontal.length();j++){
-                            score+= temp.letterValue(horizontal.charAt(j));
+                         if(wBonus>0 ){
+                             scoreConnect+= temp.letterValue(horizontal.charAt(j))*wBonus;
+                         }   else{
+                             scoreConnect+= temp.letterValue(horizontal.charAt(j))*wBonus;
+                         }
                         }
                     }
                 }
@@ -254,20 +270,26 @@ public class Board {
 
                     int letterBonus = gameBoard.get(row).get(col+i).getLetterBonus();
                     int wBonus = gameBoard.get(row).get(col+i).getWordBonus();
-                    if (wordBonus > 0){
+                    if (wordBonus > 0 && wBonus >0){
                         wordBonus = wordBonus * wBonus;
-                    }else{
+                    }if(wordBonus ==0 && wBonus>0){
                         wordBonus =wBonus;
                     }
                     Letters temp = new Letters();
                     char let = word.charAt(i);
                     int letValue = temp.letterValue(let);
-                    if(letterBonus >0){
-                        score += letterBonus * letValue;
-                    } else{
-                        score += letValue;
+                    if(tempTray.contains(let)) {
+                        if (letterBonus > 0) {
+                            score += (letterBonus * letValue);
+                        } else {
+                            score += letValue;
+                        }
                     }
-                    if(tray.contains(let)||tray.contains('*')){
+                    if(tempTray.contains(let)){
+                        tempTray.remove(new Character(let));
+                        trayChars++;
+                    } else if(tempTray.contains('*')){
+                        tempTray.remove(new Character('*'));
                         trayChars++;
                     }
 
@@ -276,7 +298,12 @@ public class Board {
                     vertical += getVertSufix(row,col+i);
                     if(vertical.length()>0) {
                         for (int j = 0; j<vertical.length();j++){
-                            score+= temp.letterValue(vertical.charAt(j));
+                            if(wBonus > 0){
+                                scoreConnect+= temp.letterValue(vertical.charAt(j))* wBonus;
+                            }else{
+                                scoreConnect+= temp.letterValue(vertical.charAt(j));
+                            }
+
                         }
                     }
                 }
@@ -289,7 +316,7 @@ public class Board {
         if(trayChars == 7){
             score +=50;
         }
-
+        score = score +scoreConnect;
         return score;
     }
     /** Initializes the gameBoard based on the specified size
@@ -401,7 +428,7 @@ public class Board {
                             }
                             connects =true;
                         } else{
-                            if(!chars.contains(word.charAt(j))){
+                            if(!chars.contains(word.charAt(j))&& !chars.contains('*')){
                                 break;
                             }
                         }
@@ -420,10 +447,12 @@ public class Board {
                         legal = verticalHelper(i,col,word,0,wordLen);
                         if(legal){
                             return i;
-                        }
+                        }else return -1;
+                    }
+                    if(j == wordLen -1){
+                        return i;
                     }
                 }
-
             }
         }else{
             // make the horizontal move
@@ -446,7 +475,7 @@ public class Board {
                             }
                             connects =true;
                         }else{
-                            if(!chars.contains(word.charAt(j))){
+                            if(!chars.contains(word.charAt(j))&&!chars.contains('*')){
                                 break;
                             }
                         }
@@ -467,10 +496,12 @@ public class Board {
                         legal = horizontalHelper(row,i,word,0,wordLen);
                         if(legal){
                             return i;
-                        }
+                        }else return -1;
+                    }
+                    if(j == wordLen -1){
+                        return i;
                     }
                 }
-
             }
 
         }

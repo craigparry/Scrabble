@@ -70,9 +70,10 @@ public class WordSolver {
             }
 //        System.out.println(test.getBoard().isLegal(7,0,"tacnodes", charList, Direction.HORIZONTAL));
            // System.out.println(test.getBoard().isLegal(0,7,"goldiest",Direction.VERTICAL));
-            test.getPlayer().playTurn();
+           test.getPlayer().playTurn();
 
-            System.out.println("score godliest: "+ test.getBoard().scoreWord(7,0,charList,"godliest",Direction.VERTICAL));
+//            System.out.println("score goldiest: "+ test.getBoard().scoreWord(0,7,charList,"goldiest",Direction.VERTICAL));
+//        System.out.println("score doggies: "+ test.getBoard().scoreWord(8,6,charList,"doggies",Direction.HORIZONTAL));
             System.out.println("Move Scored: "+test.getPlayer().getPoints());
             System.out.print(test.getBoard().toString());
             //todo implement this completely
