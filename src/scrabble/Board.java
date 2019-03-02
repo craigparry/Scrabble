@@ -250,16 +250,42 @@ public class Board {
                     }
                     // todo check for horiztontal scoring words created
                     String horizontal = getHorPrefix(row+i, col);
+                    horizontal += let;
                     horizontal += getHorSufix(row+i,col);
-                    if(horizontal.length()>0) {
-                        for (int j = 0; j<horizontal.length();j++){
-                         if(wBonus>0 ){
-                             scoreConnect+= temp.letterValue(horizontal.charAt(j))*wBonus;
-                         }   else{
-                             scoreConnect+= temp.letterValue(horizontal.charAt(j))*wBonus;
-                         }
-                        }
+                    int horLen =horizontal.length();
+                    if(horLen>1) {
+//                        for (int j = 0; j<horLen;j++){
+
+                            if(wBonus>0 ){
+//                             scoreConnect+= gameBoard.get(row+i).get(col-horLen+j).getPiece().getValue()*wBonus;
+                                scoreConnect += getHorPrefixScore(row+i,col) + getHorSufixScore(row+i,col)* wBonus;
+                                scoreConnect += letValue* wBonus;
+//                                scoreConnect+= temp.letterValue(horizontal.charAt(j))*wBonus;
+                            }   else{
+//                             scoreConnect+= gameBoard.get(row+i).get(col-horLen+j).getPiece().getValue()*wBonus;
+                                scoreConnect += getHorPrefixScore(row+i,col) + getHorSufixScore(row+i,col);
+//                                scoreConnect+= temp.letterValue(horizontal.charAt(j));
+                                scoreConnect += letValue;
+                            }
+//                        }
                     }
+//                    String horizontal = getHorPrefix(row+i, col);
+//                    horizontal += let;
+//                    horizontal += getHorSufix(row+i,col);
+//                    int horLen =horizontal.length();
+//                    if(horLen>0) {
+//                        for (int j = 0; j<horLen;j++){
+//                         if(wBonus>0 ){
+////                             scoreConnect+= gameBoard.get(row+i).get(col-horLen+j).getPiece().getValue()*wBonus;
+//                             scoreConnect += getHorPrefixScore(row+i,col) + getHorSufixScore(row+i,col)* wBonus;
+//                             scoreConnect+= temp.letterValue(horizontal.charAt(j))*wBonus;
+//                         }   else{
+////                             scoreConnect+= gameBoard.get(row+i).get(col-horLen+j).getPiece().getValue()*wBonus;
+//                             scoreConnect += getHorPrefixScore(row+i,col) + getHorSufixScore(row+i,col);
+//                             scoreConnect+= temp.letterValue(horizontal.charAt(j));
+//                         }
+//                        }
+//                    }
                 }
             }else{
                 if(!gameBoard.get(row).get(col+i).isEmpty() && col+i <size){
@@ -295,16 +321,21 @@ public class Board {
 
                     //todo check for vertical scoring words created
                     String vertical = getVertPrefix(row, col+i);
+                    vertical += let;
                     vertical += getVertSufix(row,col+i);
-                    if(vertical.length()>0) {
-                        for (int j = 0; j<vertical.length();j++){
+                    if(vertical.length()>1) {
+//                        for (int j = 0; j<vertical.length();j++){
                             if(wBonus > 0){
-                                scoreConnect+= temp.letterValue(vertical.charAt(j))* wBonus;
+                                scoreConnect += getVertPrefixScore(row,col+i) + getVertSufixScore(row,col+i)* wBonus;
+                                scoreConnect += letValue* wBonus;
+                                //scoreConnect+= temp.letterValue(vertical.charAt(j))* wBonus;
                             }else{
-                                scoreConnect+= temp.letterValue(vertical.charAt(j));
+                                scoreConnect += getVertPrefixScore(row,col+i) + getVertSufixScore(row,col+i)* wBonus;
+                                scoreConnect += letValue* wBonus;
+                              //  scoreConnect+= temp.letterValue(vertical.charAt(j));
                             }
 
-                        }
+//                        }
                     }
                 }
             }
@@ -700,6 +731,41 @@ public class Board {
 
     }
 
+    public int getVertPrefixScore(int row, int col){
+        int i =1;
+        int score =0;
+//        StringBuilder hold = new StringBuilder();
+        String temp = "";
+        Letters let = new Letters();
+        //append letter tiles to the left of the position to the front of the string
+        while( row -i >=0 && row -i < size && !gameBoard.get(row-i).get(col).isEmpty() ){
+            char hold =gameBoard.get(row-i).get(col).getPiece().getLetter();
+            score += let.letterValue(hold);
+            //            hold = Character.toLowerCase(hold);
+//            temp = hold +temp;
+            i++;
+        }
+        return score;
+
+    }
+    public int getVertSufixScore(int row, int col){
+        int i =1;
+        int score =0;
+//        StringBuilder hold = new StringBuilder();
+        String temp = "";
+        Letters let = new Letters();
+        //append letter tiles to the left of the position to the front of the string
+        while( row+i >=0 && row+i < size && !gameBoard.get(row+i).get(col).isEmpty() ){
+            char hold =gameBoard.get(row+i).get(col).getPiece().getLetter();
+               score += let.letterValue(hold);
+//            hold = Character.toLowerCase(hold);
+//            temp += hold;
+            i++;
+        }
+        return score;
+
+    }
+
     /** Gets the prefix of a horizontal locations at the position on the board
      *
      * @param row
@@ -719,6 +785,23 @@ public class Board {
         }
         return temp;
     }
+
+    public int getHorPrefixScore(int row, int col){
+        int i =1;
+        int score =0;
+//        StringBuilder hold = new StringBuilder();
+        String temp = "";
+        Letters let = new Letters();
+        //append letter tiles to the left of the position to the front of the string
+        while(col-i >= 0 && col -i < size && !gameBoard.get(row).get(col-i).isEmpty() ){
+            char hold =gameBoard.get(row).get(col-i).getPiece().getLetter();
+                score += let.letterValue(hold);
+//            hold = Character.toLowerCase(hold);
+//            temp = hold +temp;
+            i++;
+        }
+        return score;
+    }
     public String getHorSufix(int row, int col){
         int i =1;
 //        StringBuilder hold = new StringBuilder();
@@ -731,6 +814,22 @@ public class Board {
             i++;
         }
         return temp;
+    }
+    public int getHorSufixScore(int row, int col){
+        int i =1;
+        int score =0;
+//        StringBuilder hold = new StringBuilder();
+        String temp = "";
+        Letters let = new Letters();
+        //append letter tiles to the left of the position to the front of the string
+        while(col+i >= 0 && col +i < size && !gameBoard.get(row).get(col+i).isEmpty() ){
+            char hold =gameBoard.get(row).get(col+i).getPiece().getLetter();
+              score += let.letterValue(hold);
+//            hold = Character.toLowerCase(hold);
+//            temp += hold;
+            i++;
+        }
+        return score;
     }
     /** This function searches the horizontal connections of a vertical play
      * on the board. Starting at positoin(row,col) and moving down along the
@@ -769,7 +868,7 @@ public class Board {
         int i =1;
         while(col +i <size && !gameBoard.get(row).get(col+i).isEmpty() ){
             char hold =gameBoard.get(row).get(col+1).getPiece().getLetter();
-            hold = Character.toLowerCase(hold);
+//            hold = Character.toLowerCase(hold);
             temp += hold;
 //            hold.append(gameBoard.get(row).get(col+i).getPiece().getLetter());
             i++;
