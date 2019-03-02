@@ -402,11 +402,14 @@ public class Board {
 //        Board tempBoard = new Board(dictionary);
 //        tempBoard.configBoard(size +"\n"+this.toString());
         //System.out.println(tempBoard.toString());
-        //todo need to test this new version it starts at the beginning of the row and checks
+        //need to test this new version it starts at the beginning of the row and checks
         // the word in every location down vertically trying to match the word with a tiles already
         // played or finding connecting tiles to the left or the right. if it connects then calls the
         // vertical helper otherwise it will check the vertical helper for connections that would make it false
         // otherwise its true
+
+        //todo need to fix the connections that are made on the end of words that shouldn't necessarily be there
+        // i could possibly use the code i had created originally for that senario. So make sure you check that
         boolean legal =false;
         if(dir == Direction.VERTICAL){
             int wordLen = word.length();
@@ -414,6 +417,7 @@ public class Board {
             for(int i =0;i<size; i++){
                // j is string position
                 boolean connects = false;
+
                 for(int j = 0; j < wordLen; j++){
 
                     // checks size of positions
