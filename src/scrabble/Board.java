@@ -260,14 +260,19 @@ public class Board {
                             if(wBonus>0 ){
 //                             scoreConnect+= gameBoard.get(row+i).get(col-horLen+j).getPiece().getValue()*wBonus;
                                 scoreConnect += getHorPrefixScore(row+i,col) + getHorSufixScore(row+i,col)* wBonus;
-                                scoreConnect += letValue* wBonus;
+//                                scoreConnect += letValue* letterBonus;
 //                                scoreConnect+= temp.letterValue(horizontal.charAt(j))*wBonus;
                             }   else{
 //                             scoreConnect+= gameBoard.get(row+i).get(col-horLen+j).getPiece().getValue()*wBonus;
                                 scoreConnect += getHorPrefixScore(row+i,col) + getHorSufixScore(row+i,col);
 //                                scoreConnect+= temp.letterValue(horizontal.charAt(j));
-                                scoreConnect += letValue;
+//                                scoreConnect += letValue * letterBonus;
                             }
+                        if(letterBonus>0){
+                            scoreConnect += letValue* letterBonus;
+                        }else{
+                            scoreConnect += letValue;
+                        }
 //                        }
                     }
 //                    String horizontal = getHorPrefix(row+i, col);
@@ -324,18 +329,23 @@ public class Board {
 //                    String vertical = getVertPrefix(row, col+i);
 //                    vertical += let;
 //                    vertical += getVertSufix(row,col+i);
-                    if((row-1 >=0 &&!gameBoard.get(row-1).get(col+i).isEmpty())||(row +1 < size &&!gameBoard.get(row+1).get(col+i).isEmpty())){
+                    if((row-1 >=0 && !gameBoard.get(row-1).get(col+i).isEmpty())||(row +1 < size && !gameBoard.get(row+1).get(col+i).isEmpty())){
 //                    if(vertical.length()>1) {
 //                        for (int j = 0; j<vertical.length();j++){
-                            if(wBonus > 0){
-                                scoreConnect += getVertPrefixScore(row,col+i) + getVertSufixScore(row,col+i)* wBonus;
-                                scoreConnect += letValue* wBonus;
-                                //scoreConnect+= temp.letterValue(vertical.charAt(j))* wBonus;
-                            }else{
-                                scoreConnect += getVertPrefixScore(row,col+i) + getVertSufixScore(row,col+i)* wBonus;
-                                scoreConnect += letValue* wBonus;
-                              //  scoreConnect+= temp.letterValue(vertical.charAt(j));
-                            }
+                        if(wBonus > 0){
+                            scoreConnect += getVertPrefixScore(row,col+i) + getVertSufixScore(row,col+i)* wBonus;
+
+                            //scoreConnect+= temp.letterValue(vertical.charAt(j))* wBonus;
+                        }else{
+                            scoreConnect += getVertPrefixScore(row,col+i) + getVertSufixScore(row,col+i);
+
+                          //  scoreConnect+= temp.letterValue(vertical.charAt(j));
+                        }
+                        if(letterBonus>0){
+                            scoreConnect += letValue* letterBonus;
+                        }else{
+                            scoreConnect += letValue;
+                        }
 
 //                        }
                     }
@@ -414,6 +424,24 @@ public class Board {
 //        // around the words that are already placed
     // assuming the word passed is from the dictionary
 
+    public boolean colEmpty(int col ){
+
+        for(int i =0; i<size; i++){
+            if(!gameBoard.get(i).get(col).isEmpty()){
+                return false;
+            }
+        }
+        return true;
+    }
+    public boolean rowEmpty(int row){
+        for(int i =0; i<size; i++){
+            if(!gameBoard.get(row).get(i).isEmpty()){
+                return false;
+            }
+        }
+        return true;
+    }
+
     /** Checks if the word played a certain row and collum and in a certain
      * direction is a legal word, returns negative value for false and returns
      * row or collumn value for legal words
@@ -431,6 +459,33 @@ public class Board {
                return size/2;
             }
         }
+        // did not help it go faster
+//        boolean skip =true;
+//        if(dir == Direction.VERTICAL){
+//            if(!colEmpty(col)){
+//                skip =false;
+//            }
+//            if(col-1>=0 && !colEmpty(col-1)){
+//                skip =false;
+//            }
+//            if(col +1 <size && !colEmpty(col+1)){
+//                skip =false;
+//            }
+//        }else{
+//            if(!rowEmpty(row)){
+//                skip =false;
+//            }
+//            if(row-1>=0 && !rowEmpty(row-1)){
+//                skip =false;
+//            }
+//            if(row +1 <size && !rowEmpty(row+1)){
+//                skip =false;
+//            }
+//        }
+//
+//        if(skip){
+//            return -1;
+//        }
 
 //        Board tempBoard = new Board(dictionary);
 //        tempBoard.configBoard(size +"\n"+this.toString());
@@ -448,6 +503,9 @@ public class Board {
             int wordLen = word.length();
             // i is position in the rows of characters
             for(int i =0;i<size; i++){
+                if(i+wordLen >size ){
+                    return -1;
+                }
                // j is string position
                 boolean connects = false;
 
@@ -498,6 +556,9 @@ public class Board {
             int wordLen = word.length();
             // i is position in the rows of characters
             for(int i =0;i<size; i++){
+                if(i+wordLen >size ){
+                    return -1;
+                }
                 // j is string position
                 boolean connects = false;
                 for(int j = 0; j < wordLen; j++){

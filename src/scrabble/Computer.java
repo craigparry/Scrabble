@@ -47,6 +47,9 @@ public class Computer extends Player {
                 }
 
             }
+            if(hold.isEmpty() && ro -1 > 7 && gameBoard.rowEmpty(ro-1)){
+                break;
+            }
             node =findBestWord(ro,0,hold,Direction.HORIZONTAL);
             if(node != null && highest ==null){
                 highest =node;
@@ -64,6 +67,9 @@ public class Computer extends Player {
                 if(gameBoard.getGameBoard().get(ro).get(co).getPiece() != null) {
                     hold.add(gameBoard.getGameBoard().get(ro).get(co).getPiece().getLetter());
                 }
+            }
+            if(hold.isEmpty() && co -1 > 7 && gameBoard.colEmpty(co-1)){
+                break;
             }
             node =findBestWord(0, co, hold, Direction.VERTICAL);
             if(node != null && highest ==null){
@@ -103,7 +109,7 @@ public class Computer extends Player {
     // or something
 
 
-    public PlayNode findBestWord(int ro, int co,List<Character> boardChar, Direction direction ){
+    public PlayNode findBestWord(int ro, int co,List<Character> boardChar, Direction direction){
         /*traverse board and test words at each location saving the highest scoring word
         * that is a legal move on the board and return a */
         List<Character> chars = new LinkedList<>();
@@ -126,7 +132,7 @@ public class Computer extends Player {
 //        }
 
         holdWords = dictionary.searchUnordered(new LinkedList<>(),chars,null);
-
+        List<String> wordsRemove;
         if(!holdWords.isEmpty()){
             for(String s: holdWords){
                 int tempScore =0;

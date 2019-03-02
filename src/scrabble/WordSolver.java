@@ -70,7 +70,11 @@ public class WordSolver {
             }
 //        System.out.println(test.getBoard().isLegal(7,0,"tacnodes", charList, Direction.HORIZONTAL));
            // System.out.println(test.getBoard().isLegal(0,7,"goldiest",Direction.VERTICAL));
+            long longb = System.currentTimeMillis();
            test.getPlayer().playTurn();
+           long longa = System.currentTimeMillis();
+           System.out.println("Time: "+ (longa -longb));
+
 
 //            System.out.println("score goldiest: "+ test.getBoard().scoreWord(0,7,charList,"goldiest",Direction.VERTICAL));
 //        System.out.println("score doggies: "+ test.getBoard().scoreWord(8,6,charList,"doggies",Direction.HORIZONTAL));
