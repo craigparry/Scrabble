@@ -2,19 +2,48 @@ Craig Parry
 
 Scrabble: 
 
+Data structure for Dictionary: 
+I used a Trie for word lookup. It consists of Trie nodes 
+that use maps as their branches holding more Trie nodes. 
+The Trie nodes are identified by their character value 
+when looked up in the maps
 
-Set up so far the Trie for word lookup. Set up the game 
-board constructor, set up the letter values and frequencies 
-set up the letter bag. 
+
+Project Structure: 
 
 
-Todo: 
-Need to test the trie on a larger collection of words
-so will do that when I get the library of words that I
-want to use for the game. 
 
-need to create a io stream to read in the dictionary
-and a io stream to read in frequencies or letter values
+GUI- The GUI at this point is not hooked up to the logic of the 
+game and does not have the word or letter bonus colors added.
+It has a 15x15 board and a tray for the plaers letters, along with 
+a pass and a play button. I will try to get to this before monday,
+hopefully. I will make the player click on their tile and then on the 
+board to move tiles to a copy of the board that I can test for legal 
+moves, then update the real board and the gui after I test and play their 
+word and after the computer moves. 
+
+Bugs: 
+* My word search is mostly working at this moment, but there is a certain case 
+that runs slower than the others when testing from Brookes example file. It solves 
+in 12 seconds instead of about 3 or 4 seconds for the others. Hopefully thats just 
+the case for boards that are mostly blank and have lots of connecting plays. At least
+that is where the bug lies if I don't happen to find it. I tried minimizing the amount of 
+dictionary lookups, but that didn't seem to help. I think its still something in the isLegal
+function that is slowing it down.
+
+* Trying to figure out how to read my resources from the jar, but having problems at the moment. 
+
+* 
+
+
+TODO if more time: make the transcript read from a scanner in the WordSolver. 
+So that we can feed it files instead of manually testing files.
+Set up the logic for the GUI so that the player can make moves on the board 
+and set up the color scheme for word and letter bonuses. Fix any bugs that I can 
+find solutions for. 
+
+odo: 
+ io stream to read in frequencies or letter values
 
 need to creat an io stream that reads in the string rep
 of a board that can be used to test the legal moves of 
@@ -28,15 +57,3 @@ start preparing the logic of the game.
 test bonus representation of letters and bonus
 
 start set up of player class: abstract and comp/human extensions
-
-Gui- may be usuful to make a singleton for the gui
-
-Bugs: not sure whether its is just my machine, but I am getting stack
-overflow with the sowpods dictionary. My data structure works with smaller
-dictionarys though.
-
-TODO: monday need to make the computer move happen, I have the legal move and 
-I just need to test set piece tomorrow morning. Then I should be set up for 
-the computer move portion. I also need to set up a file reader
-to test my config board method and feed it a test. 
-

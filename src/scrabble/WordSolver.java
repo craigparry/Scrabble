@@ -23,6 +23,12 @@ public class WordSolver {
         board = new Board(dictionary);
         player = new Computer(bag,board,dictionary);
     }
+    public WordSolver(String file){
+        bag =new LetterBag();
+        dictionary = new Dictionary(file);
+        board = new Board(dictionary);
+        player = new Computer(bag,board,dictionary);
+    }
 
     /** returns the board used for the wordsolver
      *
@@ -49,10 +55,16 @@ public class WordSolver {
     }
 
     public static void main(String[] args){
-        WordSolver test = new WordSolver();
+        WordSolver test;
         String config;
         String tray;
-//        if(args.length > 0){
+        if(args.length > 0){
+//            test.getDictionary().readDictFile(args[0]);
+            test = new WordSolver(args[0]);
+        } else{
+            test = new WordSolver();
+        }
+
 //            config =test.getBoard().readBoard(args[0]);
             config =test.getBoard().readBoard("test2.txt");
             tray =test.getBoard().configBoard(config);

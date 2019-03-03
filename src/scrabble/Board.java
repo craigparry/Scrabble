@@ -986,8 +986,7 @@ public class Board {
         Dictionary dict = new Dictionary();
         Board board = new Board(dict);
         String config;
-//        if(length>0){
-//            String temp = args[0];
+
             config = board.readBoard("test.txt");
           System.out.println(config);
             board.configBoard(config);
@@ -995,9 +994,5 @@ public class Board {
         System.out.print(board.toString());
 
         System.out.println("is legal ");
-//        int legal = board.isLegal(8,7,"to", Direction.HORIZONTAL);
-//        if(legal>0){
-//            System.out.println("yay");
-//        }
     }
 }

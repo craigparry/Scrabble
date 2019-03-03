@@ -22,6 +22,13 @@ public class Dictionary {
         populate();
     }
 
+    public Dictionary(String file){
+        dictMap = new HashMap<>();
+        hold = new LinkedList<>();
+        readDictFile(file);
+        populate();
+    }
+
     /** Reads in the file used as the dictionary
      * @reutrn void
      */
@@ -41,7 +48,60 @@ public class Dictionary {
                 }
             } catch(IOException ex){
                 System.out.println(ex.toString());
+                System.out.println("Trying from resources");
+            try(
+                    // use this for the jar file?
+                    // need to create resources folder and "mark directory as resource root"
+                    // with the resources in the oflder to use this input stream
+            InputStream in = getClass().getResourceAsStream("sowpods.txt");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in))){
+
+                    // use this in the mean time
+//                    BufferedReader reader = new BufferedReader(new FileReader("sowpods.txt"))){
+                String line;
+                while ((line = reader.readLine()) != null){
+                    hold.add(line);
+                }
+            } catch(IOException ex2){
+                System.out.println(ex.toString());
+
             }
+            }
+    }
+    public void readDictFile(String file){
+        try(
+                // use this for the jar file?
+                // need to create resources folder and "mark directory as resource root"
+                // with the resources in the oflder to use this input stream
+//            InputStream in = getClass().getResourceAsStream("dictionary.txt");
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(in))){
+
+                // use this in the mean time
+                BufferedReader reader = new BufferedReader(new FileReader(file))){
+            String line;
+            while ((line = reader.readLine()) != null){
+                hold.add(line);
+            }
+        } catch(IOException ex){
+            System.out.println(ex.toString());
+            System.out.println("Trying from resources");
+            try(
+                    // use this for the jar file?
+                    // need to create resources folder and "mark directory as resource root"
+                    // with the resources in the oflder to use this input stream
+            InputStream in = getClass().getResourceAsStream(file);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in))){
+
+                    // use this in the mean time
+//                    BufferedReader reader = new BufferedReader(new FileReader(file))){
+                String line;
+                while ((line = reader.readLine()) != null){
+                    hold.add(line);
+                }
+            } catch(IOException ex2){
+                System.out.println(ex.toString());
+            }
+        }
     }
     /**Populates the dictiony with words from the read in file
      * @param
