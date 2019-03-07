@@ -29,8 +29,8 @@ public class Computer extends Player {
 
 // PlayNode temp = findBestWord();
 //        gameBoard.isLegal();
-        System.out.println("computer board ");
-        System.out.println(gameBoard.toString());
+//        System.out.println("computer board ");
+//        System.out.println(gameBoard.toString());
 
         PlayNode node =null;
         PlayNode highest =null;
@@ -93,6 +93,14 @@ public class Computer extends Player {
      * functionality differs between the computer and the human player
      * */
 
+
+
+
+
+    //fixed I have a bug that is not caluclating the highest score correctly so I
+    // need to look and fix that maybe I'm not setting or getting the bonuses correctly
+    // or something
+
     /** finds the best word that can be played for the computer player
      *
      * @param ro
@@ -101,14 +109,6 @@ public class Computer extends Player {
      * @param direction
      * @return PlayNode
      */
-
-
-
-    //todo I have a bug that is not caluclating the highest score correctly so I
-    // need to look and fix that maybe I'm not setting or getting the bonuses correctly
-    // or something
-
-
     public PlayNode findBestWord(int ro, int co,List<Character> boardChar, Direction direction){
         /*traverse board and test words at each location saving the highest scoring word
         * that is a legal move on the board and return a */
@@ -137,9 +137,9 @@ public class Computer extends Player {
             for(String s: holdWords){
                 int tempScore =0;
 
-                if(s.equals("lemoned")){
-                    System.out.println("lemoned pos:" + " row "+ ro + " col "+ co);
-                }
+//                if(s.equals("lemoned")){
+//                    System.out.println("lemoned pos:" + " row "+ ro + " col "+ co);
+//                }
                 int legalPos = gameBoard.isLegal(ro,co,s,trayHold,direction);
 
                 // is legal returns -1 for false
@@ -201,42 +201,83 @@ public class Computer extends Player {
             this.score =score;
             this.direction = direction;
         }
+
+        /** gtes the direction of the playnode
+         *
+         * @return Direction
+         */
         public Direction getDirection() {
             return direction;
         }
 
+        /**sets the direction of the playnode
+         *
+         * @param direction
+         */
         public void setDirection(Direction direction) {
             this.direction = direction;
         }
 
+        /** gets the word of the playnode
+         *
+         * @return String
+         */
         public String getWord() {
             return word;
         }
 
+        /**sets the word associated with the playnode
+         *
+         * @param word
+         */
         public void setWord(String word) {
             this.word = word;
         }
 
+        /** gets the collumn value of the playnode
+         *
+         * @return int
+         */
         public int getCol() {
             return col;
         }
 
+        /**sets the collumn value of the playnode
+         *
+         * @param col
+         */
         public void setCol(int col) {
             this.col = col;
         }
 
+        /** gets the row value of the playnode
+         *
+         * @return int
+         */
         public int getRow() {
             return row;
         }
 
+        /** sets the row of the playnode
+         *
+         * @param row
+         */
         public void setRow(int row) {
             this.row = row;
         }
 
+        /** gets the score of the playnode
+         *
+         * @return int
+         */
         public int getScore() {
             return score;
         }
 
+        /**Sets the score of the playnode
+         *
+         * @param score
+         */
         public void setScore(int score) {
             this.score = score;
         }

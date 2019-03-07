@@ -55,6 +55,14 @@ public class WordSolver {
     }
 
     public static void main(String[] args){
+        // todo: fix the input streams to work with the jars and in intellij
+        // make scanner for the transcript of boards to be read for the graders to test
+        // set up GUI
+        // finish comments on code
+        // finish readMe
+        // finish project diagrams
+        // move jars to Git even if not totally functional
+
         WordSolver test;
         String config;
         String tray;
@@ -65,34 +73,79 @@ public class WordSolver {
             test = new WordSolver();
         }
 
+        Scanner sc = new Scanner(System.in);
+        String line;
+        String boardConfig ="";
+        while((line = sc.nextLine()) != null && sc.hasNextLine()){
+            if(!line.equals("")){
+                boardConfig +=line +"\n";
+            }else {
+//                boardConfig+="\n";
+            }
+
+
+            if((line.equals("\n") ||line.equals("")) && !boardConfig.equals("")){
+
+
+                tray = test.getBoard().configBoard(boardConfig);
+                test.getPlayer().setTray(tray);
+                System.out.print(test.getBoard().toString());
+                test.getPlayer().playTurn();
+                System.out.println("Move Scored: "+test.getPlayer().getPoints());
+                System.out.println(test.getBoard().toString());
+                boardConfig ="";
+                test.getPlayer().clearPoints();
+
+//                while(line.equals("\n")&& sc.hasNextLine()){
+//                    line = sc.nextLine();
+//                }
+
+                //todo display points for the move and display the board then
+                //reset the players score, tray and boardConfig string for the next
+                // board to be read in
+                // run test print output
+                //
+
+            }
+
+        }
+//        System.out.println(boardConfig);
+
+
+
+
+
+
+
+
+
+
+
 //            config =test.getBoard().readBoard(args[0]);
-            config =test.getBoard().readBoard("test2.txt");
-            tray =test.getBoard().configBoard(config);
+//            config =test.getBoard().readBoard("test2.txt");
+//            tray =test.getBoard().configBoard(config);
 //            System.out.print(config);
 //            System.out.print(tray);
 
-
-
-
-            test.getPlayer().setTray(tray);
-            test.getPlayer().printTray();
-            List<Character> charList = new LinkedList<>();
-            for(Letters let: test.getPlayer().getTray()){
-                charList.add(let.getLetter());
-            }
-//        System.out.println(test.getBoard().isLegal(7,0,"tacnodes", charList, Direction.HORIZONTAL));
-           // System.out.println(test.getBoard().isLegal(0,7,"goldiest",Direction.VERTICAL));
-            long longb = System.currentTimeMillis();
-           test.getPlayer().playTurn();
-           long longa = System.currentTimeMillis();
-           System.out.println("Time: "+ (longa -longb));
-
-
-//            System.out.println("score goldiest: "+ test.getBoard().scoreWord(0,7,charList,"goldiest",Direction.VERTICAL));
-//        System.out.println("score doggies: "+ test.getBoard().scoreWord(8,6,charList,"doggies",Direction.HORIZONTAL));
-            System.out.println("Move Scored: "+test.getPlayer().getPoints());
-            System.out.print(test.getBoard().toString());
-            //todo implement this completely
+//            test.getPlayer().setTray(tray);
+//            test.getPlayer().printTray();
+//            List<Character> charList = new LinkedList<>();
+//            for(Letters let: test.getPlayer().getTray()){
+//                charList.add(let.getLetter());
+//            }
+////        System.out.println(test.getBoard().isLegal(7,0,"tacnodes", charList, Direction.HORIZONTAL));
+//           // System.out.println(test.getBoard().isLegal(0,7,"goldiest",Direction.VERTICAL));
+//            long longb = System.currentTimeMillis();
+//           test.getPlayer().playTurn();
+//           long longa = System.currentTimeMillis();
+//           System.out.println("Time: "+ (longa -longb));
+//
+//
+////            System.out.println("score goldiest: "+ test.getBoard().scoreWord(0,7,charList,"goldiest",Direction.VERTICAL));
+////        System.out.println("score doggies: "+ test.getBoard().scoreWord(8,6,charList,"doggies",Direction.HORIZONTAL));
+//            System.out.println("Move Scored: "+test.getPlayer().getPoints());
+//            System.out.print(test.getBoard().toString());
+//            //todo implement this completely
 //            charList.add('t');
 //            List<String> tempList = test.getDictionary().searchUnordered(new LinkedList<String>(),charList,null);
 //            for(String s: tempList){

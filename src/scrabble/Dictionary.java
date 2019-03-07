@@ -26,6 +26,7 @@ public class Dictionary {
         dictMap = new HashMap<>();
         hold = new LinkedList<>();
         readDictFile(file);
+
         populate();
     }
 
@@ -48,12 +49,16 @@ public class Dictionary {
                 }
             } catch(IOException ex){
                 System.out.println(ex.toString());
-                System.out.println("Trying from resources");
+                System.out.println("Loading sowpods.txt from resources");
+
             try(
+
+
                     // use this for the jar file?
                     // need to create resources folder and "mark directory as resource root"
                     // with the resources in the oflder to use this input stream
-            InputStream in = getClass().getResourceAsStream("sowpods.txt");
+
+            InputStream in = getClass().getClassLoader().getResourceAsStream("sowpods.txt");
             BufferedReader reader = new BufferedReader(new InputStreamReader(in))){
 
                     // use this in the mean time
@@ -63,11 +68,17 @@ public class Dictionary {
                     hold.add(line);
                 }
             } catch(IOException ex2){
-                System.out.println(ex.toString());
+                System.out.println(ex2.toString());
+
 
             }
-            }
+        }
+//        System.out.println("here");
     }
+    /** Reads in the file used as the dictionary specified by a string value to
+     * be read in from a file
+     * @reutrn void
+     */
     public void readDictFile(String file){
         try(
                 // use this for the jar file?
@@ -84,12 +95,13 @@ public class Dictionary {
             }
         } catch(IOException ex){
             System.out.println(ex.toString());
-            System.out.println("Trying from resources");
+            System.out.println("Loading " +file+" from resources");
+
             try(
                     // use this for the jar file?
                     // need to create resources folder and "mark directory as resource root"
                     // with the resources in the oflder to use this input stream
-            InputStream in = getClass().getResourceAsStream(file);
+            InputStream in = getClass().getClassLoader().getResourceAsStream("resources/"+file);
             BufferedReader reader = new BufferedReader(new InputStreamReader(in))){
 
                     // use this in the mean time
@@ -99,9 +111,10 @@ public class Dictionary {
                     hold.add(line);
                 }
             } catch(IOException ex2){
-                System.out.println(ex.toString());
+                System.out.println(ex2.toString());
             }
         }
+
     }
     /**Populates the dictiony with words from the read in file
      * @param

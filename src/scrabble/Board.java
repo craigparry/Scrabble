@@ -202,7 +202,18 @@ public class Board {
     }
 
 
-
+    /**Scores the word on the board at a certain row and collumn going horizontally
+     * or vertically. The word should already be tested for a legal move at that
+     * location. Scoring is based off of the values of the letters on the tray,
+     * the word and letter bonus.
+     *
+     * @param row
+     * @param col
+     * @param tray
+     * @param word
+     * @param direction
+     * @return
+     */
         public int scoreWord(int row, int col, List<Character> tray, String word, Direction direction){
         int length = word.length();
         int score =0;
@@ -424,6 +435,12 @@ public class Board {
 //        // around the words that are already placed
     // assuming the word passed is from the dictionary
 
+    /** returns a boolean of true or false dependent on whether the collumn
+     * is empty or not
+     *
+     * @param col
+     * @return boolean
+     */
     public boolean colEmpty(int col ){
 
         for(int i =0; i<size; i++){
@@ -433,6 +450,12 @@ public class Board {
         }
         return true;
     }
+    /** returns a boolean of true or false dependent on whether the row
+     * is empty or not
+     *
+     * @param row
+     * @return boolean
+     */
     public boolean rowEmpty(int row){
         for(int i =0; i<size; i++){
             if(!gameBoard.get(row).get(i).isEmpty()){
@@ -779,6 +802,13 @@ public class Board {
         return temp;
 
     }
+    /** Gets the vertical suffix of the connection created by a word at a
+     * certain row and collumn
+     *
+     * @param row
+     * @param col
+     * @return String
+     */
     public String getVertSufix(int row, int col){
         int i =1;
 
@@ -793,7 +823,12 @@ public class Board {
         return temp;
 
     }
-
+    /**Scores the vertical connections prefix of the word at a certain row and collum
+     *
+     * @param row
+     * @param col
+     * @return int
+     */
     public int getVertPrefixScore(int row, int col){
         int i =1;
         int score =0;
@@ -811,6 +846,12 @@ public class Board {
         return score;
 
     }
+    /**Scores the vertical connections Suffix of the word at a certain row and collum
+     *
+     * @param row
+     * @param col
+     * @return int
+     */
     public int getVertSufixScore(int row, int col){
         int i =1;
         int score =0;
@@ -849,6 +890,13 @@ public class Board {
         return temp;
     }
 
+    /** gets the score of the prefix of connections made by a word at a
+     * certain row and collumn
+     *
+     * @param row
+     * @param col
+     * @return int
+     */
     public int getHorPrefixScore(int row, int col){
         int i =1;
         int score =0;
@@ -865,6 +913,14 @@ public class Board {
         }
         return score;
     }
+
+    /** Gets the horizontal suffix of the connection created by a word at a
+     * certain row and collumn
+     *
+     * @param row
+     * @param col
+     * @return String
+     */
     public String getHorSufix(int row, int col){
         int i =1;
 //        StringBuilder hold = new StringBuilder();
@@ -878,6 +934,13 @@ public class Board {
         }
         return temp;
     }
+
+    /**Scores the horiztonal connections Suffix of the word at a certain row and collum
+     *
+     * @param row
+     * @param col
+     * @return int
+     */
     public int getHorSufixScore(int row, int col){
         int i =1;
         int score =0;

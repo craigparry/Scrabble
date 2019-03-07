@@ -12,6 +12,8 @@ package scrabble;
 import java.util.*;
 
 public abstract class Player {
+
+
     protected int points;
     protected Collection<Letters> tray;
     protected Board gameBoard;
@@ -26,6 +28,13 @@ public abstract class Player {
         gameBoard = board;
         drawTray(letterBag);
         this.dictionary = dictionary;
+    }
+
+    /**Clears the score of player
+     *
+     */
+    public void clearPoints() {
+        this.points = 0;
     }
     /**This method draws from the letter bag adding them to the players tray
      * until there are 7 letters in the tray
@@ -79,6 +88,11 @@ public abstract class Player {
         return tray;
     }
 
+    /**removes letter specified from the players tray
+     *
+     * @param let
+     * @return Letters
+     */
     public Letters removeLetter(char let){
         Letters temp = null;
         for(Letters l: tray){
@@ -89,6 +103,12 @@ public abstract class Player {
             tray.remove(temp);
         return temp;
     }
+
+    /** Places word on the board from the players tray
+     *
+     * @param node
+     * @return
+     */
     public int placeWord(Computer.PlayNode node){
         String word = node.getWord();
         int row = node.getRow();
@@ -134,7 +154,7 @@ public abstract class Player {
         return node.getScore();
     }
 
-    /**Places a word on the board
+    /**Places a word on the board from the players tray
      *
      * @param word
      * @param row

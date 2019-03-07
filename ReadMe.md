@@ -1,5 +1,32 @@
 Craig Parry
 
+WordSolver: run the WordSolver jar file with a command line
+argument to specify the dictionary file, otherwise it will use 
+the sowpods.txt dictionary stored in the jar. The wordsolver uses
+standard input to read in the board configuration and can handle a 
+file that holds multiple configurations. So the file can look like: 
+
+board size
+board conifguration
+player tray
+
+"2
+.. ..
+.. .. 
+words
+
+3
+.. .. ..
+.. .. ..
+.. .. .. 
+words*"
+
+repeat. 
+
+The left dot of each place repesents the word multiplier if 
+a digit. The right is the letter bonus. A lowercase letter is 
+a regular tile and a uppercase letter is a wildcard tile. 
+
 Scrabble: 
 
 Data structure for Dictionary: 
@@ -31,7 +58,6 @@ that is where the bug lies if I don't happen to find it. I tried minimizing the 
 dictionary lookups, but that didn't seem to help. I think its still something in the isLegal
 function that is slowing it down.
 
-* Trying to figure out how to read my resources from the jar, but having problems at the moment. 
 
 * 
 

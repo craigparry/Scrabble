@@ -1,3 +1,11 @@
+/**Craig Parry This class is used as the letter bag for the scrabble game, that
+ * holds all tiles currently not in play or on a players tray
+ * Use with:
+ * Board.java, BoardTile.java, Letters.java, Dictionary.java, Direction.java,
+ * Human.java, Computer.java, Player.java, MainGameLoop.java, ScrabbleGUI.java,
+ * and WordSolver.java
+ */
+
 package scrabble;
 import java.util.*;
 
@@ -15,10 +23,12 @@ public class LetterBag {
 //        freqMap = new HashMap<>();
         rand = new Random();
         fillBag();
-
-
-
     }
+
+    /**This method fills the LetterBag with all of the tiles needed to play the
+     * game with the standard scrabble frequencies and values
+     *
+     */
     public void fillBag(){
         bag.clear();
         //constructs tiles according to the letter frequencies for the letters
@@ -36,12 +46,21 @@ public class LetterBag {
         }
     }
 
+    /**This method draws a Letter from the bag
+     *
+     * @return Letters
+     */
     public Letters draw(){
         int hold = rand.nextInt(bag.size());
         return bag.remove(hold);
     }
 
-
+    /**This method holds the values for the frequencies used for the letter bag
+     * and returns the frequency associated with that letter
+     *
+     * @param letter
+     * @return int
+     */
     protected int frequency(char letter){
         int freq;
 
