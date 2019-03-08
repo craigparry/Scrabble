@@ -62,24 +62,17 @@ function that is slowing it down.
 * 
 
 
-TODO if more time: make the transcript read from a scanner in the WordSolver. 
-So that we can feed it files instead of manually testing files.
+TODO if more time: 
 Set up the logic for the GUI so that the player can make moves on the board 
 and set up the color scheme for word and letter bonuses. Fix any bugs that I can 
-find solutions for. 
+find solutions for. Set up the colors for bonuses. 
+If I had more time I would attach action listeners to each tile 
+objected created to represent the pieces on the board. If they are stored on the board the
+click is deactivated. If it is in the tray then you can click and then move the piece to the 
+board and click play when they are ready to be checked for the a legal move and scored. 
+The moved pieces would be need to be stored in a list with their positions so that it would 
+be easier to test the word when played and removed when not valid. 
 
-odo: 
- io stream to read in frequencies or letter values
-
-need to creat an io stream that reads in the string rep
-of a board that can be used to test the legal moves of 
-the game 
+io stream to read in frequencies or letter values
 
 
-set up inital board and main game with a toString 
-method so that I can test initial set up of the game and 
-start preparing the logic of the game. 
-
-test bonus representation of letters and bonus
-
-start set up of player class: abstract and comp/human extensions
