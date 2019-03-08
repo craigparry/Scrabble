@@ -18,8 +18,8 @@ public class ScrabbleGUI extends Application {
     private MainGameLoop game;
     private GridPane playingBoard;
     private HBox tray;
-    private Letters selected;
-
+    private Canvas selected;
+    private Letters selectLetter;
 
     private Canvas drawLetter(BoardTile tile) {
         int squareSize = size/15;
@@ -30,10 +30,10 @@ public class ScrabbleGUI extends Application {
         gc.setFill(Color.BEIGE);
 
         int bonus;
-        System.out.println("letterB:" +tile.getLetterBonus());
-        System.out.println("wordB:" +tile.getWordBonus());
+//        System.out.println("letterB:" +tile.getLetterBonus());
+//        System.out.println("wordB:" +tile.getWordBonus());
         if((bonus =tile.getLetterBonus()) >0){
-            System.out.println("here");
+//            System.out.println("here");
             if(bonus ==2){
 
                 gc.setFill(Color.LIGHTBLUE);
@@ -104,6 +104,10 @@ public class ScrabbleGUI extends Application {
         for(Letters letter: game.getHuman().getTray()){
             Canvas temp =drawLetter(new BoardTile(letter));
             // add listener here
+//            if( selected != null && (selected != letter)){
+//                temp.setOnMouseMoved(e->this.clearSelected(temp));
+//            }
+
             temp.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
 //            System . out . println (" pressed "
 //                    + event . getX () + " " + event . getY ());
@@ -111,20 +115,30 @@ public class ScrabbleGUI extends Application {
                 //play move and put into game board at this point
 
                 // on click make select the piece
-                selected = letter;
+
+
+                if(selected != null){
+                    clearSelected(selected);
+                }
+                selected = temp;
+                selectLetter = letter;
                 GraphicsContext gc = temp.getGraphicsContext2D();
                 gc.setStroke(Color.RED);
                 gc.setLineWidth(2);
                 gc.strokeRect(0, 0, temp.getWidth(), temp.getHeight());
-
-
 
             });
 
             tray.getChildren().add(temp);
         }
     }
+    private void clearSelected(Canvas can){
 
+        GraphicsContext gc = can.getGraphicsContext2D();
+        gc.setStroke(Color.BLACK);
+        gc.setLineWidth(2);
+        gc.strokeRect(0, 0, can.getWidth(), can.getHeight());
+    }
     private void removeLet(Canvas let){
         tray.getChildren().remove(let);
     }
@@ -138,7 +152,8 @@ public class ScrabbleGUI extends Application {
     public void start(Stage stage) {
         game = new MainGameLoop();
 //        Letters selected;
-
+        selected = null;
+        selectLetter = null;
 
         size =700;
         stage.setTitle("Scrabble Game");
