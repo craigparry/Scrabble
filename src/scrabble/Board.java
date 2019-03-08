@@ -18,7 +18,11 @@ public class Board {
     public Board(Dictionary dict){
         dictionary = dict;
         size =15;
+//        readBoard("scrabble_board.txt");
         initBoard();
+        String hold = readBoard("scrabble_board.txt");
+        configBoard(hold);
+
     }
     public Board(int x, Dictionary dict){
         dictionary = dict;
@@ -171,7 +175,7 @@ public class Board {
 
         String config = "";
 
-        if(file!= null){
+
             try(
 
                     BufferedReader reader = new BufferedReader(new FileReader(file))){
@@ -182,24 +186,29 @@ public class Board {
                 }
             } catch(IOException ex){
                 System.out.println(ex.toString());
-            }
-            return config;
-        }
-        else {
-            try (
 
-                    BufferedReader reader = new BufferedReader(new FileReader("scrabble_board.txt"))) {
-                String line;
+                try (
 
-                while ((line = reader.readLine()) != null) {
-                    config += line + "\n";
+                        InputStream in = getClass().getClassLoader().getResourceAsStream("scrabble_board.txt");
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(in))){
+//                    BufferedReader reader = new BufferedReader(new FileReader("scrabble_board.txt"))) {
+                    String line;
+
+
+                    while ((line = reader.readLine()) != null) {
+                        config += line + "\n";
+                    }
+                } catch (IOException ex2) {
+                    System.out.println(ex2.toString());
                 }
-            } catch (IOException ex) {
-                System.out.println(ex.toString());
             }
             return config;
+
+
+
+
         }
-    }
+
 
 
     /**Scores the word on the board at a certain row and collumn going horizontally
