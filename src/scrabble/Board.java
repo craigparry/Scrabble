@@ -581,14 +581,16 @@ public class Board {
                     } else break;
 
                     if(j == wordLen-1 && connects){
+                        if(i+j+1< size){
+                            if(!gameBoard.get(i+j+1).get(col).isEmpty()){
+                                return -1;
+                            }
+                        }
                         legal = verticalHelper(i,col,word,0,wordLen);
                         if(legal){
                             return i;
-                        }//else return -1;
+                        }
                     }
-//                    if(j == wordLen -1){
-//                        return i;
-//                    }
                 }
             }
         }else{
@@ -635,6 +637,11 @@ public class Board {
                     }
 
                     if(j == wordLen-1 && connects){
+                        if(i+j+1< size){
+                            if(!gameBoard.get(row).get(i+j+1).isEmpty()){
+                                return -1;
+                            }
+                        }
                         legal = horizontalHelper(row,i,word,0,wordLen);
                         if(legal){
                             return i;

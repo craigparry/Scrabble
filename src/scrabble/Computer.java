@@ -18,7 +18,7 @@ public class Computer extends Player {
     /** Method that plays the turn for the computer player
      * @return void
      */
-    public void playTurn(){
+    public boolean playTurn(){
         // search gameboard for locations on the board that have occupied spaces
         // check both vertical and horiztonal plays if there are spaces available
         // if there aren't spaces available then skip
@@ -83,9 +83,11 @@ public class Computer extends Player {
 
         if(highest != null){
             points += placeWord(highest);
+            return true;
         } else{
             //increment the turn
             // pass the computer turn
+            return false;
         }
 
     }

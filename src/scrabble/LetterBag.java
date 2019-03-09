@@ -25,6 +25,17 @@ public class LetterBag {
         fillBag();
     }
 
+    /** checks if the bag is empty
+     *
+     * @return boolean
+     */
+    public boolean empty(){
+        if(bag.isEmpty()){
+            return true;
+        }
+        return false;
+    }
+
     /**This method fills the LetterBag with all of the tiles needed to play the
      * game with the standard scrabble frequencies and values
      *

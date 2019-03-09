@@ -45,7 +45,7 @@ public class ScrabbleGUI extends Application {
 
                 gc.setFill(Color.LIGHTBLUE);
             }else{
-                gc.setFill(Color.BLUE);
+                gc.setFill(Color.CADETBLUE);
             }
 
         }else if((bonus =tile.getWordBonus()) >0){
@@ -274,7 +274,8 @@ public class ScrabbleGUI extends Application {
 
             } else{
                 // redraw tray
-                playingBoard.getChildren().clear();
+//                playingBoard.getChildren().clear();
+
                 drawBoard();
                 drawTray();
                 playsList.clear();
@@ -286,6 +287,13 @@ public class ScrabbleGUI extends Application {
         Button pass = new Button("Pass");
         pass.setOnAction(event -> {
             // draw domino from graveyard and put in player tray
+            playingBoard.getChildren().clear();
+            game.getComputer().playTurn();
+            comp.setText("Computer: "+game.getComputer().getPoints());
+            drawBoard();
+            playsList.clear();
+            selectLetter =null;
+            selected =null;
 
         });
 

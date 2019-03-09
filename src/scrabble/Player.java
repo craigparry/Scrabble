@@ -127,6 +127,7 @@ public abstract class Player {
                         // todo figure out why this is getting a null pointer
                         // has something to do with when i should be removing the wildcard
                         temp.setBlankValue(word.charAt(i));
+
                         gameBoard.setTile(row+i,col,temp);
                     }
 
@@ -217,7 +218,7 @@ public abstract class Player {
     /**abstract method plays the players turn
      *  @return void
      */
-    public abstract void playTurn();
+    public abstract boolean playTurn();
         /*this may need to be set up in each individually so that the
         * functionality differs between the computer and the human player
         * */

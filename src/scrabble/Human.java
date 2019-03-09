@@ -54,39 +54,45 @@ public class Human extends Player {
             charList.add(l.getLetter());
         }
 
-        if(list.size()==1){
-            word +=temp.getLetter();
-            legal =boardCopy.isLegal(temp.getRow(),temp.getCol(),word,charList,Direction.HORIZONTAL);
-            if(legal >=0){
-                for(Point p: list){
-                    gameBoard.setTile(p.getRow(),p.getCol(),p.getLetter());
-                    removeLetter(p.getLetter().getLetter());
-                    points += gameBoard.scoreWord(temp.getRow(),temp.getCol(),charList,word,Direction.HORIZONTAL);
-                }
-                return true;
-            }
-            legal =boardCopy.isLegal(temp.getRow(),temp.getCol(),word,charList,Direction.VERTICAL);
-            if(legal >=0){
-                for(Point p: list){
-                    gameBoard.setTile(p.getRow(),p.getCol(),p.getLetter());
-                    removeLetter(p.getLetter().getLetter());
-                    points += gameBoard.scoreWord(temp.getRow(),temp.getCol(),charList,word,Direction.VERTICAL);
-                }
-
-                return true;
-            }
-        }
+//        if(list.size()==1){
+//            word +=temp.getLetter();
+//            legal =boardCopy.isLegal(temp.getRow(),temp.getCol(),word,charList,Direction.HORIZONTAL);
+//            if(legal >=0){
+//                for(Point p: list){
+//                    gameBoard.setTile(p.getRow(),p.getCol(),p.getLetter());
+//                    removeLetter(p.getLetter().getLetter());
+//                    points += gameBoard.scoreWord(temp.getRow(),temp.getCol(),charList,word,Direction.HORIZONTAL);
+//                }
+//                return true;
+//            }
+//            legal =boardCopy.isLegal(temp.getRow(),temp.getCol(),word,charList,Direction.VERTICAL);
+//            if(legal >=0){
+//                for(Point p: list){
+//                    gameBoard.setTile(p.getRow(),p.getCol(),p.getLetter());
+//                    removeLetter(p.getLetter().getLetter());
+//                    points += gameBoard.scoreWord(temp.getRow(),temp.getCol(),charList,word,Direction.VERTICAL);
+//                }
+//
+//                return true;
+//            }
+//        }
 //        int size = boardCopy.getSize();
 
 
 
 
-        if(hor){
+//        if(hor){
 
            word += boardCopy.getHorPrefix(temp.getRow(),temp.getCol());
            word += temp.getLetter().getLetter();
            word += boardCopy.getHorSufix(temp.getRow(),temp.getCol());
-           legal =boardCopy.isLegal(temp.getRow(),temp.getCol(),word,charList,Direction.HORIZONTAL);
+           for(int i =0; i< word.length();i++){
+               if(!charList.contains(word.charAt(i))&& !charList.contains('*')){
+                   charList.add(word.charAt(i));
+               }
+           }
+
+           legal =boardCopy.isLegal(temp.getRow(),0,word,charList,Direction.HORIZONTAL);
             if(legal >=0){
                 for(Point p: list){
                     gameBoard.setTile(p.getRow(),p.getCol(),p.getLetter());
@@ -96,14 +102,24 @@ public class Human extends Player {
 
                 return true;
             }
-        }
+//        }
         word ="";
-        if(vert){
+//        if(vert){
 
             word += boardCopy.getVertPrefix(temp.getRow(),temp.getCol());
             word += temp.getLetter().getLetter();
             word += boardCopy.getVertSufix(temp.getRow(),temp.getCol());
-            legal =boardCopy.isLegal(temp.getRow(),temp.getCol(),word,charList,Direction.VERTICAL);
+            System.out.println("Vertical: " + word);
+        charList.clear();
+        for(Letters l : tray){
+            charList.add(l.getLetter());
+        }
+        for(int i =0; i< word.length();i++){
+            if(!charList.contains(word.charAt(i))&& !charList.contains('*')){
+                charList.add(word.charAt(i));
+            }
+        }
+            legal =boardCopy.isLegal(0,temp.getCol(),word,charList,Direction.VERTICAL);
             if(legal >=0){
                 for(Point p: list){
                     gameBoard.setTile(p.getRow(),p.getCol(),p.getLetter());
@@ -113,13 +129,15 @@ public class Human extends Player {
 
                 return true;
             }
-        }
+//        }
 
 
         return false;
     }
 
-    public void playTurn(){}
+    public boolean playTurn(){
+        return false;
+    }
     /*this may need to be set up in each individually so that the
      * functionality differs between the computer and the human player
      * */
