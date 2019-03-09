@@ -29,6 +29,12 @@ a regular tile and a uppercase letter is a wildcard tile.
 
 Scrabble: 
 
+To play the scrabble game click on the tiles on your tray and 
+them to a location on the board. Then press play when your are ready
+to play your word. Press clear if you want to remove the tiles you put on
+the board and pass if you want to pass your turn to the computer 
+player. 
+
 Data structure for Dictionary: 
 I used a Trie for word lookup. It consists of Trie nodes 
 that use maps as their branches holding more Trie nodes. 
@@ -75,6 +81,9 @@ function that is slowing it down.
 * There is a case where words being played vertically are not being allowed. 
 It doesn't always happen, but it happens when connecting on both sides of a horizontal word. 
 Wasn't able to track it down tonight. 
+
+* The wildcards are buggy at the moment. They are not fully built 
+into the human player, but work for the computer player. 
 
 
 TODO if more time: 

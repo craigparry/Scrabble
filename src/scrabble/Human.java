@@ -93,8 +93,8 @@ public class Human extends Player {
                    charList.add(word.charAt(i));
                }
            }
-
-           legal =gameBoard.isLegal(temp.getRow(),temp.getCol()-prefixLen,word,charList,Direction.HORIZONTAL);
+           if(dictionary.search(word,null,0,word.length())){
+            legal =gameBoard.isLegal(temp.getRow(),temp.getCol()-prefixLen,word,charList,Direction.HORIZONTAL);
             if(legal >=0){
                 for(Point p: list){
                     gameBoard.setTile(p.getRow(),p.getCol(),p.getLetter());
@@ -104,7 +104,7 @@ public class Human extends Player {
 
                 return true;
             }
-//        }
+        }
         word ="";
 //        if(vert){
 
@@ -122,6 +122,7 @@ public class Human extends Player {
                 charList.add(word.charAt(i));
             }
         }
+        for(int i =0; i< word.length();i++){
             legal =gameBoard.isLegal(temp.getRow()-prefixLen,temp.getCol(),word,charList,Direction.VERTICAL);
 
             if(legal >=0){
@@ -133,7 +134,7 @@ public class Human extends Player {
 
                 return true;
             }
-//        }
+        }
 
 
         return false;
