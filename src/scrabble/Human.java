@@ -22,6 +22,7 @@ public class Human extends Player {
         boolean hor =false;
         boolean vert = false;
         Board boardCopy = gameBoard.copyBoard(gameBoard);
+
         for(Point p: list){
             boardCopy.setTile(p.getRow(),p.getCol(),p.getLetter());
             if(x == -1){
@@ -37,41 +38,83 @@ public class Human extends Player {
             if(y != -1 && y != p.getRow()){
                 vert =true;
             }
-
         }
-        if(hor == true && vert == true){
+
+        if(hor == true && vert == true && list.size()>1){
+
+            System.out.print("broke here2");
             return false;
         }
-        int size = boardCopy.getSize();
         String word="";
+
+        Point temp =list.get(0);
         int legal= -1;
         List<Character> charList =new LinkedList<>();
         for(Letters l : tray){
             charList.add(l.getLetter());
         }
-        Point temp =list.get(0);
+
+        if(list.size()==1){
+            word +=temp.getLetter();
+            legal =boardCopy.isLegal(temp.getRow(),temp.getCol(),word,charList,Direction.HORIZONTAL);
+            if(legal >=0){
+                for(Point p: list){
+                    gameBoard.setTile(p.getRow(),p.getCol(),p.getLetter());
+                    removeLetter(p.getLetter().getLetter());
+                    points += gameBoard.scoreWord(temp.getRow(),temp.getCol(),charList,word,Direction.HORIZONTAL);
+                }
+                return true;
+            }
+            legal =boardCopy.isLegal(temp.getRow(),temp.getCol(),word,charList,Direction.VERTICAL);
+            if(legal >=0){
+                for(Point p: list){
+                    gameBoard.setTile(p.getRow(),p.getCol(),p.getLetter());
+                    removeLetter(p.getLetter().getLetter());
+                    points += gameBoard.scoreWord(temp.getRow(),temp.getCol(),charList,word,Direction.VERTICAL);
+                }
+
+                return true;
+            }
+        }
+//        int size = boardCopy.getSize();
+
+
+
+
         if(hor){
 
            word += boardCopy.getHorPrefix(temp.getRow(),temp.getCol());
            word += temp.getLetter().getLetter();
            word += boardCopy.getHorSufix(temp.getRow(),temp.getCol());
            legal =boardCopy.isLegal(temp.getRow(),temp.getCol(),word,charList,Direction.HORIZONTAL);
+            if(legal >=0){
+                for(Point p: list){
+                    gameBoard.setTile(p.getRow(),p.getCol(),p.getLetter());
+                    removeLetter(p.getLetter().getLetter());
+                    points += gameBoard.scoreWord(temp.getRow(),temp.getCol(),charList,word,Direction.HORIZONTAL);
+                }
+
+                return true;
+            }
         }
+        word ="";
         if(vert){
 
             word += boardCopy.getVertPrefix(temp.getRow(),temp.getCol());
             word += temp.getLetter().getLetter();
             word += boardCopy.getVertSufix(temp.getRow(),temp.getCol());
             legal =boardCopy.isLegal(temp.getRow(),temp.getCol(),word,charList,Direction.VERTICAL);
-        }
-        if(legal >=0){
-            for(Point p: list){
-                gameBoard.setTile(p.getRow(),p.getCol(),p.getLetter());
-                removeLetter(p.getLetter().getLetter());
-            }
+            if(legal >=0){
+                for(Point p: list){
+                    gameBoard.setTile(p.getRow(),p.getCol(),p.getLetter());
+                    removeLetter(p.getLetter().getLetter());
+                    points += gameBoard.scoreWord(temp.getRow(),temp.getCol(),charList,word,Direction.VERTICAL);
+                }
 
-            return true;
+                return true;
+            }
         }
+
 
         return false;
     }

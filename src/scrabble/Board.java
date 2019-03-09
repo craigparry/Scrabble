@@ -185,7 +185,7 @@ public class Board {
                     config += line + "\n";
                 }
             } catch(IOException ex){
-                System.out.println(ex.toString());
+//                System.out.println(ex.toString());
 
                 try (
 
@@ -432,6 +432,7 @@ public class Board {
                 char hold;
                 if(board.gameBoard.get(i).get(k).getPiece()!=null){
                     hold = board.gameBoard.get(i).get(k).getPiece().getLetter();
+                    temp.gameBoard.get(i).add(new BoardTile(new Letters(hold)));
                 }else{
                     temp.gameBoard.get(i).add(new BoardTile());
                 }

@@ -233,47 +233,53 @@ public class ScrabbleGUI extends Application {
         Button play = new Button("Play");
         play.setOnAction(event -> {
             // draw domino from graveyard and put in player tray
-            int x=-1;
-            int y =-1;
-
-            for(Point p: playsList){
-                int tempX= p.getCol();
-                int tempY= p.getRow();
-                if(x == -1){
-                    x = tempX;
-                }
-                if(y == -1){
-                    y=tempY;
-                }
-
-
-
-            }
+//            int x=-1;
+//            int y =-1;
+//
+//            for(Point p: playsList){
+//                int tempX= p.getCol();
+//                int tempY= p.getRow();
+//                if(x == -1){
+//                    x = tempX;
+//                }
+//                if(y == -1){
+//                    y=tempY;
+//                }
+//
+//            }
 
 //            if(game.getHuman().playMove(playsList)){
 //                System.out.print("human play move working ");
 //
 //            }
 
-            boolean legal = false;
-            if(game.getHuman().playMove(playsList)){
+//            boolean legal = false;
+            if(!playsList.isEmpty() && game.getHuman().playMove(playsList)){
 
                 // play the turn
                 // update score and label
                 drawBoard();
                 game.getHuman().drawTray(game.getBag());
                 drawTray();
+                hum.setText("Player: "+game.getHuman().getPoints());
                 // then the computer turn
                 // update computer score and label
 
                 game.getComputer().playTurn();
+                comp.setText("Computer: "+game.getComputer().getPoints());
                 drawBoard();
+                playsList.clear();
+                selectLetter =null;
+                selected =null;
 
             } else{
                 // redraw tray
                 playingBoard.getChildren().clear();
                 drawBoard();
                 drawTray();
+                playsList.clear();
+                selectLetter =null;
+                selected =null;
             }
         });
 
