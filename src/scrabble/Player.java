@@ -150,7 +150,7 @@ public abstract class Player {
 
             }
         }
-
+        drawTray(letterBag);
         return node.getScore();
     }
 
@@ -222,7 +222,7 @@ public abstract class Player {
         * functionality differs between the computer and the human player
         * */
 
-
+    public abstract boolean playMove(List<Point> list);
 
     /* human methods */
 

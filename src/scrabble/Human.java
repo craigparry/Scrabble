@@ -6,6 +6,7 @@
  * and WordSolver.java
  */
 package scrabble;
+import java.util.*;
 
 public class Human extends Player {
 
@@ -13,9 +14,69 @@ public class Human extends Player {
         super(bag,board,dictionary);
     }
 
-    public void playTurn(){
+    public boolean playMove(List<Point> list){
+        int x = -1;
+        int y = -1;
 
+
+        boolean hor =false;
+        boolean vert = false;
+        Board boardCopy = gameBoard.copyBoard(gameBoard);
+        for(Point p: list){
+            boardCopy.setTile(p.getRow(),p.getCol(),p.getLetter());
+            if(x == -1){
+                x = p.getCol();
+            }
+            if(y == -1){
+                y=p.getRow();
+            }
+
+            if(x != -1 && x != p.getCol()){
+                hor =true;
+            }
+            if(y != -1 && y != p.getRow()){
+                vert =true;
+            }
+
+        }
+        if(hor == true && vert == true){
+            return false;
+        }
+        int size = boardCopy.getSize();
+        String word="";
+        int legal= -1;
+        List<Character> charList =new LinkedList<>();
+        for(Letters l : tray){
+            charList.add(l.getLetter());
+        }
+        Point temp =list.get(0);
+        if(hor){
+
+           word += boardCopy.getHorPrefix(temp.getRow(),temp.getCol());
+           word += temp.getLetter().getLetter();
+           word += boardCopy.getHorSufix(temp.getRow(),temp.getCol());
+           legal =boardCopy.isLegal(temp.getRow(),temp.getCol(),word,charList,Direction.HORIZONTAL);
+        }
+        if(vert){
+
+            word += boardCopy.getVertPrefix(temp.getRow(),temp.getCol());
+            word += temp.getLetter().getLetter();
+            word += boardCopy.getVertSufix(temp.getRow(),temp.getCol());
+            legal =boardCopy.isLegal(temp.getRow(),temp.getCol(),word,charList,Direction.VERTICAL);
+        }
+        if(legal >=0){
+            for(Point p: list){
+                gameBoard.setTile(p.getRow(),p.getCol(),p.getLetter());
+                removeLetter(p.getLetter().getLetter());
+            }
+
+            return true;
+        }
+
+        return false;
     }
+
+    public void playTurn(){}
     /*this may need to be set up in each individually so that the
      * functionality differs between the computer and the human player
      * */

@@ -429,9 +429,15 @@ public class Board {
         for(int i = 0; i < size; i++){
             temp.gameBoard.add(new ArrayList<>(board.size));
             for(int k = 0; k< size; k++){
-                char hold = board.gameBoard.get(i).get(k).getPiece().getLetter();
+                char hold;
+                if(board.gameBoard.get(i).get(k).getPiece()!=null){
+                    hold = board.gameBoard.get(i).get(k).getPiece().getLetter();
+                }else{
+                    temp.gameBoard.get(i).add(new BoardTile());
+                }
 
-                temp.gameBoard.get(i).add(new BoardTile(new Letters(hold)));
+
+
 
             }
         }
@@ -489,7 +495,7 @@ public class Board {
         if(boardEmpty()){
             if(word.length()+size/2 <= size && size/2 -word.length()>=0){
                 // maybe just place the word
-               return size/2;
+                return size/2;
             }
         }
         // did not help it go faster

@@ -10,8 +10,8 @@ public class MainGameLoop {
     private Board gameBoard;
     private LetterBag bag;
     private Dictionary dictionary;
-    private Player human;
-    private Player computer;
+    private Human human;
+    private Computer computer;
     private int turn;
     // computer
     //human
@@ -94,7 +94,7 @@ public class MainGameLoop {
      *
      * @param human
      */
-    public void setHuman(Player human) {
+    public void setHuman(Human human) {
         this.human = human;
     }
 
@@ -110,7 +110,7 @@ public class MainGameLoop {
      *
      * @param computer
      */
-    public void setComputer(Player computer) {
+    public void setComputer(Computer computer) {
         this.computer = computer;
     }
 

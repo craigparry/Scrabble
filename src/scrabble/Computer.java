@@ -183,6 +183,9 @@ public class Computer extends Player {
         else return null;
 
     }
+    public boolean playMove(List<Point> list){
+        return false;
+    }
 
     /** Protected class that is used to hold the word, direction, col, row and
      * score of the play.
@@ -281,6 +284,7 @@ public class Computer extends Player {
         public void setScore(int score) {
             this.score = score;
         }
+
     }
 
 }

@@ -10,8 +10,9 @@ import javafx.stage.Stage;
 import javafx.scene.canvas.*;
 import javafx.scene.control.*;
 import javafx.scene.text.*;
+import java.util.*;
 
-import java.util.Collections;
+
 
 public class ScrabbleGUI extends Application {
     private int size;
@@ -21,6 +22,10 @@ public class ScrabbleGUI extends Application {
     private Canvas selected;
     private Letters selectLetter;
     private Board copy;
+    private List<Canvas> selectedList;
+    private List<Point> playsList;
+    private Label comp;
+    private Label hum;
 
 
     private Canvas drawLetter(BoardTile tile) {
@@ -83,6 +88,8 @@ public class ScrabbleGUI extends Application {
 
 
 //                temp.setOnMouseClicked(e->this.dropSelected(temp));
+                int finalCol = col;
+                int finalRow = row;
                 temp.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
 //            System . out . println (" pressed "
 //                    + event . getX () + " " + event . getY ());
@@ -96,11 +103,17 @@ public class ScrabbleGUI extends Application {
 //                    copy = game.getGameBoard().copyBoard(game.getGameBoard());
 //                    get
                     if(selectLetter != null){
+                        playsList.add(new Point(finalRow, finalCol,selectLetter));
                         drawLetter(temp, selectLetter);
                         selectLetter =null;
 
                         if(selected!= null){
                             tray.getChildren().remove(selected);
+
+                            //maybe make a map to hold the locations of
+                            // the letters as well
+                            // test them for legality
+                            selectedList.add(selected);
                             selected =null;
                         }
                     }
@@ -132,6 +145,7 @@ public class ScrabbleGUI extends Application {
 //        can = drawLetter()
 //    }
     private void drawTray(){
+        tray.getChildren().clear();
         game.getHuman().getTray();
         for(Letters letter: game.getHuman().getTray()){
             Canvas temp =drawLetter(new BoardTile(letter));
@@ -171,6 +185,10 @@ public class ScrabbleGUI extends Application {
         gc.setLineWidth(2);
         gc.strokeRect(0, 0, can.getWidth(), can.getHeight());
     }
+
+    private void clearPlayed(){
+
+    }
     private void removeLet(Canvas let){
         tray.getChildren().remove(let);
     }
@@ -183,9 +201,12 @@ public class ScrabbleGUI extends Application {
     @Override
     public void start(Stage stage) {
         game = new MainGameLoop();
-//        Letters selected;
+        selectedList = new LinkedList<>();
         selected = null;
         selectLetter = null;
+        playsList = new LinkedList<>();
+        hum = new Label("Player: 0");
+        comp = new Label("Computer: 0");
 
         size =700;
         stage.setTitle("Scrabble Game");
@@ -210,9 +231,59 @@ public class ScrabbleGUI extends Application {
                 null, null)));
         drawTray();
         Button play = new Button("Play");
-        Button pass = new Button("Pass");
+        play.setOnAction(event -> {
+            // draw domino from graveyard and put in player tray
+            int x=-1;
+            int y =-1;
 
-        rightSide.getChildren().addAll(play,pass);
+            for(Point p: playsList){
+                int tempX= p.getCol();
+                int tempY= p.getRow();
+                if(x == -1){
+                    x = tempX;
+                }
+                if(y == -1){
+                    y=tempY;
+                }
+
+
+
+            }
+
+//            if(game.getHuman().playMove(playsList)){
+//                System.out.print("human play move working ");
+//
+//            }
+
+            boolean legal = false;
+            if(game.getHuman().playMove(playsList)){
+
+                // play the turn
+                // update score and label
+                drawBoard();
+                game.getHuman().drawTray(game.getBag());
+                drawTray();
+                // then the computer turn
+                // update computer score and label
+
+                game.getComputer().playTurn();
+                drawBoard();
+
+            } else{
+                // redraw tray
+                playingBoard.getChildren().clear();
+                drawBoard();
+                drawTray();
+            }
+        });
+
+        Button pass = new Button("Pass");
+        pass.setOnAction(event -> {
+            // draw domino from graveyard and put in player tray
+
+        });
+
+        rightSide.getChildren().addAll(play,pass,hum,comp);
 //        rightSide.setMinWidth(size/10);
         screen.setMinSize(size,size);
 
