@@ -28,6 +28,7 @@ public class ScrabbleGUI extends Application {
     private Label hum;
 
 
+
     private Canvas drawLetter(BoardTile tile) {
         int squareSize = size/15;
         Canvas canvas;
@@ -230,6 +231,11 @@ public class ScrabbleGUI extends Application {
         tray.setBackground(new Background(new BackgroundFill(Color.SADDLEBROWN,
                 null, null)));
         drawTray();
+        Button reset = new Button("New Game");
+        Button clear = new Button("Clear");
+        clear.setOnAction(event -> {});
+        reset.setOnAction(event -> {});
+
         Button play = new Button("Play");
         play.setOnAction(event -> {
             // draw domino from graveyard and put in player tray
@@ -297,7 +303,7 @@ public class ScrabbleGUI extends Application {
 
         });
 
-        rightSide.getChildren().addAll(play,pass,hum,comp);
+        rightSide.getChildren().addAll(reset,play,clear,pass,hum,comp);
 //        rightSide.setMinWidth(size/10);
         screen.setMinSize(size,size);
 

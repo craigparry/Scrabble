@@ -17,6 +17,7 @@ public class Human extends Player {
     public boolean playMove(List<Point> list){
         int x = -1;
         int y = -1;
+        System.out.println(gameBoard.toString());
 
 
         boolean hor =false;
@@ -82,8 +83,9 @@ public class Human extends Player {
 
 
 //        if(hor){
-
+        int prefixLen;
            word += boardCopy.getHorPrefix(temp.getRow(),temp.getCol());
+           prefixLen =word.length();
            word += temp.getLetter().getLetter();
            word += boardCopy.getHorSufix(temp.getRow(),temp.getCol());
            for(int i =0; i< word.length();i++){
@@ -92,7 +94,7 @@ public class Human extends Player {
                }
            }
 
-           legal =boardCopy.isLegal(temp.getRow(),0,word,charList,Direction.HORIZONTAL);
+           legal =gameBoard.isLegal(temp.getRow(),temp.getCol()-prefixLen,word,charList,Direction.HORIZONTAL);
             if(legal >=0){
                 for(Point p: list){
                     gameBoard.setTile(p.getRow(),p.getCol(),p.getLetter());
@@ -107,6 +109,7 @@ public class Human extends Player {
 //        if(vert){
 
             word += boardCopy.getVertPrefix(temp.getRow(),temp.getCol());
+            prefixLen = word.length();
             word += temp.getLetter().getLetter();
             word += boardCopy.getVertSufix(temp.getRow(),temp.getCol());
             System.out.println("Vertical: " + word);
@@ -119,7 +122,8 @@ public class Human extends Player {
                 charList.add(word.charAt(i));
             }
         }
-            legal =boardCopy.isLegal(0,temp.getCol(),word,charList,Direction.VERTICAL);
+            legal =gameBoard.isLegal(temp.getRow()-prefixLen,temp.getCol(),word,charList,Direction.VERTICAL);
+
             if(legal >=0){
                 for(Point p: list){
                     gameBoard.setTile(p.getRow(),p.getCol(),p.getLetter());
