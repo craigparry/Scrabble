@@ -2,7 +2,7 @@
  *  used for the Scrabble game
  * Use with:
  * Board.java, BoardTile.java, Letters.java, Dictionary.java, Direction.java,
- * Computer.java, LetterBag.java, Player.java, MainGameLoop.java, ScrabbleGUI.java,
+ * Computer.java, LetterBag.java, Player.java, MainGame.java, ScrabbleGUI.java,
  * and WordSolver.java
  */
 package scrabble;

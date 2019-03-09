@@ -6,7 +6,7 @@
  */
 package scrabble;
 
-public class MainGameLoop {
+public class MainGame {
     private Board gameBoard;
     private LetterBag bag;
     private Dictionary dictionary;
@@ -16,7 +16,7 @@ public class MainGameLoop {
     // computer
     //human
 
-    public MainGameLoop(){
+    public MainGame(){
         newGame();
     }
 
@@ -133,7 +133,7 @@ public class MainGameLoop {
 
     public static void main(String[] args) {
 	// write your code here
-        MainGameLoop test = new MainGameLoop();
+        MainGame test = new MainGame();
         test.getGameBoard().setTile(7,7,new Letters('a'));
 
     }

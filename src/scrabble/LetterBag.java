@@ -2,7 +2,7 @@
  * holds all tiles currently not in play or on a players tray
  * Use with:
  * Board.java, BoardTile.java, Letters.java, Dictionary.java, Direction.java,
- * Human.java, Computer.java, Player.java, MainGameLoop.java, ScrabbleGUI.java,
+ * Human.java, Computer.java, Player.java, MainGame.java, ScrabbleGUI.java,
  * and WordSolver.java
  */
 

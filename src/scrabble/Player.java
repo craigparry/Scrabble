@@ -2,7 +2,7 @@
  * Human and Computer classes that are used in the game
  * Use with:
  * Board.java, BoardTile.java,Computer.java, Dictionary.java, Direction.java,
- * Human.java, LetterBag.java, Letters.java, MainGameLoop.java, ScrabbleGUI.java,
+ * Human.java, LetterBag.java, Letters.java, MainGame.java, ScrabbleGUI.java,
  * and WordSolver.java
  *
  */

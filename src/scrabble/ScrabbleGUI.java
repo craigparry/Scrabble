@@ -16,7 +16,7 @@ import java.util.*;
 
 public class ScrabbleGUI extends Application {
     private int size;
-    private MainGameLoop game;
+    private MainGame game;
     private GridPane playingBoard;
     private HBox tray;
     private Canvas selected;
@@ -201,7 +201,7 @@ public class ScrabbleGUI extends Application {
      */
     @Override
     public void start(Stage stage) {
-        game = new MainGameLoop();
+        game = new MainGame();
         selectedList = new LinkedList<>();
         selected = null;
         selectLetter = null;
@@ -233,7 +233,13 @@ public class ScrabbleGUI extends Application {
         drawTray();
         Button reset = new Button("New Game");
         Button clear = new Button("Clear");
-        clear.setOnAction(event -> {});
+        clear.setOnAction(event -> {
+            drawBoard();
+            drawTray();
+            playsList.clear();
+            selectLetter =null;
+            selected =null;
+        });
         reset.setOnAction(event -> {});
 
         Button play = new Button("Play");

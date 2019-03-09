@@ -72,19 +72,19 @@ dictionary lookups, but that didn't seem to help. I think its still something in
 function that is slowing it down.
 
 
-* 
+* There is a case where words being played vertically are not being allowed. 
+It doesn't always happen, but it happens when connecting on both sides of a horizontal word. 
+Wasn't able to track it down tonight. 
 
 
 TODO if more time: 
-Set up the logic for the GUI so that the player can make moves on the board 
-and set up the color scheme for word and letter bonuses. Fix any bugs that I can 
-find solutions for. Set up the colors for bonuses. 
-If I had more time I would attach action listeners to each tile 
-objected created to represent the pieces on the board. If they are stored on the board the
-click is deactivated. If it is in the tray then you can click and then move the piece to the 
-board and click play when they are ready to be checked for the a legal move and scored. 
-The moved pieces would be need to be stored in a list with their positions so that it would 
-be easier to test the word when played and removed when not valid. 
+Need to make the rules so that the first play has to be at the center of the board.
+ 
+I would add the end game logic and fix my bugs. I need to add the conditions for when the 
+bag runs out and the computer player has no move and the human player passes their turn. 
+Adding the remaining tiles scores to the other players tray if a player plays all of their tiles 
+and subtract that value from the score of the player who had tiles remaining on their tray.
+ 
 
 io stream to read in frequencies or letter values
 
