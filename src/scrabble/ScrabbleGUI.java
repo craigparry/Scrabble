@@ -20,6 +20,8 @@ public class ScrabbleGUI extends Application {
     private HBox tray;
     private Canvas selected;
     private Letters selectLetter;
+    private Board copy;
+
 
     private Canvas drawLetter(BoardTile tile) {
         int squareSize = size/15;
@@ -76,29 +78,59 @@ public class ScrabbleGUI extends Application {
 
         for(int row =0; row<boardSize; row++){
             for(int col =0; col<boardSize; col++){
-                Canvas temp = drawLetter(game.getGameBoard().getGameBoard().get(row).get(col));
+                BoardTile tileTemp = game.getGameBoard().getGameBoard().get(row).get(col);
+                Canvas temp = drawLetter(tileTemp);
 
 
-                temp.setOnMouseClicked(e->this.dropSelected());
-//                temp.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
-////            System . out . println (" pressed "
-////                    + event . getX () + " " + event . getY ());
-////            System.out.println(domino.toString());
-//                    //play move and put into game board at this point
-//
-//                    // on click make select the piece
-//
-//
-//
-//                });
+//                temp.setOnMouseClicked(e->this.dropSelected(temp));
+                temp.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
+//            System . out . println (" pressed "
+//                    + event . getX () + " " + event . getY ());
+//            System.out.println(domino.toString());
+                    //play move and put into game board at this point
+
+
+                    // add letter selected to the list of selected pieces
+                    // remove the cnavas object from the tray
+                    //
+//                    copy = game.getGameBoard().copyBoard(game.getGameBoard());
+//                    get
+                    if(selectLetter != null){
+                        drawLetter(temp, selectLetter);
+                        selectLetter =null;
+
+                        if(selected!= null){
+                            tray.getChildren().remove(selected);
+                            selected =null;
+                        }
+                    }
+
+
+
+                });
                 playingBoard.add(temp,col,row);
+
 
             }
         }
     }
-    private void dropSelected(){
 
+    public void drawLetter(Canvas can, Letters letter){
+        GraphicsContext gc = can.getGraphicsContext2D();
+        int squareSize = size/15;
+
+        gc.setStroke(Color.BLACK);
+        gc.setFont(new Font("Regular", squareSize/2));
+//            gc.strokeText(t,(squareSize/2)-5,(squareSize/2)+5,squareSize););
+        gc.strokeText(Character.toString(letter.getLetter()),
+                (squareSize/2)-(squareSize/7),(squareSize/2)+5,squareSize);
+        gc.setFont(new Font("regular",squareSize/3));
+        gc.strokeText(Integer.toString(letter.getValue()),6*squareSize/8,
+                7*squareSize/8,squareSize/5);
     }
+//    private void dropSelected(Canvas can ){
+//        can = drawLetter()
+//    }
     private void drawTray(){
         game.getHuman().getTray();
         for(Letters letter: game.getHuman().getTray()){

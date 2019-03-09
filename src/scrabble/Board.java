@@ -422,20 +422,21 @@ public class Board {
         return true;
     }
 
-//    public Board copyBoard(Board board){
-//        Board temp = new Board(board.dictionary);
-//
-//        temp.gameBoard = new ArrayList<>(board.size);
-//        for(int i = 0; i < size; i++){
-//            temp.gameBoard.add(new ArrayList<>(board.size));
-//            for(int k = 0; k< size; k++){
-//                char hold = board.gameBoard.get(i).get(k).getPiece().getLetter();
-//
-//                temp.gameBoard.get(i).add(new BoardTile(new Letters(hold)));
-//
-//            }
-//        }
-//    }
+    public Board copyBoard(Board board){
+        Board temp = new Board(board.dictionary);
+
+        temp.gameBoard = new ArrayList<>(board.size);
+        for(int i = 0; i < size; i++){
+            temp.gameBoard.add(new ArrayList<>(board.size));
+            for(int k = 0; k< size; k++){
+                char hold = board.gameBoard.get(i).get(k).getPiece().getLetter();
+
+                temp.gameBoard.get(i).add(new BoardTile(new Letters(hold)));
+
+            }
+        }
+        return temp;
+    }
 
     //        // todo: need to check for the case of a horizontal word played under
 //         //a horizontal word and a vertical played next to a vertical
