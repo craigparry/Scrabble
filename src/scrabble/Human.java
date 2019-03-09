@@ -17,7 +17,7 @@ public class Human extends Player {
     public boolean playMove(List<Point> list){
         int x = -1;
         int y = -1;
-        System.out.println(gameBoard.toString());
+//        System.out.println(gameBoard.toString());
 
 
         boolean hor =false;
@@ -43,7 +43,7 @@ public class Human extends Player {
 
         if(hor == true && vert == true && list.size()>1){
 
-            System.out.print("broke here2");
+//            System.out.print("broke here2");
             return false;
         }
         String word="";
@@ -112,7 +112,7 @@ public class Human extends Player {
             prefixLen = word.length();
             word += temp.getLetter().getLetter();
             word += boardCopy.getVertSufix(temp.getRow(),temp.getCol());
-            System.out.println("Vertical: " + word);
+//            System.out.println("Vertical: " + word);
         charList.clear();
         for(Letters l : tray){
             charList.add(l.getLetter());

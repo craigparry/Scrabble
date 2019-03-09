@@ -1,3 +1,12 @@
+/**
+ * Craig Parry This class is used for the scrabble game and is the human player
+ * used for the Scrabble game
+ * Use with:
+ * Board.java, BoardTile.java, Letters.java, Dictionary.java, Direction.java,
+ * Computer.java, LetterBag.java, Player.java, MainGame.java, Human.java,
+ * and WordSolver.java
+ */
+
 package scrabble;
 
 import javafx.application.Application;
@@ -10,8 +19,8 @@ import javafx.stage.Stage;
 import javafx.scene.canvas.*;
 import javafx.scene.control.*;
 import javafx.scene.text.*;
-import java.util.*;
 
+import java.util.*;
 
 
 public class ScrabbleGUI extends Application {
@@ -28,9 +37,15 @@ public class ScrabbleGUI extends Application {
     private Label hum;
 
 
-
+    /**
+     * Creates a letter to be drawn on the GUI using a canvas object
+     * representing the game board and the tiles on the tray
+     *
+     * @param tile
+     * @return Canvas
+     */
     private Canvas drawLetter(BoardTile tile) {
-        int squareSize = size/15;
+        int squareSize = size / 15;
         Canvas canvas;
         GraphicsContext gc;
         canvas = new Canvas(squareSize, squareSize);
@@ -40,19 +55,19 @@ public class ScrabbleGUI extends Application {
         int bonus;
 //        System.out.println("letterB:" +tile.getLetterBonus());
 //        System.out.println("wordB:" +tile.getWordBonus());
-        if((bonus =tile.getLetterBonus()) >0){
+        if ((bonus = tile.getLetterBonus()) > 0) {
 //            System.out.println("here");
-            if(bonus ==2){
+            if (bonus == 2) {
 
                 gc.setFill(Color.LIGHTBLUE);
-            }else{
+            } else {
                 gc.setFill(Color.CADETBLUE);
             }
 
-        }else if((bonus =tile.getWordBonus()) >0){
-            if(bonus == 2){
+        } else if ((bonus = tile.getWordBonus()) > 0) {
+            if (bonus == 2) {
                 gc.setFill(Color.LIGHTPINK);
-            }else{
+            } else {
                 gc.setFill(Color.RED);
             }
         }
@@ -62,28 +77,32 @@ public class ScrabbleGUI extends Application {
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(2);
         gc.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        if(!tile.isEmpty()){
+        if (!tile.isEmpty()) {
             gc.setStroke(Color.BLACK);
-            gc.setFont(new Font("Regular", squareSize/2));
+            gc.setFont(new Font("Regular", squareSize / 2));
 //            gc.strokeText(t,(squareSize/2)-5,(squareSize/2)+5,squareSize););
             gc.strokeText(Character.toString(tile.getPiece().getLetter()),
-                    (squareSize/2)-(squareSize/7),(squareSize/2)+5,squareSize);
-            gc.setFont(new Font("regular",squareSize/3));
-            gc.strokeText(Integer.toString(tile.getPiece().getValue()),6*squareSize/8,
-                    7*squareSize/8,squareSize/5);
+                    (squareSize / 2) - (squareSize / 7), (squareSize / 2) + 5, squareSize);
+            gc.setFont(new Font("regular", squareSize / 3));
+            gc.strokeText(Integer.toString(tile.getPiece().getValue()), 6 * squareSize / 8,
+                    7 * squareSize / 8, squareSize / 5);
         }
 
 
         return canvas;
     }
 
-    private void drawBoard(){
+    /**
+     * Draws the board of the scrabble game using the drawLetters function as
+     * game tiles
+     */
+    private void drawBoard() {
 
 
         int boardSize = game.getGameBoard().getSize();
 
-        for(int row =0; row<boardSize; row++){
-            for(int col =0; col<boardSize; col++){
+        for (int row = 0; row < boardSize; row++) {
+            for (int col = 0; col < boardSize; col++) {
                 BoardTile tileTemp = game.getGameBoard().getGameBoard().get(row).get(col);
                 Canvas temp = drawLetter(tileTemp);
 
@@ -103,53 +122,60 @@ public class ScrabbleGUI extends Application {
                     //
 //                    copy = game.getGameBoard().copyBoard(game.getGameBoard());
 //                    get
-                    if(selectLetter != null){
-                        playsList.add(new Point(finalRow, finalCol,selectLetter));
+                    if (selectLetter != null) {
+                        playsList.add(new Point(finalRow, finalCol, selectLetter));
                         drawLetter(temp, selectLetter);
-                        selectLetter =null;
+                        selectLetter = null;
 
-                        if(selected!= null){
+                        if (selected != null) {
                             tray.getChildren().remove(selected);
 
                             //maybe make a map to hold the locations of
                             // the letters as well
                             // test them for legality
                             selectedList.add(selected);
-                            selected =null;
+                            selected = null;
                         }
                     }
 
 
-
                 });
-                playingBoard.add(temp,col,row);
+                playingBoard.add(temp, col, row);
 
 
             }
         }
     }
 
-    public void drawLetter(Canvas can, Letters letter){
+    /**draws a letter on an existing canvas object played on the board.
+     *
+     * @param can
+     * @param letter
+     */
+    public void drawLetter(Canvas can, Letters letter) {
         GraphicsContext gc = can.getGraphicsContext2D();
-        int squareSize = size/15;
+        int squareSize = size / 15;
 
         gc.setStroke(Color.BLACK);
-        gc.setFont(new Font("Regular", squareSize/2));
+        gc.setFont(new Font("Regular", squareSize / 2));
 //            gc.strokeText(t,(squareSize/2)-5,(squareSize/2)+5,squareSize););
         gc.strokeText(Character.toString(letter.getLetter()),
-                (squareSize/2)-(squareSize/7),(squareSize/2)+5,squareSize);
-        gc.setFont(new Font("regular",squareSize/3));
-        gc.strokeText(Integer.toString(letter.getValue()),6*squareSize/8,
-                7*squareSize/8,squareSize/5);
+                (squareSize / 2) - (squareSize / 7), (squareSize / 2) + 5, squareSize);
+        gc.setFont(new Font("regular", squareSize / 3));
+        gc.strokeText(Integer.toString(letter.getValue()), 6 * squareSize / 8,
+                7 * squareSize / 8, squareSize / 5);
     }
-//    private void dropSelected(Canvas can ){
-//        can = drawLetter()
-//    }
-    private void drawTray(){
+
+
+
+    /** draws the objects in the players tray on the GUI
+     *
+     */
+    private void drawTray() {
         tray.getChildren().clear();
         game.getHuman().getTray();
-        for(Letters letter: game.getHuman().getTray()){
-            Canvas temp =drawLetter(new BoardTile(letter));
+        for (Letters letter : game.getHuman().getTray()) {
+            Canvas temp = drawLetter(new BoardTile(letter));
             // add listener here
 //            if( selected != null && (selected != letter)){
 //                temp.setOnMouseMoved(e->this.clearSelected(temp));
@@ -164,7 +190,7 @@ public class ScrabbleGUI extends Application {
                 // on click make select the piece
 
 
-                if(selected != null){
+                if (selected != null) {
                     clearSelected(selected);
                 }
                 selected = temp;
@@ -179,7 +205,12 @@ public class ScrabbleGUI extends Application {
             tray.getChildren().add(temp);
         }
     }
-    private void clearSelected(Canvas can){
+
+    /**clears the highlight of the selected piece on the board
+     *
+     * @param can
+     */
+    private void clearSelected(Canvas can) {
 
         GraphicsContext gc = can.getGraphicsContext2D();
         gc.setStroke(Color.BLACK);
@@ -187,15 +218,17 @@ public class ScrabbleGUI extends Application {
         gc.strokeRect(0, 0, can.getWidth(), can.getHeight());
     }
 
-    private void clearPlayed(){
+    private void clearPlayed() {
 
     }
-    private void removeLet(Canvas let){
+
+    private void removeLet(Canvas let) {
         tray.getChildren().remove(let);
     }
 
     /**
      * ovverides the start method of application to start the scene of the GUI
+     *
      * @param stage
      * @return void
      */
@@ -209,7 +242,7 @@ public class ScrabbleGUI extends Application {
         hum = new Label("Player: 0");
         comp = new Label("Computer: 0");
 
-        size =700;
+        size = 700;
         stage.setTitle("Scrabble Game");
         BorderPane screen = new BorderPane();
 
@@ -218,14 +251,14 @@ public class ScrabbleGUI extends Application {
 //        playingBoard.getChildren().add(drawLetter(new Letters('c')));
         drawBoard();
         VBox rightSide = new VBox();
-        rightSide.setSpacing(size/100);
+        rightSide.setSpacing(size / 100);
         rightSide.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY,
                 null, null)));
         rightSide.setBorder(new Border(new BorderStroke(Color.BLACK,
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         tray = new HBox();
         tray.setAlignment(Pos.CENTER);
-        tray.setSpacing(size/100);
+        tray.setSpacing(size / 100);
         tray.setBorder(new Border(new BorderStroke(Color.LIGHTGRAY,
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         tray.setBackground(new Background(new BackgroundFill(Color.SADDLEBROWN,
@@ -237,10 +270,11 @@ public class ScrabbleGUI extends Application {
             drawBoard();
             drawTray();
             playsList.clear();
-            selectLetter =null;
-            selected =null;
+            selectLetter = null;
+            selected = null;
         });
-        reset.setOnAction(event -> {});
+        reset.setOnAction(event -> {
+        });
 
         Button play = new Button("Play");
         play.setOnAction(event -> {
@@ -266,33 +300,33 @@ public class ScrabbleGUI extends Application {
 //            }
 
 //            boolean legal = false;
-            if(!playsList.isEmpty() && game.getHuman().playMove(playsList)){
+            if (!playsList.isEmpty() && game.getHuman().playMove(playsList)) {
 
                 // play the turn
                 // update score and label
                 drawBoard();
                 game.getHuman().drawTray(game.getBag());
                 drawTray();
-                hum.setText("Player: "+game.getHuman().getPoints());
+                hum.setText("Player: " + game.getHuman().getPoints());
                 // then the computer turn
                 // update computer score and label
 
                 game.getComputer().playTurn();
-                comp.setText("Computer: "+game.getComputer().getPoints());
+                comp.setText("Computer: " + game.getComputer().getPoints());
                 drawBoard();
                 playsList.clear();
-                selectLetter =null;
-                selected =null;
+                selectLetter = null;
+                selected = null;
 
-            } else{
+            } else {
                 // redraw tray
 //                playingBoard.getChildren().clear();
 
                 drawBoard();
                 drawTray();
                 playsList.clear();
-                selectLetter =null;
-                selected =null;
+                selectLetter = null;
+                selected = null;
             }
         });
 
@@ -301,21 +335,21 @@ public class ScrabbleGUI extends Application {
             // draw domino from graveyard and put in player tray
             playingBoard.getChildren().clear();
             game.getComputer().playTurn();
-            comp.setText("Computer: "+game.getComputer().getPoints());
+            comp.setText("Computer: " + game.getComputer().getPoints());
             drawBoard();
             playsList.clear();
-            selectLetter =null;
-            selected =null;
+            selectLetter = null;
+            selected = null;
 
         });
 
-        rightSide.getChildren().addAll(reset,play,clear,pass,hum,comp);
+        rightSide.getChildren().addAll(reset, play, clear, pass, hum, comp);
 //        rightSide.setMinWidth(size/10);
-        screen.setMinSize(size,size);
+        screen.setMinSize(size, size);
 
-        BorderPane.setAlignment(playingBoard,Pos.CENTER);
+        BorderPane.setAlignment(playingBoard, Pos.CENTER);
         BorderPane.setAlignment(rightSide, Pos.CENTER_RIGHT);
-        BorderPane.setAlignment(tray,Pos.BOTTOM_CENTER);
+        BorderPane.setAlignment(tray, Pos.BOTTOM_CENTER);
 
         screen.setCenter(playingBoard);
         screen.setRight(rightSide);

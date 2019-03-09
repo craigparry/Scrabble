@@ -84,7 +84,10 @@ I would add the end game logic and fix my bugs. I need to add the conditions for
 bag runs out and the computer player has no move and the human player passes their turn. 
 Adding the remaining tiles scores to the other players tray if a player plays all of their tiles 
 and subtract that value from the score of the player who had tiles remaining on their tray.
- 
+
+set up the new game button to work. 
+
+just ran out of time on some of these, midterms kept me busy 
 
 io stream to read in frequencies or letter values
 
